@@ -184,4 +184,5 @@ void mainGame::addMapImage()
 	//¸ÊÅø
 	IMAGEMANAGER->addImage("MAPTOOL_BACKGROUND", "image/MAPTOOL_BACKGROUND.bmp", 1200, 800, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("MAPTOOL_ARROW", "image/MAPTOOL_ARROW.bmp", 1200, 800, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MAPTOOL_FRAME", "image/MAPTOOL_FRAME.bmp", 1200, 800, true, RGB(255, 0, 255));
 }

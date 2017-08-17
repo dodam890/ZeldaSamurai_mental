@@ -86,8 +86,13 @@ void mapTool::render()
 	//drawCameraRect();
 	drawTileName();
 
+	//적당히 알아서 순서 넣어라
+	//배경
 	IMAGEMANAGER->findImage("MAPTOOL_BACKGROUND")->render(getMemDC(), 0, 0);
+	//카메라 조정 화살
 	IMAGEMANAGER->findImage("MAPTOOL_ARROW")->render(getMemDC(), 0, 0);
+	//프레임
+	IMAGEMANAGER->findImage("MAPTOOL_FRAME")->render(getMemDC(), 0, 0);
 }
 
 void mapTool::setupTiles(void)
