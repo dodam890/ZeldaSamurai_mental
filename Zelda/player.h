@@ -67,14 +67,36 @@ public:
 
 	};
 
+	enum RECT_ATTRIBUTE
+	{
+		RC_ATR_ATT,
+		RC_ATR_DEF,
+		RC_ATR_GRAB,
+		RC_ATR_ABSORB,
+		RC_ATR_END = 4,
+	};
+	struct LINK_CRUSH_RECT
+	{
+		RECT _crushRc;
+		float _damage;
+	};
+private:
+
+	RECT_ATTRIBUTE _rcAtr;
+
 private:
 
 	LINK_MOTION_IMAGE_INFO _link[LINK_MOTION_END];
 	LINK_MOTION L_Motion;
+	LINK_CRUSH_RECT _linkCrushRc;
 
 	RECT _playerRc;
+	RECT _rcCrush;
 
 	camera* _cam;
+
+	float _damage;
+	int _frameX;
 
 	float _angle;
 	float _moveSpeed;
@@ -86,14 +108,13 @@ private:
 
 	int _count;
 	int _currentFrameX, _currentFrameY;
+	int _probeX, _probeY;
+	int _rcCrushCenX;
+	int _rcCrushCenY;
 
 	bool _move;
 	bool _tumble;
-	
 	bool _isStore;
-
-	int _probeX, _probeY;
-
 	bool _isCollision;
 
 public:
@@ -110,6 +131,8 @@ public:
 	void loadImage(void);
 
 	void pixelCollision(image* _mapPixelImg);
+
+	void makeCrushRc();
 
 	RECT getRect() { return _playerRc; }
 	LINK_MOTION getMotion() { return L_Motion; }
