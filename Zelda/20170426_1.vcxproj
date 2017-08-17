@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{461D76A9-44FE-496D-92F4-525F20E7773D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>My20170426_1</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="animation.h" />
+    <ClInclude Include="aStar.h" />
+    <ClInclude Include="aStarScene.h" />
+    <ClInclude Include="aStarTile.h" />
+    <ClInclude Include="button.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="c_zeldaMap.h" />
+    <ClInclude Include="effect.h" />
+    <ClInclude Include="effectManager.h" />
+    <ClInclude Include="gameNode.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="imageManager.h" />
+    <ClInclude Include="iniDataManager.h" />
+    <ClInclude Include="inven_all.h" />
+    <ClInclude Include="inven_collect.h" />
+    <ClInclude Include="inven_item.h" />
+    <ClInclude Include="inven_map.h" />
+    <ClInclude Include="item_class.h" />
+    <ClInclude Include="item_class_manager.h" />
+    <ClInclude Include="keyAniManager.h" />
+    <ClInclude Include="keyManager.h" />
+    <ClInclude Include="loading.h" />
+    <ClInclude Include="mainGame.h" />
+    <ClInclude Include="main_scene.h" />
+    <ClInclude Include="mapTool.h" />
+    <ClInclude Include="mapToolScene.h" />
+    <ClInclude Include="npc.h" />
+    <ClInclude Include="npcZorder.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="progressBar.h" />
+    <ClInclude Include="randomFunction.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="sceneEffect.h" />
+    <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="select_scene.h" />
+    <ClInclude Include="shop_class.h" />
+    <ClInclude Include="singletonBase.h" />
+    <ClInclude Include="soundManager.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="timeManager.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="txtData.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="zeldaMap.h" />
+    <ClInclude Include="zeldaMapScene.h" />
+    <ClInclude Include="zeldaTileMap.h" />
+    <ClInclude Include="zeldaTileMapScene.h" />
+    <ClInclude Include="zeldaTileNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="animation.cpp" />
+    <ClCompile Include="aStar.cpp" />
+    <ClCompile Include="aStarScene.cpp" />
+    <ClCompile Include="aStarTile.cpp" />
+    <ClCompile Include="button.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="c_zeldaMap.cpp" />
+    <ClCompile Include="effect.cpp" />
+    <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="image.cpp" />
+    <ClCompile Include="imageManager.cpp" />
+    <ClCompile Include="iniDataManager.cpp" />
+    <ClCompile Include="inven_all.cpp" />
+    <ClCompile Include="inven_collect.cpp" />
+    <ClCompile Include="inven_item.cpp" />
+    <ClCompile Include="inven_map.cpp" />
+    <ClCompile Include="item_class.cpp" />
+    <ClCompile Include="item_class_manager.cpp" />
+    <ClCompile Include="keyAniManager.cpp" />
+    <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="loading.cpp" />
+    <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="mainGame_Image.cpp" />
+    <ClCompile Include="main_scene.cpp" />
+    <ClCompile Include="mapTool.cpp" />
+    <ClCompile Include="mapToolScene.cpp" />
+    <ClCompile Include="npc.cpp" />
+    <ClCompile Include="npcZorder.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="progressBar.cpp" />
+    <ClCompile Include="sceneEffect.cpp" />
+    <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="select_scene.cpp" />
+    <ClCompile Include="shop_class.cpp" />
+    <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="winMain.cpp" />
+    <ClCompile Include="zeldaMap.cpp" />
+    <ClCompile Include="zeldaMapScene.cpp" />
+    <ClCompile Include="zeldaTileMap.cpp" />
+    <ClCompile Include="zeldaTileMapScene.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

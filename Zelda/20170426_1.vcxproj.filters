@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="animation.cpp">
+      <Filter>2DGameFramework\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="iniDataManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="keyAniManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="keyManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>2DGameFramework\button</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar.cpp">
+      <Filter>mainGame\A%2a</Filter>
+    </ClCompile>
+    <ClCompile Include="aStarScene.cpp">
+      <Filter>mainGame\A%2a</Filter>
+    </ClCompile>
+    <ClCompile Include="aStarTile.cpp">
+      <Filter>mainGame\A%2a</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>2DGameFramework\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="gameNode.cpp">
+      <Filter>2DGameFramework\gameNode</Filter>
+    </ClCompile>
+    <ClCompile Include="loading.cpp">
+      <Filter>2DGameFramework\loading</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>2DGameFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>mainGame\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="inven_all.cpp">
+      <Filter>mainGame\inven</Filter>
+    </ClCompile>
+    <ClCompile Include="inven_collect.cpp">
+      <Filter>mainGame\inven</Filter>
+    </ClCompile>
+    <ClCompile Include="inven_item.cpp">
+      <Filter>mainGame\inven</Filter>
+    </ClCompile>
+    <ClCompile Include="inven_map.cpp">
+      <Filter>mainGame\inven</Filter>
+    </ClCompile>
+    <ClCompile Include="item_class.cpp">
+      <Filter>mainGame\inven</Filter>
+    </ClCompile>
+    <ClCompile Include="item_class_manager.cpp">
+      <Filter>mainGame\inven</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>mainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>mainGame\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>mainGame\player</Filter>
+    </ClCompile>
+    <ClCompile Include="progressBar.cpp">
+      <Filter>2DGameFramework\progressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTool.cpp">
+      <Filter>mainGame\map\mapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="mapToolScene.cpp">
+      <Filter>mainGame\map\mapTool\mapToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="zeldaTileMap.cpp">
+      <Filter>mainGame\map\zeldaTileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="zeldaTileMapScene.cpp">
+      <Filter>mainGame\map\zeldaTileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="c_zeldaMap.cpp">
+      <Filter>mainGame\map\zeldaMap\zeldaMapDerived</Filter>
+    </ClCompile>
+    <ClCompile Include="zeldaMap.cpp">
+      <Filter>mainGame\map\zeldaMap\zeldaMapBase</Filter>
+    </ClCompile>
+    <ClCompile Include="zeldaMapScene.cpp">
+      <Filter>mainGame\map\zeldaMap\zeldaMapScene</Filter>
+    </ClCompile>
+    <ClCompile Include="main_scene.cpp">
+      <Filter>mainGame\menu\mainMenu\mainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>2DGameFramework\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="txtData.cpp">
+      <Filter>2DGameFramework\txtData</Filter>
+    </ClCompile>
+    <ClCompile Include="select_scene.cpp">
+      <Filter>mainGame\menu\selectMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>2DGameFramework\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="winMain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneEffect.cpp">
+      <Filter>mainGame\sceneEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame_Image.cpp">
+      <Filter>mainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="npcZorder.cpp">
+      <Filter>mainGame\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="shop_class.cpp">
+      <Filter>mainGame\shop</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="animation.h">
+      <Filter>2DGameFramework\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="iniDataManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="keyManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="keyAniManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>2DGameFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>2DGameFramework\button</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar.h">
+      <Filter>mainGame\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="aStarScene.h">
+      <Filter>mainGame\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="aStarTile.h">
+      <Filter>mainGame\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>2DGameFramework\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="gameNode.h">
+      <Filter>2DGameFramework\gameNode</Filter>
+    </ClInclude>
+    <ClInclude Include="loading.h">
+      <Filter>2DGameFramework\loading</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>2DGameFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>mainGame\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="inven_all.h">
+      <Filter>mainGame\inven</Filter>
+    </ClInclude>
+    <ClInclude Include="inven_collect.h">
+      <Filter>mainGame\inven</Filter>
+    </ClInclude>
+    <ClInclude Include="inven_item.h">
+      <Filter>mainGame\inven</Filter>
+    </ClInclude>
+    <ClInclude Include="inven_map.h">
+      <Filter>mainGame\inven</Filter>
+    </ClInclude>
+    <ClInclude Include="item_class.h">
+      <Filter>mainGame\inven</Filter>
+    </ClInclude>
+    <ClInclude Include="item_class_manager.h">
+      <Filter>mainGame\inven</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>mainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>mainGame\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>mainGame\player</Filter>
+    </ClInclude>
+    <ClInclude Include="progressBar.h">
+      <Filter>2DGameFramework\progressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>mainGame\map\mapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="mapToolScene.h">
+      <Filter>mainGame\map\mapTool\mapToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="zeldaTileMap.h">
+      <Filter>mainGame\map\zeldaTileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="zeldaTileMapScene.h">
+      <Filter>mainGame\map\zeldaTileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="c_zeldaMap.h">
+      <Filter>mainGame\map\zeldaMap\zeldaMapDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="zeldaMap.h">
+      <Filter>mainGame\map\zeldaMap\zeldaMapBase</Filter>
+    </ClInclude>
+    <ClInclude Include="zeldaMapScene.h">
+      <Filter>mainGame\map\zeldaMap\zeldaMapScene</Filter>
+    </ClInclude>
+    <ClInclude Include="zeldaTileNode.h">
+      <Filter>mainGame\map\zeldaMap\zeldaTileNode</Filter>
+    </ClInclude>
+    <ClInclude Include="main_scene.h">
+      <Filter>mainGame\menu\mainMenu\mainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>2DGameFramework\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="txtData.h">
+      <Filter>2DGameFramework\txtData</Filter>
+    </ClInclude>
+    <ClInclude Include="select_scene.h">
+      <Filter>mainGame\menu\selectMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="singletonBase.h">
+      <Filter>2DGameFramework\singletonBase</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>2DGameFramework\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="randomFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="commonMacroFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneEffect.h">
+      <Filter>mainGame\sceneEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="npcZorder.h">
+      <Filter>mainGame\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="shop_class.h">
+      <Filter>mainGame\shop</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="2DGameFramework">
+      <UniqueIdentifier>{42634162-b4ff-4b2e-bbd7-ceeff6229a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\animation">
+      <UniqueIdentifier>{7fcb8136-160e-465a-b4ad-de9eefe9351c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\manager">
+      <UniqueIdentifier>{0976109f-47c6-4b1e-bb95-cae6cb44ea87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\button">
+      <UniqueIdentifier>{1313e1a0-0ae7-4fd0-9e25-9ba8759d6eee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\effect">
+      <UniqueIdentifier>{8bf01355-4934-4d90-8207-41720c3a054b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\image">
+      <UniqueIdentifier>{38b808de-5a63-400c-b4d9-ac66ecf87a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\txtData">
+      <UniqueIdentifier>{5f95b75d-6a1b-4f64-b7fb-c8f99fabbf99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame">
+      <UniqueIdentifier>{41fea515-ed92-4cd5-8124-61b6a0b19e47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\A%2a">
+      <UniqueIdentifier>{5c061f29-2090-41da-a1ec-8b06f1af065a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map">
+      <UniqueIdentifier>{2a8b5604-cac2-40a7-8d0f-18f0ba529093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\zeldaMap">
+      <UniqueIdentifier>{a6896465-652e-4c57-b415-3f55b5255e2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\zeldaTileMap">
+      <UniqueIdentifier>{b0af02f6-6d59-48fc-bc4d-2fa52d91c1e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\zeldaMap\zeldaMapBase">
+      <UniqueIdentifier>{a044fbf5-5ed1-4cf2-a652-a06d97c2b0bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\gameNode">
+      <UniqueIdentifier>{e708a74c-6a02-41a2-a004-bdd8e16961b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\loading">
+      <UniqueIdentifier>{1f5910b1-8050-4c84-a1b6-d97e74b267f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\camera">
+      <UniqueIdentifier>{72d23c97-9808-4e89-91ea-1bfadcb00103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\inven">
+      <UniqueIdentifier>{b9104065-fc6b-4929-8ede-05c3d5ee798a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\npc">
+      <UniqueIdentifier>{6819f1fb-f104-401f-80af-bc8ba6266fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\player">
+      <UniqueIdentifier>{52ec13ba-d79b-4fb9-a13d-e81e879b7892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\progressBar">
+      <UniqueIdentifier>{e6d79055-057a-452f-a7c7-d6b3037cb7b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\mapTool">
+      <UniqueIdentifier>{2242e28d-d696-4d4b-a0b0-81ece725b60e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\mapTool\mapToolScene">
+      <UniqueIdentifier>{79d420fa-09bd-4313-9fa7-fa1d6911fef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\zeldaMap\zeldaMapDerived">
+      <UniqueIdentifier>{263a7e26-ffd5-4759-b4fc-8c237e6f2ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\zeldaMap\zeldaMapScene">
+      <UniqueIdentifier>{c79817bb-690b-4046-965a-b79a2812ba29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\zeldaMap\zeldaTileNode">
+      <UniqueIdentifier>{4a08c3f8-bb3f-4969-aad0-9bb4b8c33f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\menu">
+      <UniqueIdentifier>{c252de87-39b2-4456-bd1d-d7a4ef690d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\menu\mainMenu">
+      <UniqueIdentifier>{bdd91873-6794-42bd-9337-ce73e98e4514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\menu\selectMenu">
+      <UniqueIdentifier>{d204f900-a032-4063-99a1-6eb6f611fe7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\menu\mainMenu\mainScene">
+      <UniqueIdentifier>{03570967-5c65-4c1c-9e3d-6238cb884b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\timer">
+      <UniqueIdentifier>{8292ed0c-e994-4cac-aae1-13177a91b73f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\singletonBase">
+      <UniqueIdentifier>{65a2d016-f948-47bc-83d4-b3e254c1c392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\utils">
+      <UniqueIdentifier>{3d924950-7185-4f98-8dba-de014a5e48f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{37ac84db-b357-480b-804d-4afe488c95fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{15f0379f-9b41-4e0f-9c3f-305b6aa85d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\sceneEffect">
+      <UniqueIdentifier>{405341aa-e79b-4966-ab22-fa24c1f8cb1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\shop">
+      <UniqueIdentifier>{71bfb9cf-3c62-4191-8f81-17b3a68b7f14}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
