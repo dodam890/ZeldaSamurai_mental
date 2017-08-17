@@ -19,7 +19,7 @@ HRESULT zeldaTileMap::init(camera* camera, int mapWidth, int mapHeight)
 	_mapHeight = mapHeight;
 
 	IMAGEMANAGER->addFrameImage("mapTiles", "image/sample_ter.bmp", 0, 0, 180, 120, SAMPLETILEX, SAMPLETILEY, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("mapTiles2", "image/sample_obj.bmp", 0, 0, 420, 510, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("mapTiles2", "image/sample_obj_30_1.bmp", 0, 0, 420, 300, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
 
 
 	loadMap();
@@ -54,6 +54,10 @@ void zeldaTileMap::render()
 			_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
 
 		IMAGEMANAGER->frameRender("mapTiles2", getMemDC(),
+			_tiles[i].rc.left, _tiles[i].rc.top,
+			_tiles[i].objFrameX, _tiles[i].objFrameY);
+
+		IMAGEMANAGER->frameRender("mapTiles3", getMemDC(),
 			_tiles[i].rc.left, _tiles[i].rc.top,
 			_tiles[i].objFrameX, _tiles[i].objFrameY);
 	}
