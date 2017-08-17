@@ -19,6 +19,12 @@ HRESULT player::init(camera* camera)
 	_move = true;
 	_isStore = false;
 
+	_damage = 0;
+	_frameX = 0;
+
+	_rcCrushCenX = _X + 210;
+	_rcCrushCenY = _Y + 125;
+
 	_probeX = _probeY = 0;
 
 	_disX = WINSIZEX / 2 - 135;
@@ -27,7 +33,7 @@ HRESULT player::init(camera* camera)
 	_X = _cam->getStartX() + _disX;
 	_Y = _cam->getStartY() + _disY;
 
-	_playerRc = RectMake(_X + 100, _Y + 110, 70, 70);
+	_playerRc = RectMake(_X + 102, _Y + 100, 66, 70);
 
 	_isCollision = 0;
 
@@ -46,8 +52,8 @@ void player::update(void)
 
 	_X = _cam->getStartX() + _disX;
 	_Y = _cam->getStartY() + _disY;
-	_playerRc = RectMake(_X + 100, _Y + 110, 70, 70);
-
+	_playerRc = RectMake(_X + 102, _Y + 100, 66, 70);
+	makeCrushRc();
 	frameCount();
 }
 
@@ -66,9 +72,10 @@ void player::draw(void)
 	TextOut(getMemDC(), 400, 50, str, strlen(str));
 	sprintf_s(str, "[disX : %1.f, disY : %1.f]", _disX, _disY);
 	TextOut(getMemDC(), 400, 70, str, strlen(str));
-
 	sprintf(str, "[frameX : %d]", _currentFrameX);
 	TextOut(getMemDC(), 400, 90, str, strlen(str));
+	sprintf_s(str, "[rcCrush cenX : %d, rcCrush cenY : %d]", _rcCrushCenX, _rcCrushCenY);
+	TextOut(getMemDC(), 400, 110, str, strlen(str));
 
 	switch (L_Motion)
 	{
@@ -219,12 +226,32 @@ void player::draw(void)
 	}
 
 	Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
-	_link[L_Motion]._linkImg->frameRender(getMemDC(), _X, _Y, _currentFrameX, 0);
+	Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
+	
+	if (L_Motion == LINK_MOTION_UP_GRAB)
+	{
+		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X - 5, _Y - 15, _currentFrameX, 0);
+	}
+	else if (L_Motion == LINK_MOTION_RIGHT_GRAB)
+	{
+		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X, _Y - 10, _currentFrameX, 0);
+	}
+	else if (L_Motion == LINK_MOTION_LEFT_GRAB)
+	{
+		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X, _Y - 10, _currentFrameX, 0);
+	}
+	else if (L_Motion == LINK_MOTION_DOWN_GRAB)
+	{
+		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X, _Y - 15, _currentFrameX, 0);
+	}
+	else
+	{
+		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X, _Y, _currentFrameX, 0);
+	}
 }
 
 void player::motionChange(void)
 {
-
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
 		switch (L_Motion)
@@ -269,22 +296,22 @@ void player::motionChange(void)
 
 			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_UP_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_DOWN_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
-			
+
 			break;
 		default:
 
@@ -347,28 +374,28 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_GRAB:
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_RIGHT_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_UP_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_DOWN_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
-			
+
 			break;
 		default:
 
@@ -431,28 +458,28 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_GRAB:
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_RIGHT_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_UP_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_DOWN_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
-			
+
 			break;
 		default:
 
@@ -515,28 +542,28 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_GRAB:
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_RIGHT_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_UP_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
-			
+
 			break;
 		case player::LINK_MOTION_DOWN_SHIELD_STAND:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
-			
+
 			break;
 		default:
 
@@ -802,6 +829,9 @@ void player::motionChange(void)
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_RIGHT;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 50, 50);
 
 			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
@@ -810,6 +840,9 @@ void player::motionChange(void)
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_LEFT;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 50, 50);
 
 			break;
 		case player::LINK_MOTION_UP_SHIELD_STAND:
@@ -818,6 +851,9 @@ void player::motionChange(void)
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_UP;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 50, 50);
 
 			break;
 		case player::LINK_MOTION_DOWN_SHIELD_STAND:
@@ -826,6 +862,9 @@ void player::motionChange(void)
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_DOWN;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 50, 50);
 
 			break;
 		}
@@ -892,6 +931,34 @@ void player::motionChange(void)
 			L_Motion = LINK_MOTION_DOWN_MAGICPOT_ABSORB;
 
 			break;
+		case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
+
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+
+			break;
+		case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
+
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+
+			break;
+		case player::LINK_MOTION_UP_MAGICPOT_FIRE:
+
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+
+			break;
+		case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
+
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+
+			break;
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp('C'))
@@ -899,36 +966,40 @@ void player::motionChange(void)
 		switch (L_Motion)
 		{
 		case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
-			
+
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_RIGHT_MAGICPOT_FIRE;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
 			break;
 		case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_LEFT_MAGICPOT_FIRE;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
 			break;
 		case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_UP_MAGICPOT_FIRE;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
 			break;
 		case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_DOWN_MAGICPOT_FIRE;
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
-			break;
-		case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
-			break;
-		case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
-			break;
-		case player::LINK_MOTION_UP_MAGICPOT_FIRE:
-			break;
-		case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
 			break;
 		}
 	}
@@ -953,7 +1024,7 @@ void player::move(void)
 
 		break;
 	case player::LINK_MOTION_RIGHT_WALK:
-		
+
 		_moveSpeed = 5;
 
 		break;
@@ -1172,7 +1243,7 @@ void player::frameCount(void)
 
 			break;
 		case player::LINK_MOTION_DOWN_PUSH:
-			
+
 			if (_currentFrameX > _link[L_Motion]._linkImg->getMaxFrameX())
 			{
 				_currentFrameX = 0;
@@ -1188,33 +1259,33 @@ void player::frameCount(void)
 				L_Motion = LINK_MOTION_RIGHT;
 			}
 
-				break;
+			break;
 		case player::LINK_MOTION_LEFT_SWORD_ATTACK:
-			
+
 			if (_currentFrameX > _link[L_Motion]._linkImg->getMaxFrameX())
 			{
 				_currentFrameX = 0;
 				L_Motion = LINK_MOTION_LEFT;
 			}
-			
+
 			break;
 		case player::LINK_MOTION_UP_SWORD_ATTACK:
-			
+
 			if (_currentFrameX > _link[L_Motion]._linkImg->getMaxFrameX())
 			{
 				_currentFrameX = 0;
 				L_Motion = LINK_MOTION_UP;
 			}
-			
+
 			break;
 		case player::LINK_MOTION_DOWN_SWORD_ATTACK:
-			
+
 			if (_currentFrameX > _link[L_Motion]._linkImg->getMaxFrameX())
 			{
 				_currentFrameX = 0;
 				L_Motion = LINK_MOTION_DOWN;
 			}
-			
+
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_OPEN:
 
@@ -1274,7 +1345,7 @@ void player::frameCount(void)
 
 			if (_currentFrameX > _link[L_Motion]._linkImg->getMaxFrameX())
 			{
-				_currentFrameX = 1;
+				_currentFrameX = 0;
 				L_Motion = LINK_MOTION_UP_SHIELD_STAND;
 			}
 
@@ -1649,7 +1720,7 @@ void player::pixelCollision(image* pixelImg)
 				case player::LINK_MOTION_LEFT_SHIELD_MOVE:
 				case player::LINK_MOTION_UP_SHIELD_MOVE:
 				case player::LINK_MOTION_DOWN_SHIELD_MOVE:
-					_disY = (float)j- 186;
+					_disY = (float)j - 186;
 					break;
 				case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
 				case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
@@ -1674,11 +1745,358 @@ void player::pixelCollision(image* pixelImg)
 		}
 	}
 }
-	//if (!(r == 255 && g == 0 && b == 255))
-	//{
-	//	_moveSpeed = 0;
-	//	_disX -= 1;
-	//}
+
+void player::makeCrushRc()
+{
+	switch (L_Motion)
+	{
+	case player::LINK_MOTION_RIGHT_GRAB:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX == 1)
+		{
+			_rcCrushCenX = _X + 190;
+			_rcCrushCenY = _Y + 135;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 50, 80);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_GRAB;
+		}
+		if (_frameX == 2)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	case player::LINK_MOTION_LEFT_GRAB:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX == 1)
+		{
+			_rcCrushCenX = _X + 80;
+			_rcCrushCenY = _Y + 135;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 50, 80);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_GRAB;
+		}
+		if (_frameX == 2)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	case player::LINK_MOTION_UP_GRAB:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX == 1)
+		{
+			_rcCrushCenX = _X + 135;
+			_rcCrushCenY = _Y + 70;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 80, 50);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_GRAB;
+		}
+		if (_frameX == 2)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	case player::LINK_MOTION_DOWN_GRAB:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX == 1)
+		{
+			_rcCrushCenX = _X + 135;
+			_rcCrushCenY = _Y + 190;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 80, 50);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_GRAB;
+		}
+		if (_frameX == 2)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	case player::LINK_MOTION_RIGHT_SWORD_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 5)
+		{
+			_rcCrushCenX = _X + 210;
+			_rcCrushCenY = _Y + 125;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 120, 150);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 7)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 120, 150);
+		}
+
+		break;
+	case player::LINK_MOTION_LEFT_SWORD_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 5)
+		{
+			_rcCrushCenX = _X + 60;
+			_rcCrushCenY = _Y + 125;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 120, 150);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 7)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 120, 150);
+		}
+
+		break;
+	case player::LINK_MOTION_UP_SWORD_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 5)
+		{
+			_rcCrushCenX = _X + 120;
+			_rcCrushCenY = _Y + 60;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 170, 120);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 7)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 120, 150);
+		}
+
+		break;
+	case player::LINK_MOTION_DOWN_SWORD_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 5)
+		{
+			_rcCrushCenX = _X + 150;
+			_rcCrushCenY = _Y + 195;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 170, 120);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 7)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 120, 150);
+		}
+
+		break;
+	case player::LINK_MOTION_RIGHT_SHIELD_STAND:
+
+		_rcCrushCenX = _X + 175;
+		_rcCrushCenY = _Y + 125;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 20, 100);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_LEFT_SHIELD_STAND:
+
+		_rcCrushCenX = _X + 95;
+		_rcCrushCenY = _Y + 125;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 20, 100);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_UP_SHIELD_STAND:
+
+		_rcCrushCenX = _X + 130;
+		_rcCrushCenY = _Y + 70;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 100, 20);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_DOWN_SHIELD_STAND:
+
+		_rcCrushCenX = _X + 135;
+		_rcCrushCenY = _Y + 185;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 100, 20);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
+
+		_rcCrushCenX = _X + 175;
+		_rcCrushCenY = _Y + 125;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 20, 100);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_LEFT_SHIELD_MOVE:
+
+		_rcCrushCenX = _X + 95;
+		_rcCrushCenY = _Y + 125;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 20, 100);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_UP_SHIELD_MOVE:
+
+		_rcCrushCenX = _X + 130;
+		_rcCrushCenY = _Y + 70;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 100, 20);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_DOWN_SHIELD_MOVE:
+
+		_rcCrushCenX = _X + 135;
+		_rcCrushCenY = _Y + 185;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 100, 20);
+		_rcAtr = RC_ATR_DEF;
+
+		break;
+	case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
+
+		_rcCrushCenX = _X + 425;
+		_rcCrushCenY = _Y + 125;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 500, 150);
+		_damage = 1.F;
+		_linkCrushRc = { _rcCrush, _damage };
+		_rcAtr = RC_ATR_ABSORB;		
+
+		break;
+	case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
+		
+		_rcCrushCenX = _X - 145;
+		_rcCrushCenY = _Y + 125;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 500, 150);
+		_damage = 1.F;
+		_linkCrushRc = { _rcCrush, _damage };
+		_rcAtr = RC_ATR_ABSORB;
+		
+		break;
+	case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
+
+		_rcCrushCenX = _X + 130;
+		_rcCrushCenY = _Y - 155;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 150, 500);
+		_damage = 1.F;
+		_linkCrushRc = { _rcCrush, _damage };
+		_rcAtr = RC_ATR_ABSORB;
+
+		break;
+	case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
+
+		_rcCrushCenX = _X + 140;
+		_rcCrushCenY = _Y + 425;
+		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 150, 500);
+		_damage = 1.F;
+		_linkCrushRc = { _rcCrush, _damage };
+		_rcAtr = RC_ATR_ABSORB;
+
+		break;
+	case player::LINK_MOTION_RIGHT_ROLLING_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 11)
+		{
+			_rcCrushCenX = _X + 135;
+			_rcCrushCenY = _Y + 135;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 250, 250);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 12)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	case player::LINK_MOTION_LEFT_ROLLING_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 11)
+		{
+			_rcCrushCenX = _X + 135;
+			_rcCrushCenY = _Y + 135;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 250, 250);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 12)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	case player::LINK_MOTION_UP_ROLLING_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 11)
+		{
+			_rcCrushCenX = _X + 135;
+			_rcCrushCenY = _Y + 135;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 250, 250);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 12)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	case player::LINK_MOTION_DOWN_ROLLING_ATTACK:
+
+		_frameX = _link[L_Motion]._linkImg->getFrameX();
+		if (_frameX >= 2 && _frameX <= 11)
+		{
+			_rcCrushCenX = _X + 135;
+			_rcCrushCenY = _Y + 135;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 250, 250);
+			_damage = 1.F;
+			_linkCrushRc = { _rcCrush, _damage };
+			_rcAtr = RC_ATR_ATT;
+		}
+		if (_frameX == 12)
+		{
+			_rcCrushCenX = -100000;
+			_rcCrushCenY = -100000;
+			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+		}
+
+		break;
+	}
+
+}
 
 void player::setIsCollision(bool collision, RECT npcRc)
 {
