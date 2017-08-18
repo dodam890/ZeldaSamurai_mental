@@ -31,6 +31,9 @@ HRESULT zeldaMapScene::init()
 
 	createMap();
 
+	_sc = new shop_class;
+	_sc->init();
+
 	return S_OK;
 }
 
@@ -51,6 +54,59 @@ void zeldaMapScene::update()
 	_link->pixelCollision(_zeldaMap[_curMap]->getPixelImg());
 
 	_sceneEffect->update();
+
+	if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(0) == true)
+	{
+		_sc->update();
+	}
+
+	if (_sc->get_give_item_is_true() == true)
+	{
+		if (_sc->get_ic()->get_itemtype() != using_item)
+		{
+			if (_sc->get_ic()->get_itemtype() != Interaction_item)
+			{
+				if (_inven->get_temp_item12_vol() < 12)
+				{
+					_inven->add_to_inven(
+						_sc->get_ic()->get_image(),
+						_sc->get_ic()->get_item_name(),
+						_sc->get_ic()->get_item_sub_text(),
+						_sc->get_ic()->get_item_num(),
+						_sc->get_ic()->get_volume(),
+						_sc->get_ic()->get_itemtype(),
+						_sc->get_ic()->get_item_where(),
+						_sc->get_ic()->get_is_equip()
+					);
+					_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(_inven->get_temp_item12_vol());
+					_inven->get_iit()->set_inven_v(_inven->get_vi());
+					_inven->up_temp_item12_vol();
+				}
+			}
+			else if (_inven->get_temp_item12_vol() == Interaction_item)
+			{
+				if (_inven->get_temp_Sitem4_vol() < 4)
+				{
+					_inven->add_to_inven(
+						_sc->get_ic()->get_image(),
+						_sc->get_ic()->get_item_name(),
+						_sc->get_ic()->get_item_sub_text(),
+						_sc->get_ic()->get_item_num(),
+						_sc->get_ic()->get_volume(),
+						_sc->get_ic()->get_itemtype(),
+						_sc->get_ic()->get_item_where(),
+						_sc->get_ic()->get_is_equip()
+					);
+					_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(12 + _inven->get_temp_Sitem4_vol());
+					_inven->get_iit()->set_inven_v(_inven->get_vi());
+					_inven->up_temp_Sitem4_vol();
+				}
+			}
+		}
+
+		_sc->set_give_item_is_true(false);
+	}
+
 	effect_alpha -= 20;
 	if (effect_alpha < 0) effect_alpha = 0;
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
@@ -82,6 +138,10 @@ void zeldaMapScene::render()
 	_camera->drawCameraPos();
 		
 	_sceneEffect->render();
+	if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(0) == true)
+	{
+		_sc->render();
+	}
 	IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
 	}
 	else if (_is_inven == true)

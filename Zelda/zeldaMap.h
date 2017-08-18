@@ -69,5 +69,7 @@ public:
 	inline int getMapHeight() { return _mapHeight; }
 
 	tagEventRect& getEventRect(int mapNum) { return _eventRectInfo[mapNum]; }
+
+	bool get_is_talk_shop_npc_who(int arry);
 };
 

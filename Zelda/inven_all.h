@@ -79,6 +79,14 @@ public:
 	void update();
 	void render();
 
+	inven_item* get_iit() { return _iit; }
+
+	void up_temp_item12_vol() { temp_item12_vol++; }
+	void up_temp_Sitem4_vol() { temp_Sitem4_vol++; }
+
+	int get_temp_item12_vol() { return temp_item12_vol; }
+	int get_temp_Sitem4_vol() { return temp_Sitem4_vol; }
+
 	//플레이어가 item을 부딪힌것에 대해서 가져와서 인벤에 적재하는 함수 맵에 떨어진 함수에 대해서 얻는다.
 	void add_to_inven(image* img, string name, string text, int num, int vol, item_type type, item_where _where, bool equip);
 	void eraser(int arr);
