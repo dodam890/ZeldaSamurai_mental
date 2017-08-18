@@ -80,5 +80,9 @@ void mainGame::changeSceneByKeyInput()
 	{
 		SCENEMANAGER->changeScene("select_scene");
 	}
+	if (KEYMANAGER->isOnceKeyDown('R'))
+	{
+		SCENEMANAGER->changeScene("zeldaTileMapScene");
+	}
 }
 
