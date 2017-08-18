@@ -39,8 +39,8 @@ HRESULT inven_collect::init()
 	collect_sub_ob3[2]._rc = RectMake(888, 422, 110, 110);
 
 
-	it_save_button._rc = RectMake(825, 565, 210, 90);
-	it_sleep_button._rc = RectMake(605, 565, 210, 90);
+	//it_save_button._rc = RectMake(825, 565, 210, 90);
+	//it_sleep_button._rc = RectMake(605, 565, 210, 90);
 
 	num_x = 0;
 	num_y = 0;
@@ -60,8 +60,8 @@ void inven_collect::update()
 void inven_collect::render()
 {
 	IMAGEMANAGER->findImage("인벤토리내용2")->render(getMemDC(), 85, 90);
-	IMAGEMANAGER->findImage("인벤토리세이브")->render(getMemDC(), it_save_button._rc.left, it_save_button._rc.top);
-	IMAGEMANAGER->findImage("인벤토리sleep")->render(getMemDC(), it_sleep_button._rc.left, it_sleep_button._rc.top);
+	//IMAGEMANAGER->findImage("인벤토리세이브")->render(getMemDC(), it_save_button._rc.left, it_save_button._rc.top);
+	//IMAGEMANAGER->findImage("인벤토리sleep")->render(getMemDC(), it_sleep_button._rc.left, it_sleep_button._rc.top);
 
 	//for (int i = 0; i < 4; i++)
 	//{
@@ -73,6 +73,10 @@ void inven_collect::render()
 	//	Rectangle(getMemDC(), collect_sub[i]._rc.left, collect_sub[i]._rc.top, collect_sub[i]._rc.right, collect_sub[i]._rc.bottom);
 	//	Ellipse(getMemDC(), collect_sub_ob3[i]._rc.left, collect_sub_ob3[i]._rc.top, collect_sub_ob3[i]._rc.right, collect_sub_ob3[i]._rc.bottom);
 	//}
+	char str[128];
+	sprintf(str, "%d,%d", num_x, num_y);
+	TextOut(getMemDC(), 200, 200, str, strlen(str));
+
 }
 
 void inven_collect::keypad()
@@ -93,9 +97,13 @@ void inven_collect::keypad()
 		{
 			num_x = 4;
 		}
-		else if (num_x < 1 && num_y > 0)
+		else if (num_x < 1 && num_y == 1)
 		{
 			num_x = 5;
+		}
+		else if (num_x < 1 && num_y > 1)
+		{
+			num_x = 3;
 		}
 	}
 
@@ -114,11 +122,15 @@ void inven_collect::keypad()
 			num_x++;
 		}
 
-		if (num_x > 5 && num_x + (5 * num_y) > 5)
+		if (num_x > 5 && num_x + (5 * num_y) == 11)
 		{
 			num_x = 1;
 		}
-		else if (num_x > 5 && num_x + (5 * num_y) != 5)
+		else if (num_x > 3 && num_x + (5 * num_y) > 11)
+		{
+			num_x = 1;
+		}
+		else if (num_x > 5 && num_x + (5 * num_y) != 5 && num_x + (5 * num_y) != 11)
 		{
 			num_x = 0;
 		}
@@ -145,10 +157,11 @@ void inven_collect::keypad()
 			num_y--;
 		}
 
-		if (num_x == 2 && num_y < 0)
+
+		if (num_x >= 2 && num_y < 0)
 		{
-			num_y = 2;
-			num_x += 2;
+			num_y = 1;
+			num_x += 1;
 		}
 		else if (num_x == 1 && num_y < 0)
 		{
@@ -177,10 +190,14 @@ void inven_collect::keypad()
 		{
 			num_y++;
 		}
-		else if (num_x + (5 * num_y) == 7 || num_x + (5 * num_y) == 8)
+		else if (num_x + (5 * num_y) == 7)
 		{
 			num_y++;
 			num_x++;
+		}
+		else if (num_x + (5 * num_y) == 8)
+		{
+			num_y += 3;
 		}
 		else if (num_x + (5 * num_y) >= 0 && num_x + (5 * num_y) <= 4 && num_x + (5 * num_y) != 3)
 		{
@@ -193,9 +210,34 @@ void inven_collect::keypad()
 		}
 
 
-		if ((num_y == 3 && num_x == 2) || (num_y == 3 && num_x == 4) || (num_y == 3 && num_x == 3))
+		if ((num_y == 2 && num_x == 4))
+		{
+			num_y -= 2;
+			num_x -= 1;
+		}
+		else if ((num_y == 4 && num_x == 3))
+		{
+			num_y -= 4;
+			num_x -= 1;
+		}
+		else if ((num_y == 2 && num_x == 5))
+		{
+			num_y -= 2;
+			num_x -= 1;
+		}
+		else if ((num_y == 3 && num_x == 3))
 		{
 			num_y -= 3;
+			num_x -= 2;
+		}
+		else if ((num_y == 4 && num_x == 3))
+		{
+			num_y = 0;
+			num_x -= 1;
+		}
+		else if ((num_y == 3 && num_x == 2))
+		{
+			num_y = 0;
 			num_x -= 2;
 		}
 		else if (num_y > 2)

@@ -17,7 +17,7 @@ HRESULT inven_item::init()
 
 	for (int i = 0; i < 12; i++)
 	{
-		item_12[i]._rc = RectMakeCenter(335 + (i%4) * 180, 232 + (i/4) * 120, 130, 100);
+		item_12[i]._rc = RectMakeCenter(335 + (i % 4) * 180, 232 + (i / 4) * 120, 130, 100);
 	}
 
 	for (int j = 0; j < 4; j++)
@@ -26,7 +26,7 @@ HRESULT inven_item::init()
 	}
 
 	////아래
-	it_save_button._rc = RectMake(790, 550, 210, 90);
+	//it_save_button._rc = RectMake(790, 550, 210, 90);
 
 	num_x = 0;
 	num_y = 0;
@@ -46,7 +46,7 @@ void inven_item::update()
 void inven_item::render()
 {
 	IMAGEMANAGER->findImage("인벤토리내용1")->render(getMemDC(), 85, 90);
-	IMAGEMANAGER->findImage("인벤토리세이브")->render(getMemDC(), it_save_button._rc.left, it_save_button._rc.top);
+	//IMAGEMANAGER->findImage("인벤토리세이브")->render(getMemDC(), it_save_button._rc.left, it_save_button._rc.top);
 	//for (int i = 0; i < 12; i++)
 	//{
 	//	Rectangle(getMemDC(), item_12[i]._rc.left, item_12[i]._rc.top, item_12[i]._rc.right, item_12[i]._rc.bottom);
@@ -67,14 +67,14 @@ void inven_item::render()
 
 		float temp_x = 0;
 		float temp_y = 0;
-		
+
 		if (_vi[i]->get_itemtype() != using_item && _vi[i]->get_itemtype() != Interaction_item)
 		{
 			if (temp_item_12_vol < 12)
 			{
 				temp_x = item_12[temp_item_12_vol]._rc.left;
 				temp_y = item_12[temp_item_12_vol]._rc.top;
-				temp_item_12_vol++; 
+				temp_item_12_vol++;
 			}
 			if (_vi[i]->get_is_equip() == true)
 			{
@@ -106,7 +106,7 @@ void inven_item::keypad()
 
 		if (num_x < 0 && num_x + (4 * num_y) == 11)
 		{
-			num_x = 4;
+			num_x = 3;
 		}
 		else if (num_x < 0 && num_x + (4 * num_y) < 12)
 		{
@@ -121,7 +121,7 @@ void inven_item::keypad()
 		{
 			num_x = 0;
 		}
-		else if (num_x > 4 && num_x + (4 * num_y) > 12)
+		else if (num_x > 3 && num_x + (4 * num_y) > 12)
 		{
 			num_x = 0;
 		}
@@ -142,8 +142,13 @@ void inven_item::keypad()
 		{
 			num_y--;
 		}
-		
-		if (num_y < 0 && num_x + (4 * num_y) != 14)
+
+		if (num_y < 0 && num_x == 4)
+		{
+			num_x--;
+			num_y = 2;
+		}
+		else if (num_y < 0 && num_x + (4 * num_y) != 14)
 		{
 			num_y = 3;
 		}
@@ -164,7 +169,13 @@ void inven_item::keypad()
 		{
 			num_y++;
 		}
-		if (num_y > 3)
+
+		if (num_x + (4 * num_y) == 16)
+		{
+			num_x--;
+			num_y = 0;
+		}
+		else if (num_y > 3)
 		{
 			num_y = 0;
 		}
