@@ -1,35 +1,64 @@
 #pragma once
 #include "gameNode.h"
+#include "aStar.h"
 
-//부모 클라쓰~
+class camera;
+
+struct tagEnemy
+{
+	image* image;
+	int currentFrameX;
+};
 class enemy : public gameNode
 {
+public:
+	enum DIRECTION
+	{
+		DIRECTION_DOWN,
+		DIRECTION_LEFT,
+		DIRECTION_RIGHT,
+		DIRECTION_UP,
+		DIRECTION_END = 4
+	};
 protected:
-	image* _imageName;
+	vector<aStarTile*> _vPath;
+	vector<aStarTile*> _viPath;
+
+protected:
+	tagEnemy _imgInfo[DIRECTION_END];
+	DIRECTION _direction;
+
 	RECT _rc;
+	RECT _moveRc;
+	RECT _collisionRc;
 
-	int _currentFrameX;
-	int _currentFrameY;
+	float _distanceX, _distanceY;
+	float _centerX, _centerY;
 
-	int _count;
-	int _fireCount;
-	int _rndFireCount;
-	
+	int _indexX, _indexY;
+
+	int _frameCount;
+
+	int _moveCount;
+
+	aStar* _aStar;
+
+	camera* _camera;
+
+	int _rangeWidth;
+	int _rangeHeight;
 
 public:
-	HRESULT init(void);
-	HRESULT init(const char* imageName, POINT position);
-	void release(void);
-	void update(void);
-	void render(void);
+	virtual HRESULT init(camera* camera, int idxX, int idxY);
+	virtual void release();
+	virtual void update();
+	virtual void render();
 
-	void move(void);
-	void draw(void);
+	virtual void move();
+	virtual void addFrame();
+	virtual void draw();
 
-	bool bulletCountFire(void);
-
-	inline RECT getRect(void) { return _rc; }
-
+	virtual void addImage();
 
 	enemy();
 	virtual ~enemy();

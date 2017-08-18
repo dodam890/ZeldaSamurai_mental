@@ -139,6 +139,21 @@
     <ClCompile Include="shop_class.cpp">
       <Filter>mainGame\shop</Filter>
     </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>mainGame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>mainGame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="slime.cpp">
+      <Filter>mainGame\enemy\enemyDerived</Filter>
+    </ClCompile>
+    <ClCompile Include="snail.cpp">
+      <Filter>mainGame\enemy\enemyDerived</Filter>
+    </ClCompile>
+    <ClCompile Include="octo.cpp">
+      <Filter>mainGame\enemy\enemyDerived</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h">
@@ -291,6 +306,21 @@
     <ClInclude Include="shop_class.h">
       <Filter>mainGame\shop</Filter>
     </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>mainGame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>mainGame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="slime.h">
+      <Filter>mainGame\enemy\enemyDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="snail.h">
+      <Filter>mainGame\enemy\enemyDerived</Filter>
+    </ClInclude>
+    <ClInclude Include="octo.h">
+      <Filter>mainGame\enemy\enemyDerived</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -403,6 +433,12 @@
     </Filter>
     <Filter Include="mainGame\shop">
       <UniqueIdentifier>{71bfb9cf-3c62-4191-8f81-17b3a68b7f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\enemy">
+      <UniqueIdentifier>{51155791-62c1-4719-b685-bf4fa5f2f4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\enemy\enemyDerived">
+      <UniqueIdentifier>{fa17fb4c-e13e-4f15-8f68-14b7cedd8231}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -9,8 +9,10 @@ mapTool::mapTool() :
 	_tiles(),
 	_sampleTiles(),
 	_sampleTiles2(),
+	_sampleTiles3(),
 	_imgTile(NULL),
 	_imgTile2(NULL),
+	_imgTile3(NULL),
 	_currentTile(),
 	_cameraRc(),
 	_showWidth(0),
@@ -60,7 +62,7 @@ void mapTool::update()
 
 	nowDrawInterFaceKind();
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		crashInterFaceRc();
 		selectTile();
@@ -73,26 +75,36 @@ void mapTool::update()
 void mapTool::render()
 {
 	//현재 내가 선택한 버튼의 정보를 텍스트아웃해줍니다.
-	//drawNowInterfaceRect();
+	drawNowInterfaceRect();
 
 	//현재 맵툴의 실제 타일맵과 샘플타일을 그려줍니다.
-	drawTileAndSample();
+	drawTile();
+	
+	//격자
+	//drawGrid();
 
-	drawGrid();
-	//인터페이스 버튼을 그려줍니다.
-	drawButton();
 
 	//카메라 조정 렉트
 	//drawCameraRect();
-	drawTileName();
 
-	//적당히 알아서 순서 넣어라
+	// 타일속성 그려주기
+	//	drawTileName();
+
 	//배경
 	IMAGEMANAGER->findImage("MAPTOOL_BACKGROUND")->render(getMemDC(), 0, 0);
 	//카메라 조정 화살
 	IMAGEMANAGER->findImage("MAPTOOL_ARROW")->render(getMemDC(), 0, 0);
+	//샘플타일 그려주기
+	drawSampleTile();
+	
+	//샘플타일배경
+	drawSampleBack();
+
 	//프레임
 	IMAGEMANAGER->findImage("MAPTOOL_FRAME")->render(getMemDC(), 0, 0);
+
+	//drawButton();
+
 }
 
 void mapTool::setupTiles(void)
@@ -108,7 +120,7 @@ void mapTool::setupTiles(void)
 			_sampleTiles[i * SAMPLETILEX + j].objFrameX = j;
 			_sampleTiles[i * SAMPLETILEX + j].objFrameY = i;
 			_sampleTiles[i * SAMPLETILEX + j].imgKind = 0;
-			_sampleTiles[i * SAMPLETILEX + j].rcTile = RectMake(WINSIZEX + (j * SAMPLETILEWIDTH), (i * SAMPLETILEHEIGHT), SAMPLETILESIZE, SAMPLETILESIZE);
+			_sampleTiles[i * SAMPLETILEX + j].rcTile = RectMake(WINSIZEX + (j * SAMPLETILEWIDTH), (i * SAMPLETILEHEIGHT)+120, SAMPLETILESIZE, SAMPLETILESIZE);
 		}
 	}
 
@@ -125,6 +137,18 @@ void mapTool::setupTiles(void)
 		}
 	}
 
+	for (int i = 0; i < SAMPLETILEY3; i++)
+	{
+		for (int j = 0; j < SAMPLETILEX3; j++)
+		{
+			_sampleTiles3[i*SAMPLETILEX3 + j].terrainFrameX = j;
+			_sampleTiles3[i*SAMPLETILEX3 + j].terrainFrameY = i;
+			_sampleTiles3[i*SAMPLETILEX3 + j].objFrameX = j;
+			_sampleTiles3[i*SAMPLETILEX3 + j].objFrameY = i;
+			_sampleTiles3[i*SAMPLETILEX3 + j].imgKind = 1;
+			_sampleTiles3[i*SAMPLETILEX3 + j].rcTile = RectMake(WINSIZEX + (j * SAMPLETILESIZE), (i * SAMPLETILESIZE) + 400, SAMPLETILESIZE, SAMPLETILESIZE);
+		}
+	}
 	for (int i = 0; i < TILEY; i++)
 	{
 		for (int j = 0; j < TILEX; j++)
@@ -147,6 +171,7 @@ void mapTool::setupTiles(void)
 		_tiles[i].objFrameY = 0;
 		_tiles[i].terrain = terrainSelect(_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
 		_tiles[i].obj = OBJ_NONE;
+		_tiles[i].obj2 = OBJ_NONE;
 	}
 }
 
@@ -155,7 +180,7 @@ void mapTool::setMap(void)
 
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		if (_tiles[i].rc.left >= WINSIZEX - WINSIZEX / 3 + 50) continue;
+		if (_tiles[i].rc.left >= WINSIZEX - 519) continue;
 		if (PtInRect(&_tiles[i].rc, _ptMouse))
 		{
 			switch (_interFaceRc)
@@ -170,21 +195,19 @@ void mapTool::setMap(void)
 				_tiles[i].objFrameX = _currentTile.objFrameX;
 				_tiles[i].objFrameY = _currentTile.objFrameY;
 				_tiles[i].obj = objSelect(_tiles[i].objFrameX, _tiles[i].objFrameY);
-
 				break;
 
 			case SET_OBJECT2_RC:
 				_tiles[i].objFrameX = _currentTile.objFrameX;
 				_tiles[i].objFrameY = _currentTile.objFrameY;
-				_tiles[i].obj = objSelect(_tiles[i].objFrameX, _tiles[i].objFrameY);
-
+				_tiles[i].obj2 = objSelect2(_tiles[i].objFrameX, _tiles[i].objFrameY);
 				break;
 
 			case SET_ERASER_RC:
 				_tiles[i].objFrameX = 0;
 				_tiles[i].objFrameY = 0;
 				_tiles[i].obj = OBJ_NONE;
-
+				_tiles[i].obj2 = OBJ_NONE;
 				break;
 
 			}
@@ -218,6 +241,28 @@ void mapTool::load(void)
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 
 	CloseHandle(file);
+
+
+	//뭐가 문젠지 모르겠지만 리셋해줌!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	_camera->resetCamera();
+	_showCamera = true;
+
+	_showWidth = TILEWIDTH;
+	_showHeight = TILEHEIGHT;
+
+	for (int i = 0; i < TILEY; i++)
+	{
+		for (int j = 0; j < TILEX; j++)
+		{
+			_tiles[i * TILEX + j].disX = TILESIZE / 2 + j * TILESIZE + 81;
+			_tiles[i * TILEX + j].disY = TILESIZE / 2 + i * TILESIZE + 132;
+
+			_tiles[i * TILEX + j].posCenter.x = _camera->getStartX() + _tiles[i * TILEX + j].disX;
+			_tiles[i * TILEX + j].posCenter.y = _camera->getStartY() + _tiles[i * TILEX + j].disY;
+
+			_tiles[i * TILEX + j].rc = RectMakeCenter(_tiles[i * TILEX + j].posCenter.x, _tiles[i * TILEX + j].posCenter.y, TILESIZE, TILESIZE);
+		}
+	}
 }
 
 void mapTool::nowDrawInterFaceKind()
@@ -309,10 +354,13 @@ void mapTool::nowDrawInterFaceKind()
 		}
 		break;
 	case SET_TERRAIN_RC:
+
 		_bSample1In = FALSE;
 		_bSample1IsOut = TRUE;
 		_bSample2In = TRUE;
 		_bSample2Out = FALSE;
+		_bSample3In = TRUE;
+		_bSample3Out = FALSE;
 
 		if (_sampleTiles2[0].rcTile.left < WINSIZEX)
 		{
@@ -323,7 +371,7 @@ void mapTool::nowDrawInterFaceKind()
 			}
 		}
 
-		if (_sampleTiles[0].rcTile.left > WINSIZEX - _imgTile->getWidth() - 10)
+		if (_sampleTiles[0].rcTile.left > WINSIZEX - _imgTile->getWidth() - 100)
 		{
 			for (int i = 0; i < SAMPLETOTAL; i++)
 			{
@@ -332,33 +380,89 @@ void mapTool::nowDrawInterFaceKind()
 			}
 		}
 
+		if (_sampleTiles3[0].rcTile.left < WINSIZEX)
+		{
+			for (int i = 0; i < SAMPLETOTAL3; i++)
+			{
+				_sampleTiles3[i].rcTile.left += 10;
+				_sampleTiles3[i].rcTile.right += 10;
+			}
+		}
 		break;
-	//case SET_OBJECT_RC:
-	//	_bSample1In = TRUE;
-	//	_bSample1IsOut = FALSE;
-	//	_bSample2In = FALSE;
-	//	_bSample2Out = TRUE;
+	
+	case SET_OBJECT1_RC:
+		_bSample1In = TRUE;
+		_bSample1IsOut = FALSE;
+		_bSample2In = FALSE;
+		_bSample2Out = TRUE;
+		_bSample3In = TRUE;
+		_bSample3Out = FALSE;
+		if (_sampleTiles[0].rcTile.left < WINSIZEX)
+		{
+			for (int i = 0; i < SAMPLETOTAL; i++)
+			{
+				_sampleTiles[i].rcTile.left += 10;
+				_sampleTiles[i].rcTile.right += 10;
+			}
+		}
 
-	//	if (_sampleTiles[0].rcTile.left < WINSIZEX)
-	//	{
-	//		for (int i = 0; i < SAMPLETOTAL; i++)
-	//		{
-	//			_sampleTiles[i].rcTile.left += 10;
-	//			_sampleTiles[i].rcTile.right += 10;
-	//		}
-	//	}
+		if (_sampleTiles2[0].rcTile.left > WINSIZEX - _imgTile2->getWidth() - 75)
+		{
+			for (int i = 0; i < SAMPLETOTAL2; i++)
+			{
+				_sampleTiles2[i].rcTile.left -= 10;
+				_sampleTiles2[i].rcTile.right -= 10;
+			}
+		}
 
-	//	if (_sampleTiles2[0].rcTile.left > WINSIZEX - _imgTile2->getWidth() - 10)
-	//	{
-	//		for (int i = 0; i < SAMPLETOTAL2; i++)
-	//		{
-	//			_sampleTiles2[i].rcTile.left -= 10;
-	//			_sampleTiles2[i].rcTile.right -= 10;
-	//		}
-	//	}
+		if (_sampleTiles3[0].rcTile.left < WINSIZEX)
+		{
+			for (int i = 0; i < SAMPLETOTAL3; i++)
+			{
+				_sampleTiles3[i].rcTile.left += 10;
+				_sampleTiles3[i].rcTile.right += 10;
+			}
+		}
+		break;
 
-	//	break;
+	case SET_OBJECT2_RC:
+		_bSample1In = TRUE;
+		_bSample1IsOut = FALSE;
+		_bSample2In = TRUE;
+		_bSample2Out = FALSE;
+		_bSample3In = FALSE;
+		_bSample3Out = TRUE;
 
+		if (_sampleTiles3[0].rcTile.left > WINSIZEX - _imgTile3->getWidth()- 25)
+		{
+			for (int i = 0; i < SAMPLETOTAL3; i++)
+			{
+				_sampleTiles3[i].rcTile.left -= 10;
+				_sampleTiles3[i].rcTile.right -= 10;
+			}
+		}
+
+		if (_sampleTiles[0].rcTile.left < WINSIZEX)
+		{
+			for (int i = 0; i < SAMPLETOTAL; i++)
+			{
+				_sampleTiles[i].rcTile.left += 10;
+				_sampleTiles[i].rcTile.right += 10;
+			}
+		}
+
+		if (_sampleTiles2[0].rcTile.left < WINSIZEX)
+		{
+			for (int i = 0; i < SAMPLETOTAL2; i++)
+			{
+				_sampleTiles2[i].rcTile.left += 10;
+				_sampleTiles2[i].rcTile.right += 10;
+			}
+		}
+
+		break;
+
+	
 	}
 }
 
@@ -368,35 +472,49 @@ void mapTool::drawGrid()
 	{
 		_grid->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
 	}
-	//_imgInterface->render(getMemDC(), WINSIZEX - _imgInterface->getWidth(), 0);
+}
+
+void mapTool::drawSampleBack()
+{
+	switch (_interFaceRc)
+	{
+		case SET_TERRAIN_RC:
+			_imgSample1->render(getMemDC(), _sampleTiles[0].rcTile.left - 5, _sampleTiles[0].rcTile.top - 5);
+		break;
+		
+		case SET_OBJECT1_RC:
+			_imgSample2->render(getMemDC(), _sampleTiles2[0].rcTile.left - 5, _sampleTiles2[0].rcTile.top - 5);
+		break;
+		
+		case SET_OBJECT2_RC:
+			_imgSample3->render(getMemDC(), _sampleTiles3[0].rcTile.left - 5, _sampleTiles3[0].rcTile.top - 5);
+		break;
+	
+		case SET_ENEMY_RC:
+		break;
+	
+		default:
+			break;
+	}
 }
 
 void mapTool::createButton()
 {
 	for (int i = 0; i < INTERFACE_END; i++)
 	{
-		//_imgButton[i] = IMAGEMANAGER->addImage("interfaceButton", "image/button.bmp", 70, 30, FALSE, FALSE);
-		//_rc[i] = RectMake(WINSIZEX - _imgInterface->getWidth(), i * 50, 70, 30);
-
 		_rc[i] = RectMake(112 + (144 * i), 67, 120, 48);
 	}
 }
 
 void mapTool::drawButton()
 {
-	//for (int i = 0; i < INTERFACE_END; i++)
-	//{
-	//	Rectangle(getMemDC(), _rc[i].left, _rc[i].top, _rc[i].right, _rc[i].bottom);
-	//	_imgButton[i]->render(getMemDC(), _rc[i].left, _rc[i].top);
-	//}
-
-	//TextOut(getMemDC(), _rc[SAVE_RC].left + 1, _rc[SAVE_RC].top + 5, "[세이브으]", strlen("[세이브으]"));
-	//TextOut(getMemDC(), _rc[LOAD_RC].left + 1, _rc[LOAD_RC].top + 5, "[로오드으]", strlen("[로오드으]"));
-	//TextOut(getMemDC(), _rc[SET_TERRAIN_RC].left + 1, _rc[SET_TERRAIN_RC].top + 5, "[지형이다]", strlen("[지형이다]"));
-	//TextOut(getMemDC(), _rc[SET_OBJECT_RC].left + 1, _rc[SET_OBJECT_RC].top + 5, "[오브젝트]", strlen("[오브젝트]"));
+	for (int i = 0; i < INTERFACE_END; i++)
+	{
+		Rectangle(getMemDC(), _rc[i].left, _rc[i].top, _rc[i].right, _rc[i].bottom);
+	}
 }
 
-void mapTool::drawTileAndSample()
+void mapTool::drawTile()
 {
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
@@ -414,38 +532,52 @@ void mapTool::drawTileAndSample()
 		else _imgTile2->frameRender(getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].objFrameX, _tiles[i].objFrameY);
 	}
 
-	//_imgInterface->render(getMemDC(), WINSIZEX - _imgInterface->getWidth(), 0);
-
-	_imgTile->render(getMemDC(), _sampleTiles[0].rcTile.left, _sampleTiles[0].rcTile.top);
-	_imgTile2->render(getMemDC(), _sampleTiles2[0].rcTile.left, _sampleTiles2[0].rcTile.top);
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].rc.left >= WINSIZEX - WINSIZEX / 3 + 50) continue;
+		if (_tiles[i].obj2 == OBJ_NONE)continue;
+		if (_showCamera) _imgTile6->frameRender(getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].objFrameX, _tiles[i].objFrameY);
+		else _imgTile5->frameRender(getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].objFrameX, _tiles[i].objFrameY);
+	}
 }
 
-//void mapTool::drawNowInterfaceRect()
-//{
-//	switch (_interFaceRc)
-//	{
-//	case SAVE_RC:
-//
-//		TextOut(getMemDC(), WINSIZEX - 200, 700, "세이브입니다", strlen("세이브입니다"));
-//
-//		break;
-//	case LOAD_RC:
-//
-//		TextOut(getMemDC(), WINSIZEX - 200, 700, "로드입니다", strlen("로드입니다"));
-//
-//		break;
-//	case SET_TERRAIN_RC:
-//
-//		TextOut(getMemDC(), WINSIZEX - 200, 700, "지형입니다", strlen("지형입니다"));
-//
-//		break;
-//	case SET_OBJECT_RC:
-//
-//		TextOut(getMemDC(), WINSIZEX - 200, 700, "오브젝트입니다", strlen("오브젝트입니다"));
-//
-//		break;
-//	}
-//}
+void mapTool::drawSampleTile()
+{
+	_imgTile->render(getMemDC(), _sampleTiles[0].rcTile.left, _sampleTiles[0].rcTile.top);
+	_imgTile2->render(getMemDC(), _sampleTiles2[0].rcTile.left, _sampleTiles2[0].rcTile.top);
+	_imgTile5->render(getMemDC(), _sampleTiles3[0].rcTile.left, _sampleTiles3[0].rcTile.top);
+}
+
+void mapTool::drawNowInterfaceRect()
+{
+	switch (_interFaceRc)
+	{
+	case SAVE_RC:
+
+		TextOut(getMemDC(), WINSIZEX - 200, 700, "세이브입니다", strlen("세이브입니다"));
+
+		break;
+	case LOAD_RC:
+
+		TextOut(getMemDC(), WINSIZEX - 200, 700, "로드입니다", strlen("로드입니다"));
+
+		break;
+	case SET_TERRAIN_RC:
+
+		TextOut(getMemDC(), WINSIZEX - 200, 700, "지형입니다", strlen("지형입니다"));
+
+		break;
+	case SET_OBJECT1_RC:
+
+		TextOut(getMemDC(), WINSIZEX - 200, 700, "오브젝트1입니다", strlen("오브젝트1입니다"));
+
+		break;
+	case SET_OBJECT2_RC:
+		TextOut(getMemDC(), WINSIZEX - 200, 700, "오브젝트2입니다", strlen("오브젝트2입니다"));
+
+		break;
+	}
+}
 
 void mapTool::loadImage()
 {
@@ -453,10 +585,15 @@ void mapTool::loadImage()
 	_imgTile = IMAGEMANAGER->addFrameImage("mapTiles", "image/sample_ter.bmp", 0, 0, 180, 120, SAMPLETILEX, SAMPLETILEY, true, RGB(255, 0, 255));
 	_imgTile3 = IMAGEMANAGER->addFrameImage("mapTiles3", "image/sample80_ter.bmp", 0, 0, 480, 320, SAMPLETILEX, SAMPLETILEY, true, RGB(255, 0, 255));
 
-	_imgTile2 = IMAGEMANAGER->addFrameImage("mapTiles2", "image/sample_obj.bmp", 0, 0, 420, 510, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
-	_imgTile4 = IMAGEMANAGER->addFrameImage("mapTIles4", "image/sample80_obj.bmp", 0, 0, 1120, 1360, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
+	_imgTile2 = IMAGEMANAGER->addFrameImage("mapTiles2", "image/sample_obj_30_1.bmp", 0, 0, 420, 300, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
+	_imgTile4 = IMAGEMANAGER->addFrameImage("mapTIles4", "image/sample_obj_80_1.bmp", 0, 0, 1120, 800, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
 
-	//_imgInterface = IMAGEMANAGER->addImage("inter", "image/interface.bmp", 450, 800, TRUE, RGB(255, 0, 255));
+	_imgTile5 = IMAGEMANAGER->addFrameImage("mapTiles5", "image/sample_obj_30_2.bmp", 0, 0, 450, 330, SAMPLETILEX3, SAMPLETILEY3, true, RGB(255, 0, 255));
+	_imgTile6 = IMAGEMANAGER->addFrameImage("mapTiles6", "image/sample_obj_80_2.bmp", 0, 0, 1200, 880, SAMPLETILEX3, SAMPLETILEY3, true, RGB(255, 0, 255));
+
+	_imgSample1 = IMAGEMANAGER->addImage("sample1", "image/MAPTOOL_SAMPLE_TER_1.bmp", 190, 130, true, RGB(255, 0, 255));
+	_imgSample2 = IMAGEMANAGER->addImage("sample2", "image/MAPTOOL_SAMPLE_OBJ_1.bmp", 430, 310, true, RGB(255, 0, 255));
+	_imgSample3 = IMAGEMANAGER->addImage("sample3", "image/MAPTOOL_SAMPLE_OBJ_2.bmp", 460, 340, true, RGB(255, 0, 255));
 
 	_grid = IMAGEMANAGER->addImage("grid", "image/grid.bmp", 900, 900, true, RGB(255, 0, 255));
 }
@@ -493,6 +630,16 @@ void mapTool::selectTile()
 		{
 			_currentTile.objFrameX = _sampleTiles2[i].objFrameX;
 			_currentTile.objFrameY = _sampleTiles2[i].objFrameY;
+			break;
+		}
+	}
+
+	for (int i = 0; i < SAMPLETILEX3 * SAMPLETILEY3; i++)
+	{
+		if (PtInRect(&_sampleTiles3[i].rcTile, _ptMouse))
+		{
+			_currentTile.objFrameX = _sampleTiles3[i].objFrameX;
+			_currentTile.objFrameY = _sampleTiles3[i].objFrameY;
 			break;
 		}
 	}
@@ -536,7 +683,7 @@ void mapTool::controlCamera()
 		_camera->setCameraY(_camera->getCameraY() + 20);
 	}
 
-	//여기바꿔야ㅑ해야해야해야해ㅑ해얗
+
 	_camera->update(TILEX * _showWidth + 600, TILEY * _showHeight + 200);
 
 	for (int i = 0; i < TILEX * TILEY; i++)
@@ -559,8 +706,35 @@ void mapTool::drawTileName()
 	for (int i = 0; i < TILETOTAL; i++)
 	{
 		if (_tiles[i].rc.left >= WINSIZEX - WINSIZEX / 3 + 50) continue;
+		switch (_tiles[i].terrain)
+		{
+		case TR_BASE:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "기본", strlen("기본"));
+			break;
+		case TR_GRASS:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "잔디", strlen("잔디"));
+			break;
+		case TR_DESERT:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "모래", strlen("모래"));
+			break;
+		case TR_WATER:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "물", strlen("물"));
+			break;
 
+		}
 		switch (_tiles[i].obj)
+		{
+			case OBJ_WALL:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "벽", strlen("벽"));
+			break;
+
+			default:
+				TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "?", strlen("?"));
+			break;
+
+		}
+
+		switch (_tiles[i].obj2)
 		{
 		case OBJ_WALL:
 
@@ -627,24 +801,75 @@ void mapTool::drawTileName()
 			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "박스2", strlen("불아1"));
 
 			break;
-		case OBJ_BOX3:
-
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "박스3", strlen("불아1"));
-
-			break;
-		case OBJ_BOX4:
-
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "박스4", strlen("불아1"));
-
-			break;
 		case OBJ_POT:
 
 			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "항아리", strlen("항아리"));
 
 			break;
+
+		case OBJ_SMALL_BOX1:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "작은박1", strlen("항아리1"));
+
+			break;
+
+		case OBJ_SMALL_BOX2:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "작은박2", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_UP_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문위닫힘", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_UP_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문위열림", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_DOWN_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문밑닫힘", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_DOWN_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문밑열림", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_UP_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2위닫", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_UP_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2위열", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_DOWN_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2밑닫", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_DOWN_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2밑열", strlen("항아리1"));
+
+			break;
+
 		default:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "???", strlen("???"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "?", strlen("?"));
 
 			break;
 		}
@@ -699,7 +924,7 @@ OBJECT mapTool::objSelect(int frameX, int frameY)
 {
 	for (int i = 0; i < 14; i++)
 	{
-		for (int j = 0; j < 15; j++)
+		for (int j = 0; j < 10; j++)
 		{
 			if (frameX == i && frameY == j)
 			{
@@ -707,82 +932,238 @@ OBJECT mapTool::objSelect(int frameX, int frameY)
 			}
 		}
 	}
+	
+}
 
-
-	if (frameX == 0 && frameY == 15)
+OBJECT mapTool::objSelect2(int frameX, int frameY)
+{
+	if (frameX == 0 && frameY == 0)
 	{
 		return OBJ_BUTTON1_UP;
 	}
 
-	else if (frameX == 0 && frameY == 16)
+	else if (frameX == 0 && frameY == 1)
 	{
 		return OBJ_BUTTON1_DOWN;
 	}
 
-	else if (frameX == 1 && frameY == 15)
+	else if (frameX == 1 && frameY == 0)
 	{
 		return OBJ_BUTTON2_UP;
 	}
 
-	else if (frameX == 1 && frameY == 16)
+	else if (frameX == 1 && frameY == 1)
 	{
 		return OBJ_BUTTON2_DOWN;
 	}
 
-	else if (frameX == 2 && frameY == 15)
+	else if (frameX == 2 && frameY == 0)
 	{
 		return OBJ_BRIDGE1;
 	}
 
-	else if (frameX == 2 && frameY == 16)
+	else if (frameX == 2 && frameY == 1)
 	{
 		return OBJ_BRIDGE2;
 	}
 
-	else if (frameX == 3 && frameY == 15)
+	else if (frameX == 3 && frameY == 0)
 	{
 		return OBJ_FIRE1;
 	}
 
-	else if (frameX == 3 && frameY == 16)
+	else if (frameX == 3 && frameY == 1)
 	{
 		return OBJ_FIRE2;
 	}
 
-	else if (frameX == 4 && frameY == 15)
+	else if (frameX == 4 && frameY == 0)
 	{
 		return OBJ_COLUMN1;
 	}
 
-	else if (frameX == 4 && frameY == 16)
+	else if (frameX == 4 && frameY == 1)
 	{
 		return OBJ_COLUMN2;
 	}
 
-	else if (frameX == 5 && frameY == 15)
+	else if (frameX == 5 && frameY == 0)
+	{
+		return OBJ_SMALL_BOX1;
+	}
+
+	else if (frameX == 5 && frameY == 1)
+	{
+		return OBJ_SMALL_BOX2;
+	}
+
+	else if (frameX == 6 && frameY == 0)
 	{
 		return OBJ_BOX1;
 	}
 
-	else if (frameX == 5 && frameY == 16)
+	else if (frameX == 6 && frameY == 1)
 	{
 		return OBJ_BOX2;
 	}
 
-	else if (frameX == 6 && frameY == 15)
+	else if (frameX == 7 && frameY == 0)
 	{
-		return OBJ_BOX3;
+		return OBJ_BOX1;
 	}
 
-	else if (frameX == 6 && frameY == 16)
+	else if (frameX == 7 && frameY == 1)
 	{
-		return OBJ_BOX4;
+		return OBJ_BOX2;
 	}
 
-	else if (frameX == 7 && frameY == 15)
+	else if (frameX == 8 && frameY == 1)
 	{
 		return OBJ_POT;
 	}
+
+	else if (frameX == 1 && frameY == 3)
+	{
+		return OBJ_DOOR_UP_CLOSE;
+	}
+
+	else if (frameX == 1 && frameY == 4)
+	{
+		return OBJ_DOOR_UP_OPEN;
+	}
+
+	else if (frameX == 4 && frameY == 2)
+	{
+		return OBJ_DOOR_DOWN_OPEN;
+	}
+
+	else if (frameX == 4 && frameY == 3)
+	{
+		return OBJ_DOOR_DOWN_CLOSE;
+	}
+
+	else if (frameX == 1 && frameY == 6)
+	{
+		return OBJ_DOOR2_UP_CLOSE;
+	}
+
+	else if (frameX == 2 && frameY == 6)
+	{
+		return OBJ_DOOR2_UP_CLOSE;
+	}
+
+	else if (frameX == 3 && frameY == 6)
+	{
+		return OBJ_DOOR2_UP_CLOSE;
+	}
+
+	else if (frameX == 1 && frameY == 7)
+	{
+		return OBJ_DOOR2_UP_CLOSE;
+	}
+
+	else if (frameX == 2 && frameY == 7)
+	{
+		return OBJ_DOOR2_UP_CLOSE;
+	}
+
+	else if (frameX == 3 && frameY == 7)
+	{
+		return OBJ_DOOR2_UP_CLOSE;
+	}
+
+	else if (frameX == 11 && frameY == 6)
+	{
+		return OBJ_DOOR2_UP_OPEN;
+	}
+
+	else if (frameX == 12 && frameY == 6)
+	{
+		return OBJ_DOOR2_UP_OPEN;
+	}
+
+	else if (frameX == 13 && frameY == 6)
+	{
+		return OBJ_DOOR2_UP_OPEN;
+	}
+
+	else if (frameX == 11 && frameY == 7)
+	{
+		return OBJ_DOOR2_UP_OPEN;
+	}
+
+	else if (frameX == 12 && frameY == 7)
+	{
+		return OBJ_DOOR2_UP_OPEN;
+	}
+
+	else if (frameX == 13 && frameY == 7)
+	{
+		return OBJ_DOOR2_UP_OPEN;
+	}
+
+	else if (frameX == 1 && frameY == 8)
+	{
+		return OBJ_DOOR2_DOWN_CLOSE;
+	}
+
+	else if (frameX == 2 && frameY == 8)
+	{
+		return OBJ_DOOR2_DOWN_CLOSE;
+	}
+
+	else if (frameX == 3 && frameY == 8)
+	{
+		return OBJ_DOOR2_DOWN_CLOSE;
+	}
+
+	else if (frameX == 1 && frameY == 9)
+	{
+		return OBJ_DOOR2_DOWN_CLOSE;
+	}
+
+	else if (frameX == 2 && frameY == 9)
+	{
+		return OBJ_DOOR2_DOWN_CLOSE;
+	}
+
+	else if (frameX == 3 && frameY == 9)
+	{
+		return OBJ_DOOR2_DOWN_CLOSE;
+	}
+
+	else if (frameX == 11 && frameY == 8)
+	{
+		return OBJ_DOOR2_DOWN_OPEN;
+	}
+
+	else if (frameX == 12 && frameY == 8)
+	{
+		return OBJ_DOOR2_DOWN_OPEN;
+	}
+
+	else if (frameX == 13 && frameY == 8)
+	{
+		return OBJ_DOOR2_DOWN_OPEN;
+	}
+
+	else if (frameX == 11 && frameY == 9)
+	{
+		return OBJ_DOOR2_DOWN_OPEN;
+	}
+
+	else if (frameX == 12 && frameY == 9)
+	{
+		return OBJ_DOOR2_DOWN_OPEN;
+	}
+
+	else if (frameX == 13 && frameY == 9)
+	{
+		return OBJ_DOOR2_DOWN_OPEN;
+	}
+
+
+
 	return OBJ_WALL;
 }
 
@@ -811,7 +1192,7 @@ void mapTool::showDefault()
 		}
 	}
 
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
 		_camera->resetCamera();
 		_showCamera = false;
