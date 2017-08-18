@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "enemy.h"
 #include "camera.h"
+#include "player.h"
 
 enemy::enemy() :
 	_rc(),
@@ -16,6 +17,8 @@ enemy::enemy() :
 	_frameCount(0),
 	_moveCount(0),
 	_aStar(NULL),
+	_currentTileIndex(0),
+	_isFull(0),
 	_camera(NULL),
 	_rangeWidth(0),
 	_rangeHeight(0),
@@ -29,24 +32,30 @@ enemy::~enemy()
 }
 
 
-HRESULT enemy::init(camera* camera, int idxX, int idxY)
+HRESULT enemy::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
 {
 	_camera = camera;
 
-	_distanceX = WINSIZEX / 2;
-	_centerX = _camera->getStartX() + _distanceX;
-
-	_distanceY = WINSIZEY / 2;
-	_centerY = _camera->getStartY() + _distanceY;
+	_map = map;
 
 	_indexX = idxX;
 	_indexY = idxY;
+
+	_aStar = new aStar;
+	_aStar->init(_camera);
+	_aStar->setTile(_map, idxX, idxY, 14, 8);
 
 	_moveCount = 0;
 
 	this->addImage();
 
-	//_aStar;
+	_distanceX = _aStar->getStartTile()->getDisX();
+	_centerX = _camera->getStartX() + _distanceX;
+
+	_distanceY = _aStar->getStartTile()->getDisY();
+	_centerY = _camera->getStartY() + _distanceY;
+
+	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 
 
 	return S_OK;;
@@ -54,11 +63,19 @@ HRESULT enemy::init(camera* camera, int idxX, int idxY)
 
 void enemy::release()
 {
+	_aStar->release();
 }
 
 void enemy::update()
 {
 	this->addFrame();
+
+	_centerX = _camera->getStartX() + _distanceX;
+	_centerY = _camera->getStartY() + _distanceY;
+	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 50, _imgInfo[_direction].image->getFrameHeight());
+
+	this->aStarPathFind();
+	//_aStar->update();
 }
 
 void enemy::render()
@@ -66,8 +83,31 @@ void enemy::render()
 	this->draw();
 }
 
-void enemy::move()
+void enemy::move(int index)
 {
+	if (_vPath[index]->getDisX() > _distanceX)
+	{
+		_direction = DIRECTION_RIGHT;
+		_distanceX += 5;
+	}
+
+	if (_vPath[index]->getDisX() < _distanceX)
+	{
+		_direction = DIRECTION_LEFT;
+		_distanceX -= 5;
+	}
+
+	if (_vPath[index]->getDisY() < _distanceY)
+	{
+		_direction = DIRECTION_UP;
+		_distanceY -= 5;
+	}
+
+	if (_vPath[index]->getDisY() > _distanceY)
+	{
+		_direction = DIRECTION_DOWN;
+		_distanceY += 5;
+	}
 }
 
 void enemy::addFrame()
@@ -87,15 +127,41 @@ void enemy::addFrame()
 
 void enemy::draw()
 {
-	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
-	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+	if (_aStar) _aStar->render();
+
+	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
 	if (!_imgInfo[_direction].image) return;
 
-	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left, _rc.top, _imgInfo[_direction].currentFrameX, 0);
+	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left - 25, _rc.top, _imgInfo[_direction].currentFrameX, 0);
 }
 
 void enemy::addImage()
 {
+}
+
+void enemy::aStarPathFind()
+{
+	_aStar->tilesUpdate();
+	if (_aStar->getIsFindEnd())
+	{
+		_aStar->setCharacterPath(_vPath, &_isFull);
+		_currentTileIndex = 0;
+	}
+	else _aStar->update();
+
+	if (_currentTileIndex < _vPath.size())
+	{
+		if (((_vPath[_currentTileIndex]->getRect().left == _rc.left) &&
+			(_vPath[_currentTileIndex]->getRect().right == _rc.right) &&
+			(_vPath[_currentTileIndex]->getRect().top == _rc.top) &&
+			(_vPath[_currentTileIndex]->getRect().bottom == _rc.bottom)))
+		{
+			_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), 14, 8);
+			_currentTileIndex++;
+		}
+		else this->move(_currentTileIndex);
+	}
 }

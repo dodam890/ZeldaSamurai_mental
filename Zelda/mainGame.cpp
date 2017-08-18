@@ -35,7 +35,7 @@ HRESULT mainGame::init(void)
 
 	//SCENEMANAGER->changeScene("main_scene");
 
-	SCENEMANAGER->changeScene("ASTAR");
+	SCENEMANAGER->changeScene("mapToolScene");
 	return S_OK;
 }
 
@@ -61,7 +61,7 @@ void mainGame::render(void)
 
 	SCENEMANAGER->render();
 
-	//	TIMEMANAGER->render(getMemDC());
+		TIMEMANAGER->render(getMemDC());
 	//===============아래도 건들지마라 =================
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 }
@@ -83,6 +83,10 @@ void mainGame::changeSceneByKeyInput()
 	if (KEYMANAGER->isOnceKeyDown('R'))
 	{
 		SCENEMANAGER->changeScene("zeldaTileMapScene");
+	}
+	if (KEYMANAGER->isOnceKeyDown('T'))
+	{
+		SCENEMANAGER->changeScene("ASTAR");
 	}
 }
 

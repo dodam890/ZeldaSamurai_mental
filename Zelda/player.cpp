@@ -1049,7 +1049,7 @@ void player::move(void)
 
 		if (_cam->isCameraXEndSide())
 		{
-			if (_playerRc.right >= WINSIZEX / 2 + 35)
+			if (_playerRc.right >= WINSIZEX / 2 + 35 && !_isStore)
 			{
 				_cam->setCameraX(_cam->getCameraX() + _moveSpeed);
 				_disX += _moveSpeed;
@@ -1070,7 +1070,7 @@ void player::move(void)
 
 		if (_cam->isCameraXZeroSide())
 		{
-			if (_playerRc.left <= WINSIZEX / 2 - 35)
+			if (_playerRc.left <= WINSIZEX / 2 - 35 && !_isStore)
 			{
 				_cam->setCameraX(_cam->getCameraX() - _moveSpeed);
 				_disX -= _moveSpeed;
@@ -1092,7 +1092,7 @@ void player::move(void)
 
 		if (_cam->isCameraYZeroSide())
 		{
-			if (_playerRc.top <= WINSIZEY / 2 - 35)
+			if (_playerRc.top <= WINSIZEY / 2 - 35 && !_isStore)
 			{
 				_cam->setCameraY(_cam->getCameraY() - _moveSpeed);
 				_disY -= _moveSpeed;
@@ -1114,7 +1114,7 @@ void player::move(void)
 
 		if (_cam->isCameraYEndSide())
 		{
-			if (_playerRc.bottom >= WINSIZEY / 2 + 35)
+			if (_playerRc.bottom >= WINSIZEY / 2 + 35 && !_isStore)
 			{
 				_cam->setCameraY(_cam->getCameraY() + _moveSpeed);
 				_disY += _moveSpeed;

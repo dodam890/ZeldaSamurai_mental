@@ -66,6 +66,12 @@ public:
 	string getAttribute() { return m_strAttribute; }
 	void setAttribute(string strAttribute) { m_strAttribute = strAttribute; }
 
+	int getDisX() { return m_nDisX; }
+	int getDisY() { return m_nDisY; }
+
+	void setDisX(int disX) { m_nDisX = disX; }
+	void setDisY(int disY) { m_nDisY = disY; }
+
 	void setColor(COLORREF color)
 	{
 		DeleteObject(m_hBrush);

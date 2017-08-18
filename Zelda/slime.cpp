@@ -9,9 +9,9 @@ slime::~slime()
 {
 }
 
-HRESULT slime::init(camera * camera, int idxX, int idxY)
+HRESULT slime::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
 {
-	enemy::init(camera, idxX, idxY);
+	enemy::init(camera, map, idxX, idxY);
 
 	_rangeWidth = 500;
 
@@ -46,9 +46,9 @@ void slime::render()
 	enemy::render();
 }
 
-void slime::move()
+void slime::move(int index)
 {
-	enemy::move();
+	enemy::move(index);
 }
 
 void slime::addFrame()

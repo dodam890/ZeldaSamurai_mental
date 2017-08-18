@@ -1,15 +1,20 @@
 #pragma once
-#include "aStar.h"
 #include "gameNode.h"
 #include "zeldaTileMap.h"
 #include "camera.h"
+#include "enemyManager.h"
+//#include "aStar.h"
 
 class aStarScene : public gameNode
 {
 private:
-	aStar* _aStar;
+	//aStar* _aStar;
+
+private:
 	zeldaTileMap* _map;
 	camera* _ca;
+
+	enemyManager* _em;
 public:
 	aStarScene();
 	virtual ~aStarScene();
