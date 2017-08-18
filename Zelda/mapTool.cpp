@@ -81,7 +81,7 @@ void mapTool::render()
 	drawTile();
 	
 	//격자
-//	drawGrid();
+	//drawGrid();
 
 
 	//카메라 조정 렉트
@@ -180,7 +180,7 @@ void mapTool::setMap(void)
 
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		if (_tiles[i].rc.left >= WINSIZEX - WINSIZEX / 3 + 50) continue;
+		if (_tiles[i].rc.left >= WINSIZEX - 519) continue;
 		if (PtInRect(&_tiles[i].rc, _ptMouse))
 		{
 			switch (_interFaceRc)
@@ -450,7 +450,6 @@ void mapTool::drawGrid()
 	{
 		_grid->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
 	}
-	//_imgInterface->render(getMemDC(), WINSIZEX - _imgInterface->getWidth(), 0);
 }
 
 void mapTool::drawSampleBack()
@@ -662,7 +661,7 @@ void mapTool::controlCamera()
 		_camera->setCameraY(_camera->getCameraY() + 20);
 	}
 
-	//여기바꿔야ㅑ해야해야해야해ㅑ해얗
+
 	_camera->update(TILEX * _showWidth + 600, TILEY * _showHeight + 200);
 
 	for (int i = 0; i < TILEX * TILEY; i++)
