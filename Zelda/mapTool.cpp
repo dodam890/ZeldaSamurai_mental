@@ -62,7 +62,7 @@ void mapTool::update()
 
 	nowDrawInterFaceKind();
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		crashInterFaceRc();
 		selectTile();
@@ -241,6 +241,28 @@ void mapTool::load(void)
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 
 	CloseHandle(file);
+
+
+	//¹¹°¡ ¹®Á¨Áö ¸ð¸£°ÚÁö¸¸ ¸®¼ÂÇØÁÜ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	_camera->resetCamera();
+	_showCamera = true;
+
+	_showWidth = TILEWIDTH;
+	_showHeight = TILEHEIGHT;
+
+	for (int i = 0; i < TILEY; i++)
+	{
+		for (int j = 0; j < TILEX; j++)
+		{
+			_tiles[i * TILEX + j].disX = TILESIZE / 2 + j * TILESIZE + 81;
+			_tiles[i * TILEX + j].disY = TILESIZE / 2 + i * TILESIZE + 132;
+
+			_tiles[i * TILEX + j].posCenter.x = _camera->getStartX() + _tiles[i * TILEX + j].disX;
+			_tiles[i * TILEX + j].posCenter.y = _camera->getStartY() + _tiles[i * TILEX + j].disY;
+
+			_tiles[i * TILEX + j].rc = RectMakeCenter(_tiles[i * TILEX + j].posCenter.x, _tiles[i * TILEX + j].posCenter.y, TILESIZE, TILESIZE);
+		}
+	}
 }
 
 void mapTool::nowDrawInterFaceKind()
@@ -1170,7 +1192,7 @@ void mapTool::showDefault()
 		}
 	}
 
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
 		_camera->resetCamera();
 		_showCamera = false;
