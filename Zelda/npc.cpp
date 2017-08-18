@@ -172,8 +172,8 @@ void npc::render()
 
 	TextOut(getMemDC(), _moveRc.left, _moveRc.top, "무브렉트", strlen("무브렉트"));
 
-	if(_talkOn)
-		drawTextBox();
+	/*if(_talkOn)
+		drawTextBox();*/
 }
 
 void npc::setImages(string imageKeyNameDown, string imageKeyNameLeft, string imageKeyNameRight, string imageKeyNameUp)
