@@ -5,7 +5,7 @@
 zeldaTileMapScene::zeldaTileMapScene() :
 	_map(NULL),
 	_camera(NULL),
-	_ast(NULL)
+	_em(NULL)
 {
 }
 
@@ -21,12 +21,12 @@ HRESULT zeldaTileMapScene::init()
 	_map = new zeldaTileMap;
 	_map->init(_camera, 5000, 1000);
 
-	_ast = new aStar;
-	_ast->init(_camera);
-	_ast->setTile(_map, 1, 1, 18, 18);
+	//_em = new enemyManager;
+	//_em->init(_camera, _map);
+	//_em->setOcto();
+	//_em->setSlime();
+	//_em->setSnail();
 
-	_test.image = IMAGEMANAGER->addImage("ball", "image/ball.bmp", 32, 32, true, RGB(255, 0, 255));
-	_test.rc = _ast->getStartTile()->getRect();
 
 	_i = 0;
 	_nIdxX = 1;
@@ -49,7 +49,7 @@ void zeldaTileMapScene::update()
 	_camera->update(_map->getMapWidth(), _map->getMapHeight());
 	_map->update();
 
-	if (_ast->getIsFindEnd())
+	/*if (_ast->getIsFindEnd())
 	{
 		_ast->setCharacterPath(_test.vTankTile, &isFull);
 		_i = 0;
@@ -68,7 +68,9 @@ void zeldaTileMapScene::update()
 			_i++;
 		}
 		else testMove(_i);
-	}
+	}*/
+
+	//_em->update();
 
 }
 
@@ -77,12 +79,14 @@ void zeldaTileMapScene::render()
 	//_camera->drawCameraPos();
 	_map->render();
 	//if (_ast) _ast->render();
-	_test.image->render(getMemDC(), _test.rc.left, _test.rc.top);
+	//_test.image->render(getMemDC(), _test.rc.left, _test.rc.top);
+
+	//_em->render();
 }
 
 void zeldaTileMapScene::testMove(int index)
 {
-	if (_test.vTankTile[index]->getRect().left > _test.rc.left)
+	/*if (_test.vTankTile[index]->getRect().left > _test.rc.left)
 	{
 		_test.rc.left++;
 	}
@@ -119,5 +123,5 @@ void zeldaTileMapScene::testMove(int index)
 	else if (_test.vTankTile[index]->getRect().bottom < _test.rc.bottom)
 	{
 		_test.rc.bottom--;
-	}
+	}*/
 }

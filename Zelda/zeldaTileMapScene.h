@@ -2,17 +2,7 @@
 #include "gameNode.h"
 #include "zeldaTileMap.h"
 #include "camera.h"
-
-#include "aStar.h"
-#include "aStarTile.h"
-
-struct tagTestImage
-{
-	RECT rc;
-	image* image;
-	vector<aStarTile*> vTankTile;
-	vector<aStarTile*>::iterator viTankTile;
-};
+#include "enemyManager.h"
 
 
 class zeldaTileMapScene : public gameNode
@@ -22,7 +12,6 @@ private:
 	camera* _camera;
 
 private:
-	aStar* _ast;
 
 	int _count;
 	int _i;
@@ -31,7 +20,8 @@ private:
 	int _nIdxX;
 	int _nIdxY;
 
-	tagTestImage _test;
+	enemyManager* _em;
+
 
 public:
 	zeldaTileMapScene();

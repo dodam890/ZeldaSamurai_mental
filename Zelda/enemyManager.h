@@ -3,6 +3,7 @@
 #include "enemy.h"
 
 class camera;
+class zeldaTileMap;
 
 class enemyManager : public gameNode
 {
@@ -15,9 +16,10 @@ private:
 	viEnemy _viEm;
 
 	camera* _camera;
+	zeldaTileMap* _map;
 
 public:
-	HRESULT init(camera* camera);
+	HRESULT init(camera* camera, zeldaTileMap* map);
 	void release();
 	void update();
 	void render();

@@ -14,9 +14,10 @@ enemyManager::~enemyManager()
 {
 }
 
-HRESULT enemyManager::init(camera* camera)
+HRESULT enemyManager::init(camera* camera, zeldaTileMap* map)
 {
 	_camera = camera;
+	_map = map;
 
 	return S_OK;
 }
@@ -46,7 +47,7 @@ void enemyManager::setOcto()
 	enemy* enemyOcto;
 
 	enemyOcto = new octo;
-	enemyOcto->init(_camera, 0, 0);
+	enemyOcto->init(_camera, _map, 10, 10);
 	_vEm.push_back(enemyOcto);
 }
 
@@ -55,7 +56,7 @@ void enemyManager::setSlime()
 	enemy* enemySlime;
 
 	enemySlime = new slime;
-	enemySlime->init(_camera, 0, 0);
+//	enemySlime->init(_camera, 0, 0);
 	_vEm.push_back(enemySlime);
 }
 
@@ -63,6 +64,6 @@ void enemyManager::setSnail()
 {
 	enemy* enemySnail;
 	enemySnail = new snail;
-	enemySnail->init(_camera, 0, 0);
+	//enemySnail->init(_camera, 0, 0);
 	_vEm.push_back(enemySnail);
 }

@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "aStarScene.h"
 
-aStarScene::aStarScene() :
-	_aStar(NULL)
+aStarScene::aStarScene()
 {
 }
 
@@ -18,15 +17,15 @@ HRESULT aStarScene::init()
 	_map = new zeldaTileMap;
 	_map->init(_ca, 2000, 1000);
 
-	_aStar = new aStar;
+	/*_aStar = new aStar;
 	_aStar->init(_ca);
-	_aStar->setTile(_map, 1, 1, 15, 15);
+	_aStar->setTile(_map, 1, 1, 15, 15);*/
 	return S_OK;
 }
 
 void aStarScene::release()
 {
-	_aStar->release();
+	//_aStar->release();
 }
 
 void aStarScene::update()
@@ -49,11 +48,11 @@ void aStarScene::update()
 	}
 
 	_ca->update(5000, 5000);
-	_aStar->update();
+	//_aStar->update();
 }
 
 void aStarScene::render()
 {
-	_aStar->render();
+	//_aStar->render();
 	_ca->drawCameraPos();
 }

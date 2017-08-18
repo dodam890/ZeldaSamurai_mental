@@ -265,7 +265,6 @@ void aStar::resetAstar(zeldaTileMap* pZeldaMap, int nStartIdxX, int nStartIdxY, 
 {
 	if (nStartIdxX == nEndIdxX && nStartIdxY == nEndIdxY) return;
 	this->clearAstar();
-	//this->setTile(pZeldaMap, nStartIdxX, nStartIdxY, nEndIdxX, nEndIdxY);
 
 	for (int i = 0; i < TILEY; i++)
 	{

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "enemy.h"
 #include "camera.h"
+#include "player.h"
 
 enemy::enemy() :
 	_rc(),
@@ -16,6 +17,8 @@ enemy::enemy() :
 	_frameCount(0),
 	_moveCount(0),
 	_aStar(NULL),
+	_currentTileIndex(0),
+	_isFull(0),
 	_camera(NULL),
 	_rangeWidth(0),
 	_rangeHeight(0),
@@ -29,9 +32,11 @@ enemy::~enemy()
 }
 
 
-HRESULT enemy::init(camera* camera, int idxX, int idxY)
+HRESULT enemy::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
 {
 	_camera = camera;
+
+	_map = map;
 
 	_distanceX = WINSIZEX / 2;
 	_centerX = _camera->getStartX() + _distanceX;
@@ -45,8 +50,6 @@ HRESULT enemy::init(camera* camera, int idxX, int idxY)
 	_moveCount = 0;
 
 	this->addImage();
-
-	//_aStar;
 
 
 	return S_OK;;
