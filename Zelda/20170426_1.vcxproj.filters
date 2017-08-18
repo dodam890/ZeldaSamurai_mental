@@ -154,6 +154,9 @@
     <ClCompile Include="octo.cpp">
       <Filter>mainGame\enemy\enemyDerived</Filter>
     </ClCompile>
+    <ClCompile Include="c_zeldaTileMap.cpp">
+      <Filter>mainGame\map\zeldaTileMap\c_zeldaTileMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h">
@@ -321,6 +324,9 @@
     <ClInclude Include="octo.h">
       <Filter>mainGame\enemy\enemyDerived</Filter>
     </ClInclude>
+    <ClInclude Include="c_zeldaTileMap.h">
+      <Filter>mainGame\map\zeldaTileMap\c_zeldaTileMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -439,6 +445,9 @@
     </Filter>
     <Filter Include="mainGame\enemy\enemyDerived">
       <UniqueIdentifier>{fa17fb4c-e13e-4f15-8f68-14b7cedd8231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame\map\zeldaTileMap\c_zeldaTileMap">
+      <UniqueIdentifier>{8a81208c-4bc2-41f0-9278-019c14a2c198}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

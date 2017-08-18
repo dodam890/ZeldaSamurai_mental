@@ -20,17 +20,15 @@ public:
 	zeldaTileMap();
 	virtual ~zeldaTileMap();
 
-	virtual HRESULT init(camera* camera, int mapWidth, int mapHeight);
-	virtual void setCameraMemoryAddressLink(camera* camera) { _camera = camera; }
+	virtual HRESULT init(camera* camera, const CHAR* pSaveMapFileName, int mapWidth, int mapHeight);
 	virtual void release();
 	virtual void update();
 	virtual void render();
 
-	void loadMap();
-	void controlCamera();
+	virtual void loadMap(const CHAR* pSaveMapFileName);
 
-	inline int getMapWidth() { return _mapWidth; }
-	inline int getMapHeight() { return _mapHeight; }
+	int getMapWidth() { return _mapWidth; }
+	int getMapHeight() { return _mapHeight; }
 
 	BOOL* getAttribute(ATTRIBUTE attribute) { return _attribute[attribute]; }
 };

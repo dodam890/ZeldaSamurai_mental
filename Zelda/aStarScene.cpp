@@ -16,7 +16,7 @@ HRESULT aStarScene::init()
 	_ca->init();
 
 	_map = new zeldaTileMap;
-	_map->init(_ca, 2000, 1000);
+	_map->init(_ca, "mapSave10.map", 2000, 1000);
 
 	_aStar = new aStar;
 	_aStar->init(_ca);

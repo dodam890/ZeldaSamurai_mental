@@ -19,7 +19,7 @@ HRESULT zeldaTileMapScene::init()
 	_camera->init();
 
 	_map = new zeldaTileMap;
-	_map->init(_camera, 5000, 1000);
+	_map->init(_camera, "mapSave00.map", 5000, 1000);
 
 	_ast = new aStar;
 	_ast->init(_camera);

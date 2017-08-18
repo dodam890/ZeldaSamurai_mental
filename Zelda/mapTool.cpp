@@ -66,6 +66,10 @@ void mapTool::update()
 	{
 		crashInterFaceRc();
 		selectTile();
+		
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
+	{
 		setMap();
 	}
 
@@ -189,18 +193,21 @@ void mapTool::setMap(void)
 				_tiles[i].terrainFrameX = _currentTile.terFrameX;
 				_tiles[i].terrainFrameY = _currentTile.terFrameY;
 				_tiles[i].terrain = terrainSelect(_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+				_tiles[i].tileKind = KIND_TERRAIN;
 				break;
 
 			case SET_OBJECT1_RC:
 				_tiles[i].objFrameX = _currentTile.objFrameX;
 				_tiles[i].objFrameY = _currentTile.objFrameY;
 				_tiles[i].obj = objSelect(_tiles[i].objFrameX, _tiles[i].objFrameY);
+				_tiles[i].tileKind = KIND_OBJ1;
 				break;
 
 			case SET_OBJECT2_RC:
 				_tiles[i].objFrameX = _currentTile.objFrameX;
 				_tiles[i].objFrameY = _currentTile.objFrameY;
 				_tiles[i].obj2 = objSelect2(_tiles[i].objFrameX, _tiles[i].objFrameY);
+				_tiles[i].tileKind = KIND_OBJ2;
 				break;
 
 			case SET_ERASER_RC:
@@ -235,7 +242,7 @@ void mapTool::load(void)
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("mapSave01.map", GENERIC_READ, 0, NULL,
+	file = CreateFile("mapSave00.map", GENERIC_READ, 0, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
