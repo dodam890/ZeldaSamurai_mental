@@ -1,12 +1,8 @@
 #pragma once
 #include "gameNode.h"
-#include "minion.h"
-#include "bullets.h"
-#include <vector>
+#include "enemy.h"
 
-//상호참조 시 컴파일러 무한루프를 빠져나오기 위한 
-//전방선언
-class spaceShip;
+class camera;
 
 class enemyManager : public gameNode
 {
@@ -15,32 +11,20 @@ private:
 	typedef vector<enemy*>::iterator viEnemy;
 
 private:
-	vEnemy _vMinion;
-	viEnemy _viMinion;
+	vEnemy _vEm;
+	viEnemy _viEm;
 
-	bullet* _bullet;
-
-	spaceShip* _ship;
+	camera* _camera;
 
 public:
-	HRESULT init(void);
-	void release(void);
-	void update(void);
-	void render(void);
+	HRESULT init(camera* camera);
+	void release();
+	void update();
+	void render();
 
-	void setMinion(void);
-
-	void minionBulletFire(void);
-
-	void removeMinion(int arrNum);
-
-	void collision(void);
-
-	void setSpaceShipMemoryAddressLink(spaceShip* ship) { _ship = ship; }
-	
-
-	inline vector<enemy*> getVMinion(void) { return _vMinion; }
-	inline vector<enemy*>::iterator getVIMinion(void) { return _viMinion; }
+	void setOcto();
+	void setSlime();
+	void setSnail();
 
 	enemyManager();
 	~enemyManager();

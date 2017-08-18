@@ -1,8 +1,25 @@
 #include "stdafx.h"
 #include "enemy.h"
+#include "camera.h"
 
-
-enemy::enemy()
+enemy::enemy() :
+	_rc(),
+	_moveRc(),
+	_collisionRc(),
+	_imgInfo(),
+	_distanceX(0.f),
+	_distanceY(0.f),
+	_centerX(0.f),
+	_centerY(0.f),
+	_indexX(0),
+	_indexY(0),
+	_frameCount(0),
+	_moveCount(0),
+	_aStar(NULL),
+	_camera(NULL),
+	_rangeWidth(0),
+	_rangeHeight(0),
+	_direction(DIRECTION_DOWN)
 {
 }
 
@@ -11,76 +28,74 @@ enemy::~enemy()
 {
 }
 
-HRESULT enemy::init(void)
-{
 
-	return S_OK;
+HRESULT enemy::init(camera* camera, int idxX, int idxY)
+{
+	_camera = camera;
+
+	_distanceX = WINSIZEX / 2;
+	_centerX = _camera->getStartX() + _distanceX;
+
+	_distanceY = WINSIZEY / 2;
+	_centerY = _camera->getStartY() + _distanceY;
+
+	_indexX = idxX;
+	_indexY = idxY;
+
+	_moveCount = 0;
+
+	this->addImage();
+
+	//_aStar;
+
+
+	return S_OK;;
 }
 
-HRESULT enemy::init(const char* imageName, POINT position)
+void enemy::release()
 {
-	_currentFrameX = _currentFrameY = 0;
-	_count = _fireCount = 0;
-
-	_rndFireCount = RND->getFromIntTo(1, 1000);
-
-	_imageName = IMAGEMANAGER->findImage(imageName);
-
-	_rc = RectMakeCenter(position.x, position.y,
-		_imageName->getFrameWidth(),
-		_imageName->getFrameHeight());
-
-
-	return S_OK;
 }
 
-void enemy::release(void)
+void enemy::update()
 {
-
+	this->addFrame();
 }
 
-void enemy::update(void)
+void enemy::render()
 {
-	_count++;
+	this->draw();
+}
 
-	if (_count % 2 == 0)
+void enemy::move()
+{
+}
+
+void enemy::addFrame()
+{
+	if (!_imgInfo[_direction].image) return;
+
+	_frameCount++;
+
+	if (_frameCount % 20 == 0)
 	{
-		_imageName->setFrameX(_currentFrameX);
-		_currentFrameX++;
-		if (_currentFrameX >= _imageName->getMaxFrameX()) _currentFrameX = 0;
+		if (_imgInfo[_direction].currentFrameX >= _imgInfo[_direction].image->getMaxFrameX()) _imgInfo[_direction].currentFrameX = 0;
+		else _imgInfo[_direction].currentFrameX++;
 
-		_count = 0;
+		_frameCount = 0;
 	}
 }
 
-void enemy::render(void)
+void enemy::draw()
 {
-	draw();
+	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+
+	if (!_imgInfo[_direction].image) return;
+
+	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left, _rc.top, _imgInfo[_direction].currentFrameX, 0);
 }
 
-
-void enemy::move(void)
+void enemy::addImage()
 {
-
-}
-
-void enemy::draw(void)
-{
-	_imageName->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
-}
-
-
-bool enemy::bulletCountFire(void)
-{
-	_fireCount++;
-
-	if (_fireCount % _rndFireCount == 0)
-	{
-		_fireCount = 0;
-		_rndFireCount = RND->getFromIntTo(1, 1000);
-
-		return true;
-	}
-
-	return false;
 }
