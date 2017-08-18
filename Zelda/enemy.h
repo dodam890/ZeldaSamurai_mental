@@ -62,11 +62,13 @@ public:
 	virtual void update();
 	virtual void render();
 
-	virtual void move();
+	virtual void move(int index);
 	virtual void addFrame();
 	virtual void draw();
 
 	virtual void addImage();
+
+	virtual void aStarPathFind();
 
 	enemy();
 	virtual ~enemy();

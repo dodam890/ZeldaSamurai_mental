@@ -32,7 +32,7 @@ void zeldaTileMap::release()
 
 void zeldaTileMap::update()
 {
-	controlCamera();
+	//controlCamera();
 }
 
 void zeldaTileMap::render()

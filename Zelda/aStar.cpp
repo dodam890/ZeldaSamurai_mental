@@ -75,11 +75,7 @@ void aStar::release()
 
 void aStar::update()
 {
-	for (int i = 0; i < m_vTotalList.size(); i++)
-	{
-		m_vTotalList[i]->update();
-	}
-	//pathFinder(m_pCurTile);
+	pathFinder(m_pCurTile);
 }
 
 void aStar::render()
@@ -184,7 +180,7 @@ std::vector<aStarTile*> aStar::addOpenList(aStarTile * pCurTile)
 				}
 			}
 
-			//if (node->getAttribute() != "end") node->setColor(RGB(128, 64, 28));
+			if (node->getAttribute() != "end") node->setColor(RGB(128, 64, 28));
 
 			if (!addObj) continue;
 
@@ -238,7 +234,7 @@ void aStar::pathFinder(aStarTile * pCurTile)
 		while (m_pCurTile->getParentNode() != NULL)
 		{
 			m_vPathList.push_back(m_pCurTile);
-			//m_pCurTile->setColor(RGB(0, 255, 125));
+			m_pCurTile->setColor(RGB(0, 255, 125));
 			m_pCurTile = m_pCurTile->getParentNode();
 		}
 
@@ -316,6 +312,14 @@ void aStar::clearAstar()
 	m_nCount = 0;
 	m_bIsStart = 0;
 	m_bIsEnd = 0;
+}
+
+void aStar::tilesUpdate()
+{
+	for (int i = 0; i < m_vTotalList.size(); i++)
+	{
+		m_vTotalList[i]->update();
+	}
 }
 
 void aStar::setCharacterPath(vector<aStarTile*>& realPath, bool* bIsVFull)

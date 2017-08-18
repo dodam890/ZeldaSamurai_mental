@@ -56,6 +56,8 @@ public:
 	void resetAstar(zeldaTileMap* pZeldaMap, int nStartIdxX, int nStartIdxY, int nEndIdxX, int nEndIdxY);
 	void clearAstar();
 
+	void tilesUpdate();
+
 	std::vector<aStarTile*> getVTotalList() { return m_vTotalList; }
 };
 

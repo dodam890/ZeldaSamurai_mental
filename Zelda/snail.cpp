@@ -45,9 +45,9 @@ void snail::render()
 	enemy::render();
 }
 
-void snail::move()
+void snail::move(int index)
 {
-	enemy::move();
+	enemy::move(index);
 }
 
 void snail::addFrame()

@@ -46,9 +46,9 @@ void slime::render()
 	enemy::render();
 }
 
-void slime::move()
+void slime::move(int index)
 {
-	enemy::move();
+	enemy::move(index);
 }
 
 void slime::addFrame()

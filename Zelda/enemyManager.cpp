@@ -28,6 +28,26 @@ void enemyManager::release()
 
 void enemyManager::update()
 {
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && _camera->isCameraXZeroSide())
+	{
+
+		_camera->setCameraX(_camera->getCameraX() - 10);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && _camera->isCameraXEndSide())
+	{
+		_camera->setCameraX(_camera->getCameraX() + 10);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_UP) && _camera->isCameraYZeroSide())
+	{
+		_camera->setCameraY(_camera->getCameraY() - 10);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && _camera->isCameraYEndSide())
+	{
+		_camera->setCameraY(_camera->getCameraY() + 10);
+	}
+
+	_camera->update(5000, 5000);
+
 	for (_viEm = _vEm.begin(); _viEm != _vEm.end(); ++_viEm)
 	{
 		(*_viEm)->update();
@@ -47,7 +67,7 @@ void enemyManager::setOcto()
 	enemy* enemyOcto;
 
 	enemyOcto = new octo;
-	enemyOcto->init(_camera, _map, 10, 10);
+	enemyOcto->init(_camera, _map, 5, 5);
 	_vEm.push_back(enemyOcto);
 }
 

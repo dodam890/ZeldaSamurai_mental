@@ -17,6 +17,10 @@ HRESULT aStarScene::init()
 	_map = new zeldaTileMap;
 	_map->init(_ca, 2000, 1000);
 
+
+	_em = new enemyManager;
+	_em->init(_ca, _map);
+	_em->setOcto();
 	/*_aStar = new aStar;
 	_aStar->init(_ca);
 	_aStar->setTile(_map, 1, 1, 15, 15);*/
@@ -30,29 +34,16 @@ void aStarScene::release()
 
 void aStarScene::update()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && _ca->isCameraXZeroSide())
-	{
-		_ca->setCameraX(_ca->getCameraX() - 10);
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && _ca->isCameraXEndSide())
-	{
-		_ca->setCameraX(_ca->getCameraX() + 10);
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && _ca->isCameraYZeroSide())
-	{
-		_ca->setCameraY(_ca->getCameraY() - 10);
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && _ca->isCameraYEndSide())
-	{
-		_ca->setCameraY(_ca->getCameraY() + 10);
-	}
 
-	_ca->update(5000, 5000);
 	//_aStar->update();
+
+	_em->update();
 }
 
 void aStarScene::render()
 {
 	//_aStar->render();
+
+	_em->render();
 	_ca->drawCameraPos();
 }
