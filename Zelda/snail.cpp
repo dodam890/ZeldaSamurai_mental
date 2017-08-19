@@ -60,6 +60,11 @@ void snail::draw()
 	enemy::draw();
 }
 
+void snail::aStarPathFind()
+{
+	enemy::aStarPathFind();
+}
+
 void snail::addImage()
 {
 	enemy::addImage();

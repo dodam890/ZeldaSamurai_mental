@@ -16,6 +16,8 @@ public:
 	virtual void addFrame();
 	virtual void draw();
 
+	virtual void aStarPathFind();
+
 	virtual void addImage();
 };
 
