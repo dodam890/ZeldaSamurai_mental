@@ -16,11 +16,8 @@ HRESULT octo::init(player* player, camera* camera, zeldaTileMap* map, int idxX, 
 	_rangeWidth = 400;
 	_rangeHeight = 400;
 
-	_indexX = idxX;
-	_indexY = idxY;
-
-	_moveRc = RectMakeCenter(_moveCenterX, _moveCenterY, _rangeWidth, _rangeHeight);
-	_collisionRc = RectMakeCenter(_collisionCenterX, _collisionCenterY, 800, 800);
+	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
+	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
 
 	return S_OK;
 }
@@ -36,8 +33,9 @@ void octo::update()
 {
 	enemy::update();
 
-	_moveRc = RectMakeCenter(_moveCenterX, _moveCenterY, _rangeWidth, _rangeHeight);
-	_collisionRc = RectMakeCenter(_collisionCenterX, _collisionCenterY, 800, 800);
+	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
+	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
+	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 50, _imgInfo[_direction].image->getFrameHeight());
 }
 
 void octo::render()
@@ -63,6 +61,10 @@ void octo::addFrame()
 void octo::draw()
 {
 	enemy::draw();
+
+	if (!_imgInfo[_direction].image) return;
+
+	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left - 25, _rc.top, _imgInfo[_direction].currentFrameX, 0);
 }
 
 void octo::aStarPathFind()

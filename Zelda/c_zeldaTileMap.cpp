@@ -9,7 +9,9 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
-	_em->setOcto();
+	//_em->setOcto();
+	_em->setSlime();
+	//_em->setSnail();
 
 	return S_OK;
 }

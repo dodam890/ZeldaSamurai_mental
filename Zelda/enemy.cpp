@@ -52,21 +52,10 @@ HRESULT enemy::init(player* player, camera* camera, zeldaTileMap* map, int idxX,
 	this->addImage();
 
 	_distanceX = _aStar->getStartTile()->getDisX();
-	_moveDistanceX = _aStar->getStartTile()->getDisX();
-	_collisionDistanceX = _aStar->getStartTile()->getDisX();
-
 	_centerX = _camera->getStartX() + _distanceX;
-	_moveCenterX = _camera->getStartX() + _moveDistanceX;
-	_collisionCenterX = _camera->getStartX() + _collisionDistanceX;
-
 
 	_distanceY = _aStar->getStartTile()->getDisY();
-	_moveDistanceY = _aStar->getStartTile()->getDisY();
-	_collisionDistanceY = _aStar->getStartTile()->getDisY();
-
 	_centerY = _camera->getStartY() + _distanceY;
-	_moveCenterY = _camera->getStartY() + _moveDistanceY;
-	_collisionCenterY = _camera->getStartY() + _collisionDistanceY;
 
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 
@@ -95,31 +84,18 @@ void enemy::update()
 		normalMove();
 	}
 
-	//RECT temp;
-	//if (IntersectRect(&temp, &_moveRc, &_player->getRect()))
-	//{
-	//	_isFindPlayer = false;
-	//}
-
-	//RECT sour;
-	//if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
-	//{
-	//	_isFindPlayer = true;
-	//}
-	//else
-	//{
-	//	_isFindPlayer = false;
-	//}
+	RECT sour;
+	if (IntersectRect(&sour, &_collisionRc, &_player->getRect()) && !IntersectRect(&sour, &_moveRc, &_player->getRect()))
+	{
+		_isFindPlayer = true;
+	}
+	else
+	{
+		_isFindPlayer = false;
+	}
 
 	_centerX = _camera->getStartX() + _distanceX;
-	_moveCenterX = _camera->getStartX() + _moveDistanceX;
-	_collisionCenterX = _camera->getStartX() + _collisionDistanceX;
-
 	_centerY = _camera->getStartY() + _distanceY;
-	_moveCenterY = _camera->getStartY() + _moveDistanceY;
-	_collisionCenterY = _camera->getStartY() + _collisionDistanceY;
-
-	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 50, _imgInfo[_direction].image->getFrameHeight());
 
 	//_aStar->update();
 
@@ -135,6 +111,15 @@ void enemy::render()
 
 void enemy::aStarMove(int index)
 {
+	_moveCount += TIMEMANAGER->getElapsedTime() * 100;
+
+	if (_moveCount > 100.f)
+	{
+		int rndNum = RND->getFromIntTo(0, 3);
+		_direction = (DIRECTION)rndNum;
+		_moveCount = 0.f;
+	}
+
 	if (_vPath[index]->getDisX() > _distanceX)
 	{
 		_direction = DIRECTION_RIGHT;
@@ -162,32 +147,23 @@ void enemy::aStarMove(int index)
 
 void enemy::normalMove()
 {
-	_moveCount += TIMEMANAGER->getElapsedTime() * 100;
-
-	if (_moveCount > 100.f)
-	{
-		int rndNum = RND->getFromIntTo(0, 3);
-		_direction = (DIRECTION)rndNum;
-		_moveCount = 0.f;
-	}
-
 	switch (_direction)
 	{
 	case enemy::DIRECTION_DOWN:
 		if (_rc.bottom < _moveRc.bottom)
-			_distanceY++;
+			_distanceY += 5;
 		break;
 	case enemy::DIRECTION_LEFT:
 		if (_rc.left > _moveRc.left)
-			_distanceX--;
+			_distanceX -= 5;
 		break;
 	case enemy::DIRECTION_RIGHT:
 		if (_rc.right < _moveRc.right)
-			_distanceX++;
+			_distanceX += 5;
 		break;
 	case enemy::DIRECTION_UP:
 		if (_rc.top > _moveRc.top)
-			_distanceY--;
+			_distanceY -= 5;
 		break;
 	}
 }
@@ -214,10 +190,6 @@ void enemy::draw()
 	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
 	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
-
-	if (!_imgInfo[_direction].image) return;
-
-	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left - 25, _rc.top, _imgInfo[_direction].currentFrameX, 0);
 
 	char str[128] = "";
 	sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
@@ -247,8 +219,8 @@ void enemy::aStarPathFind()
 			(_vPath[_currentTileIndex]->getRect().top == _rc.top) &&
 			(_vPath[_currentTileIndex]->getRect().bottom == _rc.bottom)))
 		{
-				_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), _player->getIndexX(), _player->getIndexY());
-				_currentTileIndex++;
+			_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), _player->getIndexX(), _player->getIndexY());
+			_currentTileIndex++;
 		}
 		else this->aStarMove(_currentTileIndex);
 	}

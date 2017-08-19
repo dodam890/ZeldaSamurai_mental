@@ -16,7 +16,6 @@ HRESULT snail::init(player* player, camera* camera, zeldaTileMap* map, int idxX,
 	_rangeWidth = 400;
 	_rangeHeight = 300;
 
-	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
 	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
 
@@ -32,12 +31,9 @@ void snail::update()
 {
 	enemy::update();
 
-	_centerX = _camera->getStartX() + _distanceX;
-	_centerY = _camera->getStartY() + _distanceY;
-
-	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
 	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
+	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 60, _imgInfo[_direction].image->getFrameHeight() - 55);
 }
 
 void snail::render()
@@ -63,6 +59,10 @@ void snail::addFrame()
 void snail::draw()
 {
 	enemy::draw();
+
+	if (!_imgInfo[_direction].image) return;
+
+	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left - 30, _rc.top - 50, _imgInfo[_direction].currentFrameX, 0);
 }
 
 void snail::aStarPathFind()
