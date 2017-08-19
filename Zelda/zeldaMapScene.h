@@ -7,6 +7,7 @@
 #include "inven_all.h"
 #include "shop_class.h"
 #include "sceneEffect.h"
+#include "c_zeldaTileMap.h"
 
 class zeldaMapScene : public gameNode
 {
@@ -57,6 +58,8 @@ public:
 	void createMap();
 	void rectCollision();
 	void setScene(int num);
+
+	void changeTileScene();
 
 	void setCurMap(MAP_KIND curMap) { _curMap = curMap; }
 };

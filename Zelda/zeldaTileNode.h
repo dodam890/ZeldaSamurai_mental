@@ -6,8 +6,8 @@
 #define TILEWIDTH 80
 #define TILEHEIGHT 80
 
-#define TILEX 30
-#define TILEY 30
+#define TILEX 20
+#define TILEY 20
 #define TILETOTAL TILEX * TILEY
 
 #define TILESIZEX TILESIZE * TILEX

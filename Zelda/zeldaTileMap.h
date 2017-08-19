@@ -42,5 +42,6 @@ public:
 	tagTile* getTile() { return _tiles; }
 
 	BOOL* getAttribute(ATTRIBUTE attribute) { return _attribute[attribute]; }
+	tagTile* getTiles() { return _tiles; }
 };
 

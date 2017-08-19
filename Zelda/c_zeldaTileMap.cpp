@@ -15,18 +15,17 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 
 void zeldaTileMap1::release()
 {
+	zeldaTileMap::release();
 }
 
 void zeldaTileMap1::update()
 {
+	zeldaTileMap::update();
 }
 
 void zeldaTileMap1::render()
 {
-}
-
-void zeldaTileMap1::loadMap()
-{
+	zeldaTileMap::render();
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -39,18 +38,17 @@ HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSav
 
 void zeldaTileMap2::release()
 {
+	zeldaTileMap::release();
 }
 
 void zeldaTileMap2::update()
 {
+	zeldaTileMap::update();
 }
 
 void zeldaTileMap2::render()
 {
-}
-
-void zeldaTileMap2::loadMap()
-{
+	zeldaTileMap::render();
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -63,18 +61,63 @@ HRESULT zeldaTileMap3::init(player* player, camera * camera, const CHAR* pMapSav
 
 void zeldaTileMap3::release()
 {
+	zeldaTileMap::release();
 }
 
 void zeldaTileMap3::update()
 {
+	zeldaTileMap::update();
 }
 
 void zeldaTileMap3::render()
 {
+	zeldaTileMap::render();
 }
 
-void zeldaTileMap3::loadMap()
+// ----------------------------------------------------------------------------------------------------
+
+HRESULT zeldaTileMap4::init(player* player, camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
 {
+	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
+	return S_OK;
+}
+
+void zeldaTileMap4::release()
+{
+	zeldaTileMap::release();
+}
+
+void zeldaTileMap4::update()
+{
+	zeldaTileMap::update();
+}
+
+void zeldaTileMap4::render()
+{
+	zeldaTileMap::render();
+}
+
+// ----------------------------------------------------------------------------------------------------
+
+HRESULT zeldaTileMap5::init(player* player, camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
+{
+	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
+	return S_OK;
+}
+
+void zeldaTileMap5::release()
+{
+	zeldaTileMap::release();
+}
+
+void zeldaTileMap5::update()
+{
+	zeldaTileMap::update();
+}
+
+void zeldaTileMap5::render()
+{
+	zeldaTileMap::render();
 }
 
 // ----------------------------------------------------------------------------------------------------

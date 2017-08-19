@@ -61,6 +61,11 @@ void slime::draw()
 	enemy::draw();
 }
 
+void slime::aStarPathFind()
+{
+	enemy::aStarPathFind();
+}
+
 void slime::addImage()
 {
 	enemy::addImage();

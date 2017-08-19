@@ -2,6 +2,7 @@
 #include "enemy.h"
 #include "camera.h"
 #include "player.h"
+#include "zeldaTileMap.h"
 
 enemy::enemy() :
 	_rc(),
@@ -114,6 +115,8 @@ void enemy::move(int index)
 		_direction = DIRECTION_DOWN;
 		_distanceY += 5;
 	}
+
+	getMapAttribute();
 }
 
 void enemy::addFrame()
@@ -169,5 +172,78 @@ void enemy::aStarPathFind()
 			_currentTileIndex++;
 		}
 		else this->move(_currentTileIndex);
+	}
+}
+
+void enemy::getMapAttribute()
+{
+	BOOL* attribute = _map->getAttribute(E_ATR_MOVE);
+
+	RECT rcCollision = _rc;
+
+	int tileIndex[2];
+	int tileX, tileY;
+
+	tileX = rcCollision.left / TILESIZE;
+	tileY = rcCollision.top / TILESIZE;
+
+	switch (_direction)
+	{
+	case enemy::DIRECTION_DOWN:
+		tileIndex[0] = (tileX + tileY * TILEX) + TILEX;
+		tileIndex[1] = (tileX + 1 + tileY * TILEX) + TILEX;
+		break;
+	case enemy::DIRECTION_LEFT:
+		tileIndex[0] = tileX + TILEX * tileY;
+		tileIndex[1] = tileX + (tileY + 1) * TILEX;
+		break;
+	case enemy::DIRECTION_RIGHT:
+		tileIndex[0] = (tileX + TILEX * tileY) + 1;
+		tileIndex[1] = (tileX + (tileY + 1) * TILEX) + 1;
+		break;
+	case enemy::DIRECTION_UP:
+		tileIndex[0] = tileX + TILEX * tileY;
+		tileIndex[1] = tileX + 1 + TILEX * tileY;
+		break;
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		RECT rc;
+		if ((attribute[tileIndex[i]] == FALSE) && 
+			IntersectRect(&rc, &rcCollision, &_map->getTiles()[tileIndex[i]].rc))
+		{
+			switch (_direction)
+			{
+			case enemy::DIRECTION_DOWN:
+				_rc.bottom = _map->getTiles()[tileIndex[i]].rc.top;
+				_rc.top = _rc.bottom - _imgInfo[_direction].image->getFrameHeight();
+
+				_distanceY = _rc.top + (_rc.bottom - _rc.top) / 2;
+				break;
+			case enemy::DIRECTION_LEFT:
+				_rc.left = _map->getTiles()[tileIndex[i]].rc.right;
+				_rc.right = _rc.left + (_imgInfo[_direction].image->getFrameWidth() - 50);
+
+				_distanceX = _rc.left + (_rc.right - _rc.left) / 2;
+				break;
+			case enemy::DIRECTION_RIGHT:
+				_rc.right = _map->getTiles()[tileIndex[i]].rc.left;
+				_rc.left = _rc.right - (_imgInfo[_direction].image->getFrameWidth() - 50);
+
+				_distanceX = _rc.left + (_rc.right - _rc.left) / 2;
+				break;
+			case enemy::DIRECTION_UP:
+				_rc.top = _map->getTiles()[tileIndex[i]].rc.bottom;
+				_rc.bottom = _rc.top + _imgInfo[_direction].image->getFrameHeight();
+
+				_distanceY = _rc.top + (_rc.bottom - _rc.top) / 2;
+				break;
+			case enemy::DIRECTION_END:
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }

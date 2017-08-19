@@ -50,6 +50,8 @@ void zeldaMapScene::release()
 
 void zeldaMapScene::update()
 {
+	changeTileScene();
+
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->update();
@@ -199,8 +201,20 @@ void zeldaMapScene::createMap()
 	_zeldaMap[STORE] = new storeMap;
 	_zeldaMap[STORE]->init("STORE", "STORE_PIXELCOLLISION", _camera, _link);
 
-	_zeldaTileMap[TILEMAP_ONE] = new zeldaTileMap;
-	_zeldaTileMap[TILEMAP_ONE]->init(_link, _camera, "mapSave00.map", TILEX * TILESIZE, TILEY * TILESIZE);
+	_zeldaTileMap[TILEMAP_ONE] = new zeldaTileMap1;
+	_zeldaTileMap[TILEMAP_ONE]->init(_link, _camera, "mapSave01.map", TILEX * TILESIZE, TILEY * TILESIZE);
+	
+	_zeldaTileMap[TILEMAP_TWO] = new zeldaTileMap2;
+	_zeldaTileMap[TILEMAP_TWO]->init(_link, _camera, "mapSave02.map", TILEX * TILESIZE, TILEY * TILESIZE);
+
+	_zeldaTileMap[TILEMAP_THREE] = new zeldaTileMap3;
+	_zeldaTileMap[TILEMAP_THREE]->init(_link, _camera, "mapSave03.map", TILEX * TILESIZE, TILEY * TILESIZE);
+
+	_zeldaTileMap[TILEMAP_FOUR] = new zeldaTileMap4;
+	_zeldaTileMap[TILEMAP_FOUR]->init(_link, _camera, "mapSave04.map", TILEX * TILESIZE, TILEY * TILESIZE);
+
+	_zeldaTileMap[TILEMAP_BOSS] = new zeldaTileMap5;
+	_zeldaTileMap[TILEMAP_BOSS]->init(_link, _camera, "mapSave05.map", TILEX * TILESIZE, TILEY * TILESIZE);
 }
 
 void zeldaMapScene::rectCollision()
@@ -284,4 +298,13 @@ void zeldaMapScene::setScene(int num)
 
 	_sceneEffect->init();
 	_link->isMove(true);
+}
+
+void zeldaMapScene::changeTileScene()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD1)) _tileMapKind = TILEMAP_ONE;
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD2)) _tileMapKind = TILEMAP_TWO;
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD3)) _tileMapKind = TILEMAP_THREE;
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD4)) _tileMapKind = TILEMAP_FOUR;
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD5)) _tileMapKind = TILEMAP_BOSS;
 }
