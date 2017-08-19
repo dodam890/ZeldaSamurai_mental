@@ -184,8 +184,8 @@ void enemy::getMapAttribute()
 	int tileIndex[2];
 	int tileX, tileY;
 
-	tileX = rcCollision.left / TILESIZE;
-	tileY = rcCollision.top / TILESIZE;
+	tileX = (rcCollision.left - _camera->getStartX()) / TILESIZE;
+	tileY = (rcCollision.top - _camera->getStartY()) / TILESIZE;
 
 	switch (_direction)
 	{

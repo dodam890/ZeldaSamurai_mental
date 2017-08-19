@@ -275,13 +275,9 @@ void zeldaTileMap::render()
 		}
 	}
 
-	vector<enemy*> vEm = _em->getVEnemy();
-	vector<enemy*>::iterator viEm = _em->getVIEnemy();
+	//에너미 플레이어 에이스타 맵 확인용
 
-	for (viEm = vEm.begin(); viEm != vEm.end(); ++viEm)
-	{
-		(*viEm)->render();
-	}
+	_em->render();
 
 	_player->render();
 }
