@@ -21,9 +21,6 @@ private:
 	vector<item_class*> _vi;
 	vector<item_class*>::iterator _vii;
 
-	vector<item_class*> _ve;
-	vector<item_class*>::iterator _vie;
-
 	inven_tory_type change_view;
 	inven_item* _iit;
 	inven_collect* _icl;
@@ -69,6 +66,9 @@ private:
 	int ZX_B_UP;
 	int ZX_I_UP;
 
+	int P_money;
+
+
 public:
 	inven_all();
 	~inven_all();
@@ -90,10 +90,22 @@ public:
 
 	void select_item(void);
 
+	void up_temp_item12_vol() { temp_item12_vol++; }
+	void up_temp_Sitem4_vol() { temp_Sitem4_vol++; }
+
+	int get_temp_item12_vol() { return temp_item12_vol; }
+	int get_temp_Sitem4_vol() { return temp_Sitem4_vol; }
+	int get_P_money() { return P_money; }
+	void set_P_money(int _set) { P_money = _set; }
 
 	vector<item_class*> get_vi() { return _vi; }
 	vector<item_class*>::iterator get_vii() { return _vii; }
 
+	inven_item* get_iit() { return _iit; }
+
+
 	void inven_controll();
+
+	void number_control();
 };
 

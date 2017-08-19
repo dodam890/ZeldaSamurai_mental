@@ -39,8 +39,10 @@ void zeldaMap::release()
 
 void zeldaMap::update()	   
 {
-	_link->update();
-
+	if (get_is_talk_shop_npc_who(0) == false)
+	{
+		_link->update();
+	}
 	//---------- zOrder ------------
 	if(_kind == TOWN)
 		_npcZorder->setTownNpcByZorder(_link, _townNpc, 10);
@@ -97,4 +99,9 @@ void zeldaMap::setAllNpcOnMap()
 	_storeNpc[0]->init(_camera, "npcShop", DIRECTION_DOWN, 270.f, 260.f, 150, 250);
 	_storeNpc[1]->init(_camera, "npcLink", DIRECTION_DOWN, 2050.f, 325.f, 300, 150);
 	_storeNpc[2]->init(_camera, "npcMaster", DIRECTION_DOWN, 1500.f, 120.f, 200, 200);
+}
+
+bool zeldaMap::get_is_talk_shop_npc_who(int arry)
+{
+	return _storeNpc[arry]->getTalkOn();
 }

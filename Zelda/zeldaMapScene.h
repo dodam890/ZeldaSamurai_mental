@@ -5,6 +5,7 @@
 #include "camera.h"
 #include "player.h"
 #include "inven_all.h"
+#include "shop_class.h"
 #include "sceneEffect.h"
 
 class zeldaMapScene : public gameNode
@@ -24,6 +25,7 @@ private:
 	camera* _camera;
 	player* _link;
 	inven_all* _inven;
+	shop_class* _sc;
 	image* _imgTmpBackbuffer;
 	MAP_KIND _curMap;
 	zeldaMap* _zeldaMap[MAP_KIND_END];

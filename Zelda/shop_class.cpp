@@ -20,6 +20,7 @@ HRESULT shop_class::init()
 	corcer_y = message_y + 406;
 
 	temp_now_pick = 0;
+	pick_where = 0;
 	click_now = true;
 
 	_rc[0] = RectMake(message_x, message_y, IMAGEMANAGER->findImage("상점이미지1")->getWidth(), IMAGEMANAGER->findImage("상점이미지1")->getHeight());
@@ -30,6 +31,10 @@ HRESULT shop_class::init()
 	{
 		item_rc[i] = RectMake(message_x + 34, message_y + 26 + i * 46, 412, 40);
 	}
+
+	give_item_is_true = false;
+	_ic = new item_class;
+
 	return S_OK;
 }
 
@@ -103,6 +108,16 @@ void shop_class::update()
 
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			if (pick_where == 0)
+			{
+				give_item_is_true = true;
+
+				_ic = buy_what(temp_now_pick);
+			}
+			if (pick_where == 1)
+			{
+				give_item_is_true = false;
+			}
 		}
 	}
 }
@@ -143,286 +158,89 @@ void shop_class::select_render(float left, float top, float right, float bottom,
 	IMAGEMANAGER->findImage("빨간선택4")->frameRender(getMemDC(), right - IMAGEMANAGER->findImage("빨간선택4")->getFrameWidth() / 6, bottom - IMAGEMANAGER->findImage("빨간선택4")->getFrameHeight() / 6, carrent_x, carrent_y);
 }
 
+item_class* shop_class::buy_what(int arry)
+{
 
-//void item_class_manager::item_search(item_class* calling, int num, float init_x, float init_y, int vol, bool equip)
-//{
-//
-//	item_state temp;
-//
-//	switch (num)
-//	{
-//		//검
-//	case 0:
-//
-//		temp.ATK = 1;
-//		temp.ATK_SPEED = 1.0;
-//		temp.critical = 1.5;
-//		temp.DEF = 0;
-//		temp.price = 100;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("검"),
-//			"검", "명검이다. 매우 아프다.",
-//			0,
-//			init_x,
-//			init_y,
-//			vol,
-//			weapon,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//방패
-//	case 1:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 10;
-//		temp.price = 80;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("방패"),
-//			"방패", "방패이다. 매우 견고하다.",
-//			1,
-//			init_x,
-//			init_y,
-//			vol,
-//			Armor,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//항아리
-//	case 2:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 150;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("마법항아리"),
-//			"마법항아리", "모든지 흡수한 후 다시 뱉어낸다",
-//			2,
-//			init_x,
-//			init_y,
-//			vol,
-//			special_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//지팡이
-//	case 3:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 150;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("지팡이"),
-//			"지팡이", "요술 지팡이, 모든지 반대로 뒤집니다.",
-//			3,
-//			init_x,
-//			init_y,
-//			vol,
-//			special_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//빈병
-//	case 4:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 50;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("빈병"),
-//			"빈병", "무언가를 담을 수 있다",
-//			4,
-//			init_x,
-//			init_y,
-//			vol,
-//			Interaction_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//요정병
-//	case 5:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 250;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("요정병"),
-//			"요정병", "요정이 들어 있다. 위험할때 도와주는 친구",
-//			5,
-//			init_x,
-//			init_y,
-//			vol,
-//			Interaction_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//폭탄
-//	case 6:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 50;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("폭탄"),
-//			"폭탄", "폭탄이다. 매우 강하다.",
-//			6,
-//			init_x,
-//			init_y,
-//			vol,
-//			using_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//키
-//	case 7:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 70;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("키"),
-//			"키", "잠긴 문을 열수 있는 열쇠이다.",
-//			7,
-//			init_x,
-//			init_y,
-//			vol,
-//			using_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//보스방키
-//	case 8:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 200;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("보스방키"),
-//			"보스방키", "보스 방문을 열수 있는 키이다.",
-//			8,
-//			init_x,
-//			init_y,
-//			vol,
-//			using_item,
-//			inventory_map,
-//			equip,
-//			temp);
-//		break;
-//		//하트추가
-//	case 9:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 60;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("하트추가"),
-//			"하트", "생명력을 올려준다.",
-//			9,
-//			init_x,
-//			init_y,
-//			vol,
-//			using_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//초록루비
-//	case 10:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 1;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("초록루비"),
-//			"초록색 루비", " 1 루비 가치 이다.",
-//			10,
-//			init_x,
-//			init_y,
-//			vol,
-//			using_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//파란루비
-//	case 11:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 5;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("파란루비"),
-//			"파란색 루비", " 5 루비의 가치이다. ",
-//			11,
-//			init_x,
-//			init_y,
-//			vol,
-//			using_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//		//빨간루비
-//	case 12:
-//
-//		temp.ATK = 0;
-//		temp.ATK_SPEED = 0;
-//		temp.critical = 0;
-//		temp.DEF = 0;
-//		temp.price = 10;
-//		temp.upgrade = 0;
-//
-//		calling->setting_items(IMAGEMANAGER->findImage("빨강루비"),
-//			"빨강색 루비", " 10 루비의 가치이다. ",
-//			12,
-//			init_x,
-//			init_y,
-//			vol,
-//			using_item,
-//			inventory_item,
-//			equip,
-//			temp);
-//		break;
-//	}
-//}
+	item_class* temp;
+	temp = new item_class;
+
+	switch (arry)
+	{
+	case 0:
+		temp->setting_items(IMAGEMANAGER->findImage("검"),
+			"검", "명검이다. 매우 아프다.",
+			0,
+			NULL,
+			NULL,
+			1,
+			weapon,
+			inventory_item,
+			false);
+		break;
+		//방패
+	case 1:
+		temp->setting_items(IMAGEMANAGER->findImage("방패"),
+			"방패", "방패이다. 매우 견고하다.",
+			1,
+			NULL,
+			NULL,
+			1,
+			Armor,
+			inventory_item,
+			false);
+		break;
+		//항아리
+	case 2:
+		temp->setting_items(IMAGEMANAGER->findImage("마법항아리"),
+			"마법항아리", "모든지 흡수한 후 다시 뱉어낸다",
+			2,
+			NULL,
+			NULL,
+			1,
+			special_item,
+			inventory_item,
+			false
+		);
+		break;
+		//지팡이
+	case 3:
+		temp->setting_items(IMAGEMANAGER->findImage("지팡이"),
+			"지팡이", "요술 지팡이, 모든지 반대로 뒤집니다.",
+			3,
+			NULL,
+			NULL,
+			1,
+			special_item,
+			inventory_item,
+			false
+		);
+		break;
+		//빈병
+	case 4:
+		temp->setting_items(IMAGEMANAGER->findImage("빈병"),
+			"빈병", "무언가를 담을 수 있다",
+			4,
+			NULL,
+			NULL,
+			1,
+			Interaction_item,
+			inventory_item,
+			false
+		);
+		break;
+		//하트추가
+	case 5:
+		temp->setting_items(IMAGEMANAGER->findImage("하트추가"),
+			"하트", "생명력을 올려준다.",
+			9,
+			NULL,
+			NULL,
+			1,
+			using_item,
+			inventory_item,
+			false
+		);
+		break;
+	}
+	return temp;
+}

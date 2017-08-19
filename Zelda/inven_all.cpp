@@ -25,10 +25,10 @@ HRESULT inven_all::init()
 	_item_m = new item_class_manager;
 	_item_m->init();
 
-	_item_m->add_items_init(100, 200, 12, 1, false);
-	_item_m->add_items_init(100, 300, 12, 1, false);
-	_item_m->add_items_init(100, 400, 12, 1, false);
-	_item_m->add_items_init(100, 500, 12, 1, false);
+	//_item_m->add_items_init(100, 200, 0, 1, false);
+	//_item_m->add_items_init(100, 300, 1, 1, false);
+	//_item_m->add_items_init(100, 400, 2, 1, false);
+	//_item_m->add_items_init(100, 500, 3, 1, false);
 
 	count = 0;
 	index = 0;
@@ -50,7 +50,9 @@ HRESULT inven_all::init()
 	equip_z = 0;
 	equip_x = 0;
 
-	change_view = collect_part;
+	P_money = 0;
+
+	change_view = item_part;
 
 	switch (change_view)
 	{
@@ -116,52 +118,52 @@ void inven_all::release()
 void inven_all::update()
 {
 	//test
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		for (int i = 0; i < _item_m->get_vt().size(); i++)
-		{
-			if (PtInRect(&_item_m->get_vt()[i]->get_rc(), _ptMouse))
-			{
-				if (_item_m->get_vt()[i]->get_itemtype() != using_item)
-				{
-					if (_item_m->get_vt()[i]->get_itemtype() != Interaction_item)
-					{
-						if (temp_item12_vol < 12)
-						{
-							add_to_inven(_item_m->get_vt()[i]->get_image(),
-								_item_m->get_vt()[i]->get_item_name(),
-								_item_m->get_vt()[i]->get_item_sub_text(),
-								_item_m->get_vt()[i]->get_item_num(),
-								1,
-								_item_m->get_vt()[i]->get_itemtype(),
-								_item_m->get_vt()[i]->get_item_where(),
-								false);
-							_vi[_vi.size() - 1]->set_numbering_where(temp_item12_vol);
-							_iit->set_inven_v(get_vi());
-							temp_item12_vol++;
-						}
-					}
-					else if (_item_m->get_vt()[i]->get_itemtype() == Interaction_item)
-					{
-						if (temp_Sitem4_vol < 4)
-						{
-							add_to_inven(_item_m->get_vt()[i]->get_image(),
-								_item_m->get_vt()[i]->get_item_name(),
-								_item_m->get_vt()[i]->get_item_sub_text(),
-								_item_m->get_vt()[i]->get_item_num(),
-								1,
-								_item_m->get_vt()[i]->get_itemtype(),
-								_item_m->get_vt()[i]->get_item_where(),
-								false);
-							_vi[_vi.size() - 1]->set_numbering_where(12 + temp_Sitem4_vol);
-							_iit->set_inven_v(get_vi());
-							temp_Sitem4_vol++;
-						}
-					}
-				}
-			}
-		}
-	}
+	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	//{
+	//	for (int i = 0; i < _item_m->get_vt().size(); i++)
+	//	{
+	//		if (PtInRect(&_item_m->get_vt()[i]->get_rc(), _ptMouse))
+	//		{
+	//			if (_item_m->get_vt()[i]->get_itemtype() != using_item)
+	//			{
+	//				if (_item_m->get_vt()[i]->get_itemtype() != Interaction_item)
+	//				{
+	//					if (temp_item12_vol < 12)
+	//					{
+	//						add_to_inven(_item_m->get_vt()[i]->get_image(),
+	//							_item_m->get_vt()[i]->get_item_name(),
+	//							_item_m->get_vt()[i]->get_item_sub_text(),
+	//							_item_m->get_vt()[i]->get_item_num(),
+	//							1,
+	//							_item_m->get_vt()[i]->get_itemtype(),
+	//							_item_m->get_vt()[i]->get_item_where(),
+	//							false);
+	//						_vi[_vi.size() - 1]->set_numbering_where(temp_item12_vol);
+	//						_iit->set_inven_v(get_vi());
+	//						temp_item12_vol++;
+	//					}
+	//				}
+	//				else if (_item_m->get_vt()[i]->get_itemtype() == Interaction_item)
+	//				{
+	//					if (temp_Sitem4_vol < 4)
+	//					{
+	//						add_to_inven(_item_m->get_vt()[i]->get_image(),
+	//							_item_m->get_vt()[i]->get_item_name(),
+	//							_item_m->get_vt()[i]->get_item_sub_text(),
+	//							_item_m->get_vt()[i]->get_item_num(),
+	//							1,
+	//							_item_m->get_vt()[i]->get_itemtype(),
+	//							_item_m->get_vt()[i]->get_item_where(),
+	//							false);
+	//						_vi[_vi.size() - 1]->set_numbering_where(12 + temp_Sitem4_vol);
+	//						_iit->set_inven_v(get_vi());
+	//						temp_Sitem4_vol++;
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
 	count++;
 	if (count % 20 == 0)
@@ -193,7 +195,6 @@ void inven_all::render()
 	if (change_view == item_part)
 	{
 		_iit->render();
-
 		int tmep_numbering = _iit->get_num_x() + (4 * _iit->get_num_y());
 
 		if (tmep_numbering <= 11)
@@ -232,6 +233,8 @@ void inven_all::render()
 	else if (change_view == collect_part)
 	{
 		_icl->render();
+		IMAGEMANAGER->findImage("초록루비")->render(getMemDC(), 650, 575);
+		number_control();
 
 		int tmep_numbering = _icl->get_num_x() + (5 * _icl->get_num_y());
 
@@ -338,6 +341,13 @@ void inven_all::render()
 				index,
 				0);
 		}
+
+		if (_vi.size() > 0)
+		{
+			_vi[equip_z]->get_image()->render(getMemDC(), 655, 242);
+			_vi[equip_x]->get_image()->render(getMemDC(), 900, 242);
+		}
+
 	}
 	else if (change_view == map_part)
 	{
@@ -352,14 +362,14 @@ void inven_all::render()
 	IMAGEMANAGER->findImage("인벤토리변경키1")->render(getMemDC(), inven_change_A_x, inven_change_A_y);
 	IMAGEMANAGER->findImage("인벤토리변경키2")->render(getMemDC(), inven_change_B_x, inven_change_B_y);
 
-	IMAGEMANAGER->findImage("버튼z")->render(getMemDC(), 900, ZX_B_UP);
-	IMAGEMANAGER->findImage("버튼x")->render(getMemDC(), 1000, ZX_B_UP);
+	//IMAGEMANAGER->findImage("버튼z")->render(getMemDC(), 900, ZX_B_UP);
+	//IMAGEMANAGER->findImage("버튼x")->render(getMemDC(), 1000, ZX_B_UP);
 
-	if (_vi.size() > 0)
-	{
-		_vi[equip_z]->get_image()->render(getMemDC(), 895, ZX_I_UP);
-		_vi[equip_x]->get_image()->render(getMemDC(), 995, ZX_I_UP);
-	}
+	//
+	//
+	//
+	//
+	//
 	//char str[128];
 	//sprintf(str, "%d", _vi.size());
 	//TextOut(getMemDC(), 20, 20, str, strlen(str));
@@ -544,12 +554,12 @@ void inven_all::inven_controll()
 		}
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('V'))
+	if (KEYMANAGER->isOnceKeyDown('Q') && change_bo == false)
 	{
 		change_bo = true;
 		key_A = true;
 	}
-	if (KEYMANAGER->isOnceKeyDown('B'))
+	else if (KEYMANAGER->isOnceKeyDown('W') && change_bo == false)
 	{
 		change_bo = true;
 		key_B = true;
@@ -647,5 +657,10 @@ void inven_all::select_item(void)
 			}
 		}
 		_vi[equip_x]->set_equip(true);
-	}
+	};
+}
+
+void inven_all::number_control()
+{
+	//P_moneny
 }
