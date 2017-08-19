@@ -274,6 +274,11 @@ void zeldaTileMap::render()
 			break;
 		}
 	}
+
+	//에너미 플레이어 에이스타 맵 확인용
+
+	_em->render();
+
 	_player->render();
 }
 

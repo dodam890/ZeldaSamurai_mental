@@ -29,6 +29,9 @@ public:
 	void setOcto();
 	void setSlime();
 	void setSnail();
+	
+	vector<enemy*>& getVEnemy() { return _vEm; }
+	vector<enemy*>::iterator& getVIEnemy() { return _viEm; }
 
 	enemyManager();
 	~enemyManager();

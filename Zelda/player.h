@@ -154,6 +154,10 @@ public:
 	float getDisX() { return _disX; }
 	float getDisY() { return _disY; }
 
+	int getIndexX() { return _linkIdxX; }
+	int getIndexY() { return _linkIdxY; }
+	int getIndex() { return _linkIdx; }
+
 	void setIsCollision(bool collision, RECT npcRc);
 
 	void setX(float X) { _X = X; }

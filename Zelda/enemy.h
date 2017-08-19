@@ -78,6 +78,8 @@ public:
 	virtual void aStarPathFind();
 	virtual void getMapAttribute();
 
+	aStar* getAstar() { return _aStar; }
+
 	enemy();
 	virtual ~enemy();
 };
