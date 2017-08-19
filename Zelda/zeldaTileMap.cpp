@@ -35,8 +35,6 @@ void zeldaTileMap::release()
 
 void zeldaTileMap::update()
 {
-
-	_player->update();
 	cameraSetTile();
 	_camera->update(_mapWidth, _mapHeight);
 

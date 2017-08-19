@@ -2,6 +2,7 @@
 #include "gameNode.h"
 
 class camera;
+class zeldaTileMap;
 
 class player : public gameNode
 {
@@ -80,8 +81,11 @@ public:
 		RECT _crushRc;
 		float _damage;
 	};
-private:
 
+private:
+	zeldaTileMap* _zeldaTileMap;
+
+private:
 	RECT_ATTRIBUTE _rcAtr;
 
 private:
@@ -105,8 +109,9 @@ private:
 	float _disX, _disY;
 	float _cenX, _cenY;
 
-	int _idX;
-	int _idY;
+	int _linkIdx;
+	int _linkIdxX;
+	int _linkIdxY;
 
 	int _count;
 	int _currentFrameX, _currentFrameY;
@@ -119,11 +124,14 @@ private:
 	bool _isStore;
 	bool _isCollision;
 
+	bool _isPlayerInTileMap;
+	bool _moveTile;
+
 public:
 
 	HRESULT init(camera* camera);
 	void release(void);
-	void update(void);
+	void update(zeldaTileMap* _tileMap);
 	void render(void);
 
 	void draw(void);
@@ -135,6 +143,8 @@ public:
 	void pixelCollision(image* _mapPixelImg);
 
 	void makeCrushRc();
+
+	void dectectionTileMap();
 
 	RECT getRect() { return _playerRc; }
 	LINK_MOTION getMotion() { return L_Motion; }
@@ -152,6 +162,7 @@ public:
 	void isMove(bool move) { _move = move; }
 	void isStore(bool isStore) { _isStore = isStore; }
 
+	void setIsInTileMap(bool bInTile) { _isPlayerInTileMap = bInTile; }
 
 	player();
 	~player();

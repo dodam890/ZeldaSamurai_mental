@@ -38,6 +38,8 @@ public:
 
 	int getMapWidth() { return _mapWidth; }
 	int getMapHeight() { return _mapHeight; }
+	
+	tagTile* getTile() { return _tiles; }
 
 	BOOL* getAttribute(ATTRIBUTE attribute) { return _attribute[attribute]; }
 };
