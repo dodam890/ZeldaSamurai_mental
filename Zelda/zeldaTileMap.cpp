@@ -274,6 +274,15 @@ void zeldaTileMap::render()
 			break;
 		}
 	}
+
+	vector<enemy*> vEm = _em->getVEnemy();
+	vector<enemy*>::iterator viEm = _em->getVIEnemy();
+
+	for (viEm = vEm.begin(); viEm != vEm.end(); ++viEm)
+	{
+		(*viEm)->render();
+	}
+
 	_player->render();
 }
 
