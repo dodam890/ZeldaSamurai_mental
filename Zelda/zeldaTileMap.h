@@ -40,5 +40,6 @@ public:
 	int getMapHeight() { return _mapHeight; }
 
 	BOOL* getAttribute(ATTRIBUTE attribute) { return _attribute[attribute]; }
+	tagTile* getTiles() { return _tiles; }
 };
 

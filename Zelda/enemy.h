@@ -76,6 +76,7 @@ public:
 	virtual void addImage();
 
 	virtual void aStarPathFind();
+	virtual void getMapAttribute();
 
 	enemy();
 	virtual ~enemy();
