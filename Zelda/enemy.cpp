@@ -73,10 +73,26 @@ void enemy::update()
 {
 	this->addFrame();
 
-	//if (_isFindPlayer)
-	//{
+	if (_isFindPlayer)
+	{
 		this->aStarPathFind();
-	//}
+		//_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
+
+		RECT temp;
+		if (IntersectRect(&temp, &_moveRc, &_player->getRect()))
+		{
+			//_isFindPlayer = false;
+		}
+	}
+	else
+	{
+		RECT sour;
+		if (IntersectRect(&sour, &_collisionRc, &_player->getRect()) && !IntersectRect(&sour, &_moveRc, &_player->getRect()))
+		{
+			//_isFindPlayer = true;
+		}
+	//	normalMove();
+	}
 
 	_centerX = _camera->getStartX() + _distanceX;
 	_centerY = _camera->getStartY() + _distanceY;
@@ -90,7 +106,7 @@ void enemy::render()
 	this->draw();
 }
 
-void enemy::move(int index)
+void enemy::aStarMove(int index)
 {
 	if (_vPath[index]->getDisX() > _distanceX)
 	{
@@ -116,7 +132,30 @@ void enemy::move(int index)
 		_distanceY += 5;
 	}
 
-	//getMapAttribute();
+	getMapAttribute();
+}
+
+void enemy::normalMove()
+{
+	switch (_direction)
+	{
+	case enemy::DIRECTION_DOWN:
+		if (_rc.bottom < _moveRc.bottom)
+			_distanceY++;
+		break;
+	case enemy::DIRECTION_LEFT:
+		if (_rc.left > _moveRc.left)
+			_distanceX--;
+		break;
+	case enemy::DIRECTION_RIGHT:
+		if (_rc.right < _moveRc.right)
+			_distanceX++;
+		break;
+	case enemy::DIRECTION_UP:
+		if (_rc.top > _moveRc.top)
+			_distanceY--;
+		break;
+	}
 }
 
 void enemy::addFrame()
@@ -171,7 +210,7 @@ void enemy::aStarPathFind()
 			_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), _player->getIndexX(), _player->getIndexY());
 			_currentTileIndex++;
 		}
-		else this->move(_currentTileIndex);
+		else this->aStarMove(_currentTileIndex);
 	}
 }
 
