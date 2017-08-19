@@ -72,10 +72,13 @@ void zeldaTileMap::render()
 			continue;
 		}
 
-		if (_tiles[i].obj == OBJ_NONE) continue;
-		IMAGEMANAGER->frameRender("mapTiles_obj_1", getMemDC(),
-			_tiles[i].rc.left, _tiles[i].rc.top,
-			_tiles[i].objFrameX, _tiles[i].objFrameY);
+		if (_tiles[i].tileKind == KIND_OBJ1)
+		{
+			if (_tiles[i].obj == OBJ_NONE) continue;
+			IMAGEMANAGER->frameRender("mapTiles_obj_1", getMemDC(),
+				_tiles[i].rc.left, _tiles[i].rc.top,
+				_tiles[i].objFrameX, _tiles[i].objFrameY);
+		}
 	}
 
 	for (int i = 0; i < TILEX * TILEY; i++)
