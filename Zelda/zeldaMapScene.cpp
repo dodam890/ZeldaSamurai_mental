@@ -37,7 +37,10 @@ HRESULT zeldaMapScene::init()
 	_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 3480, _camera->getStartY() + 2130, 50, 50);
 	_sc = new shop_class;
 	_sc->init();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8f50aa7718daefe53f65bd4cdbcbffe4727acdc4
 
 	return S_OK;
 }
@@ -52,7 +55,18 @@ void zeldaMapScene::update()
 {
 	if (_isTileMap)
 	{
+<<<<<<< HEAD
 		_zeldaTileMap[_tileMapKind]->update();
+=======
+	_zeldaTileMap[_tileMapKind]->update();
+	_zeldaMap[_curMap]->update();
+	_camera->update(_zeldaMap[_curMap]->getMapWidth(), _zeldaMap[_curMap]->getMapHeight());
+	rectCollision();
+
+	_link->pixelCollision(_zeldaMap[_curMap]->getPixelImg());
+
+	_sceneEffect->update();
+>>>>>>> 8f50aa7718daefe53f65bd4cdbcbffe4727acdc4
 	}
 	else
 	{
@@ -126,6 +140,10 @@ void zeldaMapScene::update()
 						}
 					}
 				}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8f50aa7718daefe53f65bd4cdbcbffe4727acdc4
 				_sc->set_give_item_is_true(false);
 			}
 
@@ -156,6 +174,15 @@ void zeldaMapScene::render()
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->render();
+<<<<<<< HEAD
+=======
+		_zeldaMap[_curMap]->render();
+
+		_camera->render();
+		_camera->drawCameraPos();
+			
+		_sceneEffect->render();
+>>>>>>> 8f50aa7718daefe53f65bd4cdbcbffe4727acdc4
 	}
 	else
 	{
