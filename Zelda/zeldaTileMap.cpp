@@ -24,10 +24,6 @@ HRESULT zeldaTileMap::init(player* player, camera* camera, const CHAR* pSaveMapF
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_1", "image/sample_obj_80_1.bmp", 0, 0, 1120, 800, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_2", "image/sample_obj_80_2.bmp", 0, 0, 1200, 880, SAMPLETILEX3, SAMPLETILEY3, true, RGB(255, 0, 255));
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 261d1c8d2c4bf98c738b3cdc6ea5db68540fc7ce
 	loadMap(pSaveMapFileName);
 
 	return S_OK;
@@ -39,13 +35,10 @@ void zeldaTileMap::release()
 
 void zeldaTileMap::update()
 {
-<<<<<<< HEAD
 	_player->update();
 	cameraSetTile();
 	_camera->update(_mapWidth, _mapHeight);
-=======
 	//controlCamera();
->>>>>>> 261d1c8d2c4bf98c738b3cdc6ea5db68540fc7ce
 }
 
 void zeldaTileMap::render()
@@ -288,11 +281,7 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 {
 	HANDLE file;
 	DWORD read;
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 261d1c8d2c4bf98c738b3cdc6ea5db68540fc7ce
 	file = CreateFile(pSaveMapFileName, GENERIC_READ, 0, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 

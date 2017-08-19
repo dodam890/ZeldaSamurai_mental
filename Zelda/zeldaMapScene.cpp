@@ -31,15 +31,12 @@ HRESULT zeldaMapScene::init()
 
 	createMap();
 
-<<<<<<< HEAD
 	_tileMapKind = TILEMAP_ONE;
 	_isTileMap = false;
 
 	_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 3480, _camera->getStartY() + 2130, 50, 50);
-=======
 	_sc = new shop_class;
 	_sc->init();
->>>>>>> 261d1c8d2c4bf98c738b3cdc6ea5db68540fc7ce
 
 	return S_OK;
 }
@@ -54,9 +51,7 @@ void zeldaMapScene::update()
 {
 	if (_isTileMap)
 	{
-<<<<<<< HEAD
 		_zeldaTileMap[_tileMapKind]->update();
-=======
 	_zeldaMap[_curMap]->update();
 	_camera->update(_zeldaMap[_curMap]->getMapWidth(), _zeldaMap[_curMap]->getMapHeight());
 	rectCollision();
@@ -124,7 +119,6 @@ void zeldaMapScene::update()
 		effect_alpha = 255;
 		_is_inven = true;
 	}
->>>>>>> 261d1c8d2c4bf98c738b3cdc6ea5db68540fc7ce
 	}
 	else
 	{
@@ -175,21 +169,18 @@ void zeldaMapScene::render()
 { 
 	if (_isTileMap)
 	{
-<<<<<<< HEAD
 		_zeldaTileMap[_tileMapKind]->render();
-=======
-	_zeldaMap[_curMap]->render();
+		_zeldaMap[_curMap]->render();
 
-	_camera->render();
-	_camera->drawCameraPos();
-		
-	_sceneEffect->render();
-	if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(0) == true)
-	{
-		_sc->render();
-	}
-	IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
->>>>>>> 261d1c8d2c4bf98c738b3cdc6ea5db68540fc7ce
+		_camera->render();
+		_camera->drawCameraPos();
+			
+		_sceneEffect->render();
+		if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(0) == true)
+		{
+			_sc->render();
+		}
+		IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
 	}
 	else
 	{
