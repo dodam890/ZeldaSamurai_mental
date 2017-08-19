@@ -45,9 +45,14 @@ void snail::render()
 	enemy::render();
 }
 
-void snail::move(int index)
+void snail::aStarMove(int index)
 {
-	enemy::move(index);
+	enemy::aStarMove(index);
+}
+
+void snail::normalMove()
+{
+	enemy::normalMove();
 }
 
 void snail::addFrame()
@@ -63,6 +68,11 @@ void snail::draw()
 void snail::aStarPathFind()
 {
 	enemy::aStarPathFind();
+}
+
+void snail::getMapAttribute()
+{
+	enemy::getMapAttribute();
 }
 
 void snail::addImage()

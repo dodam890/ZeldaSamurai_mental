@@ -46,9 +46,14 @@ void slime::render()
 	enemy::render();
 }
 
-void slime::move(int index)
+void slime::aStarMove(int index)
 {
-	enemy::move(index);
+	enemy::aStarMove(index);
+}
+
+void slime::normalMove()
+{
+	enemy::normalMove();
 }
 
 void slime::addFrame()
@@ -64,6 +69,11 @@ void slime::draw()
 void slime::aStarPathFind()
 {
 	enemy::aStarPathFind();
+}
+
+void slime::getMapAttribute()
+{
+	enemy::getMapAttribute();
 }
 
 void slime::addImage()

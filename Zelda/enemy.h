@@ -69,7 +69,8 @@ public:
 	virtual void update();
 	virtual void render();
 
-	virtual void move(int index);
+	virtual void aStarMove(int index);
+	virtual void normalMove();
 	virtual void addFrame();
 	virtual void draw();
 
@@ -77,8 +78,6 @@ public:
 
 	virtual void aStarPathFind();
 	virtual void getMapAttribute();
-
-	aStar* getAstar() { return _aStar; }
 
 	enemy();
 	virtual ~enemy();

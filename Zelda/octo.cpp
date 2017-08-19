@@ -42,9 +42,14 @@ void octo::render()
 	enemy::render();
 }
 
-void octo::move(int index)
+void octo::aStarMove(int index)
 {
-	enemy::move(index);
+	enemy::aStarMove(index);
+}
+
+void octo::normalMove()
+{
+	enemy::normalMove();
 }
 
 void octo::addFrame()
@@ -60,6 +65,11 @@ void octo::draw()
 void octo::aStarPathFind()
 {
 	enemy::aStarPathFind();
+}
+
+void octo::getMapAttribute()
+{
+	enemy::getMapAttribute();
 }
 
 void octo::addImage()
