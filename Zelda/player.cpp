@@ -33,6 +33,9 @@ HRESULT player::init(camera* camera)
 	_X = _cam->getStartX() + _disX;
 	_Y = _cam->getStartY() + _disY;
 
+	_idX = 0;
+	_idY = 0;
+
 	_playerRc = RectMake(_X + 102, _Y + 100, 66, 70);
 
 	_isCollision = 0;

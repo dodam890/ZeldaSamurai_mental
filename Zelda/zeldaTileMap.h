@@ -2,30 +2,39 @@
 #include "gameNode.h"
 #include "zeldaTileNode.h"
 #include "camera.h"
+#include "enemyManager.h"
+
+class player;
 
 class zeldaTileMap : public gameNode
 {
-private:
+protected:
 	camera* _camera;
 	image* _imgTmpBackbuffer;
 
 	int _mapWidth;
 	int _mapHeight;
 
-private:
+protected:
 	tagTile _tiles[TILEX * TILEY];
 	BOOL _attribute[E_ATR_END][TILEX * TILEY];
+
+protected:
+	enemyManager* _em;
+	player* _player;
 
 public:
 	zeldaTileMap();
 	virtual ~zeldaTileMap();
 
-	virtual HRESULT init(camera* camera, const CHAR* pSaveMapFileName, int mapWidth, int mapHeight);
+	virtual HRESULT init(player* player, camera* camera, const CHAR* pSaveMapFileName, int mapWidth, int mapHeight);
 	virtual void release();
 	virtual void update();
 	virtual void render();
 
 	virtual void loadMap(const CHAR* pSaveMapFileName);
+
+	void cameraSetTile();
 
 	int getMapWidth() { return _mapWidth; }
 	int getMapHeight() { return _mapHeight; }

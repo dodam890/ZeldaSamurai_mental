@@ -9,9 +9,9 @@ snail::~snail()
 {
 }
 
-HRESULT snail::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
+HRESULT snail::init(player* player, camera* camera, zeldaTileMap* map, int idxX, int idxY)
 {
-	enemy::init(camera, map, idxX, idxY);
+	enemy::init(player, camera, map, idxX, idxY);
 
 	_rangeWidth = 400;
 	_rangeHeight = 300;

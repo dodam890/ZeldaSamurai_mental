@@ -80,7 +80,6 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="aStar.h" />
-    <ClInclude Include="aStarScene.h" />
     <ClInclude Include="aStarTile.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
@@ -132,13 +131,11 @@
     <ClInclude Include="zeldaMap.h" />
     <ClInclude Include="zeldaMapScene.h" />
     <ClInclude Include="zeldaTileMap.h" />
-    <ClInclude Include="zeldaTileMapScene.h" />
     <ClInclude Include="zeldaTileNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="aStar.cpp" />
-    <ClCompile Include="aStarScene.cpp" />
     <ClCompile Include="aStarTile.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -190,7 +187,6 @@
     <ClCompile Include="zeldaMap.cpp" />
     <ClCompile Include="zeldaMapScene.cpp" />
     <ClCompile Include="zeldaTileMap.cpp" />
-    <ClCompile Include="zeldaTileMapScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

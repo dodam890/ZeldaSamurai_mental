@@ -4,6 +4,7 @@
 
 class camera;
 class zeldaTileMap;
+class player;
 
 class enemyManager : public gameNode
 {
@@ -16,10 +17,11 @@ private:
 	viEnemy _viEm;
 
 	camera* _camera;
+	player* _player;
 	zeldaTileMap* _map;
 
 public:
-	HRESULT init(camera* camera, zeldaTileMap* map);
+	HRESULT init(player* player, camera* camera, zeldaTileMap* map);
 	void release();
 	void update();
 	void render();

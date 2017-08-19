@@ -9,6 +9,17 @@
 
 class zeldaMapScene : public gameNode
 {
+public:
+	enum TILEMAP_KIND
+	{
+		TILEMAP_ONE,
+		TILEMAP_TWO,
+		TILEMAP_THREE,
+		TILEMAP_FOUR,
+		TILEMAP_BOSS,
+		TILEMAP_END = 5
+	};
+
 private:
 	camera* _camera;
 	player* _link;
@@ -16,7 +27,6 @@ private:
 	image* _imgTmpBackbuffer;
 	MAP_KIND _curMap;
 	zeldaMap* _zeldaMap[MAP_KIND_END];
-
 	sceneEffect* _sceneEffect;
 
 	bool _isCameraMove;
@@ -24,6 +34,14 @@ private:
 
 	bool _is_inven;
 	int effect_alpha;
+
+private:
+	zeldaTileMap* _zeldaTileMap[TILEMAP_END];
+	TILEMAP_KIND _tileMapKind;
+
+	bool _isTileMap;
+
+	RECT _rcGoTileMap;
 
 public:
 	zeldaMapScene();

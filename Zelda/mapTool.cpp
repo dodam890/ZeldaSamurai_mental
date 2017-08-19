@@ -92,7 +92,7 @@ void mapTool::render()
 	//drawCameraRect();
 
 	// 타일속성 그려주기
-	//	drawTileName();
+	
 
 	//배경
 	IMAGEMANAGER->findImage("MAPTOOL_BACKGROUND")->render(getMemDC(), 0, 0);
@@ -108,7 +108,7 @@ void mapTool::render()
 	IMAGEMANAGER->findImage("MAPTOOL_FRAME")->render(getMemDC(), 0, 0);
 
 	//drawButton();
-
+	//drawTileName();
 }
 
 void mapTool::setupTiles(void)
@@ -197,13 +197,16 @@ void mapTool::setMap(void)
 				break;
 
 			case SET_OBJECT1_RC:
+
 				_tiles[i].objFrameX = _currentTile.objFrameX;
 				_tiles[i].objFrameY = _currentTile.objFrameY;
 				_tiles[i].obj = objSelect(_tiles[i].objFrameX, _tiles[i].objFrameY);
 				_tiles[i].tileKind = KIND_OBJ1;
+
 				break;
 
 			case SET_OBJECT2_RC:
+
 				_tiles[i].objFrameX = _currentTile.objFrameX;
 				_tiles[i].objFrameY = _currentTile.objFrameY;
 				_tiles[i].obj2 = objSelect2(_tiles[i].objFrameX, _tiles[i].objFrameY);
@@ -211,6 +214,7 @@ void mapTool::setMap(void)
 				break;
 
 			case SET_ERASER_RC:
+
 				_tiles[i].objFrameX = 0;
 				_tiles[i].objFrameY = 0;
 				_tiles[i].obj = OBJ_NONE;
@@ -703,12 +707,14 @@ void mapTool::controlCamera()
 
 void mapTool::drawTileName()
 {
-	char str[128] = "";
-	sprintf(str, "[objX : %d, objY : %d]", _currentTile.objFrameX, _currentTile.objFrameY);
-	TextOut(getMemDC(), WINSIZEX - 200, WINSIZEY - 200, str, strlen(str));
-	sprintf(str, "[terX : %d, terY : %d]", _currentTile.terFrameX, _currentTile.terFrameY);
-	TextOut(getMemDC(), WINSIZEX - 200, WINSIZEY - 170, str, strlen(str));
-
+	for (int i = 0; i < TILETOTAL; i++)
+	{
+		char str[128] = "";
+		sprintf(str, "[objX : %d, objY : %d]", _tiles[i].objFrameX, _tiles[i].objFrameY);
+		TextOut(getMemDC(), _tiles[i].rc.left +10, _tiles[i].rc.top+ 20, str, strlen(str));
+		//sprintf(str, "[terX : %d, terY : %d]", _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+		//TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 20, str, strlen(str));
+	}
 
 	for (int i = 0; i < TILETOTAL; i++)
 	{
@@ -732,11 +738,11 @@ void mapTool::drawTileName()
 		switch (_tiles[i].obj)
 		{
 			case OBJ_WALL:
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "벽", strlen("벽"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 40, "벽", strlen("벽"));
 			break;
 
 			default:
-				TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "?", strlen("?"));
+				TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 40, "?", strlen("?"));
 			break;
 
 		}
@@ -745,138 +751,138 @@ void mapTool::drawTileName()
 		{
 		case OBJ_WALL:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "벽", strlen("벽"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "벽", strlen("벽"));
 
 			break;
 		case OBJ_BUTTON1_UP:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "버튼1업", strlen("버튼1업"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼1업", strlen("버튼1업"));
 
 			break;
 		case OBJ_BUTTON1_DOWN:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "버튼1밑", strlen("버튼1밑"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼1밑", strlen("버튼1밑"));
 
 			break;
 		case OBJ_BUTTON2_UP:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "버튼2업", strlen("버튼1밑"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼2업", strlen("버튼1밑"));
 
 			break;
 		case OBJ_BUTTON2_DOWN:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "버튼2밑", strlen("버튼1밑"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼2밑", strlen("버튼1밑"));
 
 			break;
 		case OBJ_BRIDGE1:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "다리1", strlen("다리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "다리1", strlen("다리1"));
 
 			break;
 		case OBJ_BRIDGE2:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "다리2", strlen("다리2"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "다리2", strlen("다리2"));
 
 			break;
 		case OBJ_FIRE1:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "불1", strlen("불1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "불1", strlen("불1"));
 
 			break;
 		case OBJ_FIRE2:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "불2", strlen("불1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "불2", strlen("불1"));
 
 			break;
 		case OBJ_COLUMN1:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "기둥1", strlen("불아1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "기둥1", strlen("불아1"));
 
 			break;
 		case OBJ_COLUMN2:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "기둥2", strlen("불아1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "기둥2", strlen("불아1"));
 
 			break;
 		case OBJ_BOX1:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "박스1", strlen("불아1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "박스1", strlen("불아1"));
 
 			break;
 		case OBJ_BOX2:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "박스2", strlen("불아1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "박스2", strlen("불아1"));
 
 			break;
 		case OBJ_POT:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "항아리", strlen("항아리"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "항아리", strlen("항아리"));
 
 			break;
 
 		case OBJ_SMALL_BOX1:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "작은박1", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "작은박1", strlen("항아리1"));
 
 			break;
 
 		case OBJ_SMALL_BOX2:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "작은박2", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "작은박2", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR_UP_CLOSE:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문위닫힘", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문위닫힘", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR_UP_OPEN:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문위열림", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문위열림", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR_DOWN_CLOSE:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문밑닫힘", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문밑닫힘", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR_DOWN_OPEN:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문밑열림", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문밑열림", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR2_UP_CLOSE:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2위닫", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2위닫", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR2_UP_OPEN:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2위열", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2위열", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR2_DOWN_CLOSE:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2밑닫", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2밑닫", strlen("항아리1"));
 
 			break;
 
 		case OBJ_DOOR2_DOWN_OPEN:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "문2밑열", strlen("항아리1"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2밑열", strlen("항아리1"));
 
 			break;
 
 		default:
 
-			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "?", strlen("?"));
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "?", strlen("?"));
 
 			break;
 		}

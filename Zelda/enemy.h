@@ -23,6 +23,9 @@ public:
 		DIRECTION_END = 4
 	};
 protected:
+	player* _player;
+
+protected:
 	vector<aStarTile*> _vPath;
 	vector<aStarTile*> _viPath;
 
@@ -49,6 +52,8 @@ protected:
 	int _currentTileIndex;
 	bool _isFull;
 
+	bool _isFindPlayer;
+
 	camera* _camera;
 
 	player* _link;
@@ -59,7 +64,7 @@ protected:
 	int _rangeHeight;
 
 public:
-	virtual HRESULT init(camera* camera, zeldaTileMap* map, int idxX, int idxY);
+	virtual HRESULT init(player* player, camera* camera, zeldaTileMap* map, int idxX, int idxY);
 	virtual void release();
 	virtual void update();
 	virtual void render();

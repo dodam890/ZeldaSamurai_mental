@@ -16,12 +16,6 @@ HRESULT select_scene::init()
 	count = 0;
 	carrentX = 0;
 
-	_camera = new camera;
-	_camera->init();
-
-	_link = new player;
-	_link->init(_camera);
-
 	return S_OK;
 }
 
@@ -38,13 +32,10 @@ void select_scene::update()
 		if (carrentX > IMAGEMANAGER->findImage("선택창뒷배경")->getMaxFrameX()) carrentX = 0;
 		count = 0;
 	}
-	_link->update();
-
 }
 
 void select_scene::render()
 {
 	IMAGEMANAGER->findImage("선택창뒷배경")->frameRender(getMemDC(), 0, 0, carrentX, 0);
 	IMAGEMANAGER->findImage("타이틀")->render(getMemDC(), 10, 0);
-	_link->render();
 }

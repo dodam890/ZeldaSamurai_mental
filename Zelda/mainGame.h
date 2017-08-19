@@ -4,9 +4,6 @@
 #include "zeldaMapScene.h"
 #include "main_scene.h"
 #include "select_scene.h"
-#include "zeldaTileMapScene.h"
-
-#include "aStarScene.h"
 
 class mainGame : public gameNode
 {

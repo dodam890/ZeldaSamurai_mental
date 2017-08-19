@@ -105,6 +105,8 @@ private:
 	float _disX, _disY;
 	float _cenX, _cenY;
 
+	int _idX;
+	int _idY;
 
 	int _count;
 	int _currentFrameX, _currentFrameY;

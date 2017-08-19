@@ -34,9 +34,6 @@
     <ClCompile Include="aStar.cpp">
       <Filter>mainGame\A%2a</Filter>
     </ClCompile>
-    <ClCompile Include="aStarScene.cpp">
-      <Filter>mainGame\A%2a</Filter>
-    </ClCompile>
     <ClCompile Include="aStarTile.cpp">
       <Filter>mainGame\A%2a</Filter>
     </ClCompile>
@@ -92,9 +89,6 @@
       <Filter>mainGame\map\mapTool\mapToolScene</Filter>
     </ClCompile>
     <ClCompile Include="zeldaTileMap.cpp">
-      <Filter>mainGame\map\zeldaTileMap</Filter>
-    </ClCompile>
-    <ClCompile Include="zeldaTileMapScene.cpp">
       <Filter>mainGame\map\zeldaTileMap</Filter>
     </ClCompile>
     <ClCompile Include="c_zeldaMap.cpp">
@@ -192,9 +186,6 @@
     <ClInclude Include="aStar.h">
       <Filter>mainGame\A%2a</Filter>
     </ClInclude>
-    <ClInclude Include="aStarScene.h">
-      <Filter>mainGame\A%2a</Filter>
-    </ClInclude>
     <ClInclude Include="aStarTile.h">
       <Filter>mainGame\A%2a</Filter>
     </ClInclude>
@@ -250,9 +241,6 @@
       <Filter>mainGame\map\mapTool\mapToolScene</Filter>
     </ClInclude>
     <ClInclude Include="zeldaTileMap.h">
-      <Filter>mainGame\map\zeldaTileMap</Filter>
-    </ClInclude>
-    <ClInclude Include="zeldaTileMapScene.h">
       <Filter>mainGame\map\zeldaTileMap</Filter>
     </ClInclude>
     <ClInclude Include="c_zeldaMap.h">

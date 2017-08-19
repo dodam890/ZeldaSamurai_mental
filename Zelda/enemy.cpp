@@ -22,7 +22,8 @@ enemy::enemy() :
 	_camera(NULL),
 	_rangeWidth(0),
 	_rangeHeight(0),
-	_direction(DIRECTION_DOWN)
+	_direction(DIRECTION_DOWN),
+	_isFindPlayer(false)
 {
 }
 
@@ -32,10 +33,10 @@ enemy::~enemy()
 }
 
 
-HRESULT enemy::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
+HRESULT enemy::init(player* player, camera* camera, zeldaTileMap* map, int idxX, int idxY)
 {
+	_player = player;
 	_camera = camera;
-
 	_map = map;
 
 	_indexX = idxX;
@@ -57,6 +58,7 @@ HRESULT enemy::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
 
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 
+	_isFindPlayer = false;
 
 	return S_OK;;
 }
@@ -70,11 +72,15 @@ void enemy::update()
 {
 	this->addFrame();
 
+	if (_isFindPlayer)
+	{
+		this->aStarPathFind();
+	}
+
 	_centerX = _camera->getStartX() + _distanceX;
 	_centerY = _camera->getStartY() + _distanceY;
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 50, _imgInfo[_direction].image->getFrameHeight());
 
-	this->aStarPathFind();
 	//_aStar->update();
 }
 

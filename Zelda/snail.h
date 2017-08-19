@@ -7,7 +7,7 @@ public:
 	snail();
 	virtual ~snail();
 
-	virtual HRESULT init(camera* camera, zeldaTileMap* map, int idxX, int idxY);
+	virtual HRESULT init(player* player, camera* camera, zeldaTileMap* map, int idxX, int idxY);
 	virtual void release();
 	virtual void update();
 	virtual void render();

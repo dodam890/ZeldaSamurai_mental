@@ -3,10 +3,13 @@
 
 // ----------------------------------------------------------------------------------------------------
 
-HRESULT zeldaTileMap1::init(camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
+HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
 {
-	zeldaTileMap::init(camera, pMapSaveFileName, mapWidth, mapHeight);
+	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
 	
+	_em = new enemyManager;
+	//_em->init(_player, _camera, );
+
 	return S_OK;
 }
 
@@ -28,9 +31,9 @@ void zeldaTileMap1::loadMap()
 
 // ----------------------------------------------------------------------------------------------------
 
-HRESULT zeldaTileMap2::init(camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
+HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
 {
-	zeldaTileMap::init(camera, pMapSaveFileName, mapWidth, mapHeight);
+	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
 	return S_OK;
 }
 
@@ -52,9 +55,9 @@ void zeldaTileMap2::loadMap()
 
 // ----------------------------------------------------------------------------------------------------
 
-HRESULT zeldaTileMap3::init(camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
+HRESULT zeldaTileMap3::init(player* player, camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
 {
-	zeldaTileMap::init(camera, pMapSaveFileName, mapWidth, mapHeight);
+	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
 	return S_OK;
 }
 

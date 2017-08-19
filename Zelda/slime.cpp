@@ -9,9 +9,9 @@ slime::~slime()
 {
 }
 
-HRESULT slime::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
+HRESULT slime::init(player* player, camera* camera, zeldaTileMap* map, int idxX, int idxY)
 {
-	enemy::init(camera, map, idxX, idxY);
+	enemy::init(player, camera, map, idxX, idxY);
 
 	_rangeWidth = 500;
 

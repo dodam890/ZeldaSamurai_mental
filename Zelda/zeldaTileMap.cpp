@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "zeldaTileMap.h"
+#include "player.h"
 
 zeldaTileMap::zeldaTileMap() :
 	_tiles(),
@@ -12,8 +13,9 @@ zeldaTileMap::~zeldaTileMap()
 {
 }
 
-HRESULT zeldaTileMap::init(camera* camera, const CHAR* pSaveMapFileName, int mapWidth, int mapHeight)
+HRESULT zeldaTileMap::init(player* player, camera* camera, const CHAR* pSaveMapFileName, int mapWidth, int mapHeight)
 {
+	_player = player;
 	_camera = camera;
 	_mapWidth = mapWidth;
 	_mapHeight = mapHeight;
@@ -22,12 +24,8 @@ HRESULT zeldaTileMap::init(camera* camera, const CHAR* pSaveMapFileName, int map
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_1", "image/sample_obj_80_1.bmp", 0, 0, 1120, 800, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_2", "image/sample_obj_80_2.bmp", 0, 0, 1200, 880, SAMPLETILEX3, SAMPLETILEY3, true, RGB(255, 0, 255));
 
-<<<<<<< HEAD
 	loadMap(pSaveMapFileName);
 
-=======
-	loadMap();
->>>>>>> db2adc7fdf40581292384cf1cd049df19defbce3
 	return S_OK;
 }
 
@@ -37,10 +35,9 @@ void zeldaTileMap::release()
 
 void zeldaTileMap::update()
 {
-<<<<<<< HEAD
-=======
-	//controlCamera();
->>>>>>> db2adc7fdf40581292384cf1cd049df19defbce3
+	_player->update();
+	cameraSetTile();
+	_camera->update(_mapWidth, _mapHeight);
 }
 
 void zeldaTileMap::render()
@@ -56,42 +53,259 @@ void zeldaTileMap::render()
 		{
 			continue;
 		}
-		if (_tiles[i].tileKind == KIND_TERRAIN)
+
+		IMAGEMANAGER->frameRender("mapTiles_ter", getMemDC(),
+			_tiles[i].rc.left, _tiles[i].rc.top,
+			_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+	}
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].rc.left >= WINSIZEX ||
+			_tiles[i].rc.right <= 0 ||
+			_tiles[i].rc.bottom <= 0 ||
+			_tiles[i].rc.top >= WINSIZEY)
 		{
-			IMAGEMANAGER->frameRender("mapTiles_ter", getMemDC(),
-				_tiles[i].rc.left, _tiles[i].rc.top,
-				_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+			continue;
 		}
-		if (_tiles[i].tileKind == KIND_OBJ1)
+
+		if (_tiles[i].obj == OBJ_NONE) continue;
+		IMAGEMANAGER->frameRender("mapTiles_obj_1", getMemDC(),
+			_tiles[i].rc.left, _tiles[i].rc.top,
+			_tiles[i].objFrameX, _tiles[i].objFrameY);
+	}
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].rc.left >= WINSIZEX ||
+			_tiles[i].rc.right <= 0 ||
+			_tiles[i].rc.bottom <= 0 ||
+			_tiles[i].rc.top >= WINSIZEY)
 		{
-			IMAGEMANAGER->frameRender("mapTiles_obj_1", getMemDC(),
-				_tiles[i].rc.left, _tiles[i].rc.top,
-				_tiles[i].objFrameX, _tiles[i].objFrameY);
+			continue;
 		}
-		if (_tiles[i].tileKind == KIND_OBJ2)
+
+		if (_tiles[i].obj2 == OBJ_NONE) continue;
+		IMAGEMANAGER->frameRender("mapTiles_obj_2", getMemDC(),
+			_tiles[i].rc.left, _tiles[i].rc.top,
+			_tiles[i].objFrameX, _tiles[i].objFrameY);
+	}
+
+	for (int i = 0; i < TILETOTAL; i++)
+	{
+		char str[128];
+		sprintf(str, "%d , %d", _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+		TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 20, str, strlen(str));
+		sprintf(str, "%d , %d", _tiles[i].objFrameX, _tiles[i].objFrameY);
+		TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 30, str, strlen(str));
+
+		if (_tiles[i].rc.left >= WINSIZEX - WINSIZEX / 3 + 50) continue;
+		switch (_tiles[i].terrain)
 		{
-			IMAGEMANAGER->frameRender("mapTiles_obj_2", getMemDC(),
-				_tiles[i].rc.left, _tiles[i].rc.top,
-				_tiles[i].objFrameX, _tiles[i].objFrameY);
+		case TR_BASE:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "기본", strlen("기본"));
+	
+
+			break;
+		case TR_GRASS:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "잔디", strlen("잔디"));
+
+			break;
+		case TR_DESERT:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "모래", strlen("모래"));
+
+			break;
+		case TR_WATER:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "물", strlen("물"));
+		
+			break;
+
+		}
+		switch (_tiles[i].obj)
+		{
+		case OBJ_WALL:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 40, "벽", strlen("벽"));
+			break;
+
+		default:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 40, "?", strlen("?"));
+			break;
+
+		}
+
+		switch (_tiles[i].obj2)
+		{
+		case OBJ_WALL:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "벽", strlen("벽"));
+
+			break;
+		case OBJ_BUTTON1_UP:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼1업", strlen("버튼1업"));
+
+			break;
+		case OBJ_BUTTON1_DOWN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼1밑", strlen("버튼1밑"));
+
+			break;
+		case OBJ_BUTTON2_UP:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼2업", strlen("버튼1밑"));
+
+			break;
+		case OBJ_BUTTON2_DOWN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "버튼2밑", strlen("버튼1밑"));
+
+			break;
+		case OBJ_BRIDGE1:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "다리1", strlen("다리1"));
+
+			break;
+		case OBJ_BRIDGE2:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "다리2", strlen("다리2"));
+
+			break;
+		case OBJ_FIRE1:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "불1", strlen("불1"));
+
+			break;
+		case OBJ_FIRE2:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "불2", strlen("불1"));
+
+			break;
+		case OBJ_COLUMN1:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "기둥1", strlen("불아1"));
+
+			break;
+		case OBJ_COLUMN2:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "기둥2", strlen("불아1"));
+
+			break;
+		case OBJ_BOX1:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "박스1", strlen("불아1"));
+
+			break;
+		case OBJ_BOX2:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "박스2", strlen("불아1"));
+
+			break;
+		case OBJ_POT:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "항아리", strlen("항아리"));
+
+			break;
+
+		case OBJ_SMALL_BOX1:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "작은박1", strlen("항아리1"));
+
+			break;
+
+		case OBJ_SMALL_BOX2:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "작은박2", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_UP_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문위닫힘", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_UP_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문위열림", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_DOWN_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문밑닫힘", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR_DOWN_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문밑열림", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_UP_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2위닫", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_UP_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2위열", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_DOWN_CLOSE:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2밑닫", strlen("항아리1"));
+
+			break;
+
+		case OBJ_DOOR2_DOWN_OPEN:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "문2밑열", strlen("항아리1"));
+
+			break;
+
+		default:
+
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 70, "?", strlen("?"));
+
+			break;
 		}
 	}
+	_player->render();
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 {
 	HANDLE file;
 	DWORD read;
-
-<<<<<<< HEAD
 	file = CreateFile(pSaveMapFileName, GENERIC_READ, 0, NULL,
-=======
-	file = CreateFile("mapSave00.map", GENERIC_READ, 0, NULL,
->>>>>>> db2adc7fdf40581292384cf1cd049df19defbce3
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
-	memset(_attribute, 0, sizeof(BOOL) * TILEX * TILEY);
 
+	for (int i = 0; i < TILEY; i++)
+	{
+		for (int j = 0; j < TILEX; j++)
+		{
+			_tiles[i * TILEX + j].disX = TILESIZE / 2 + j * TILESIZE + 81;
+			_tiles[i * TILEX + j].disY = TILESIZE / 2 + i * TILESIZE + 132;
+
+			_tiles[i * TILEX + j].posCenter.x = _camera->getStartX() + _tiles[i * TILEX + j].disX;
+			_tiles[i * TILEX + j].posCenter.y = _camera->getStartY() + _tiles[i * TILEX + j].disY;
+
+			_tiles[i * TILEX + j].rc = RectMakeCenter(_tiles[i * TILEX + j].posCenter.x, _tiles[i * TILEX + j].posCenter.y, TILESIZE, TILESIZE);
+		}
+	}
+	for (int i = 0; i < TILETOTAL; i++)
+	{
+		_tiles[i].disX -= 80;
+		_tiles[i].disY -= 130;
+		_tiles[i].posCenter.x = _camera->getStartX() + _tiles[i].disX;
+		_tiles[i].posCenter.y = _camera->getStartY() + _tiles[i].disY;
+		_tiles[i].rc = RectMakeCenter(_tiles[i].posCenter.x, _tiles[i].posCenter.y, TILESIZE, TILESIZE);
+	}
 
 
 	for (int i = 0; i < E_ATR_END; i++)
@@ -121,4 +335,15 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 	}
 
 	CloseHandle(file);
+}
+
+void zeldaTileMap::cameraSetTile()
+{
+	for (int i = 0; i < TILETOTAL; i++)
+	{
+		_tiles[i].posCenter.x = _camera->getStartX() + _tiles[i].disX;
+		_tiles[i].posCenter.y = _camera->getStartY() + _tiles[i].disY;
+		_tiles[i].rc = RectMakeCenter(_tiles[i].posCenter.x, _tiles[i].posCenter.y, TILESIZE, TILESIZE);
+
+	}
 }

@@ -17,12 +17,10 @@ HRESULT mainGame::init(void)
 	addImage();
 
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
-	SCENEMANAGER->addScene("zeldaMapScene", new zeldaMapScene);
 	SCENEMANAGER->addScene("main_scene", new main_scene);
 	SCENEMANAGER->addScene("select_scene", new select_scene);
-	SCENEMANAGER->addScene("zeldaTileMapScene", new zeldaTileMapScene);
-	SCENEMANAGER->addScene("ASTAR", new aStarScene);
 
+	SCENEMANAGER->addScene("zeldaMapScene", new zeldaMapScene);
 
 	//메인메뉴 클래스 생성할거고.
 	//메인메뉴에서 두가지의 씬 전환 할것임.
@@ -79,14 +77,6 @@ void mainGame::changeSceneByKeyInput()
 	if (KEYMANAGER->isOnceKeyDown('E'))
 	{
 		SCENEMANAGER->changeScene("select_scene");
-	}
-	if (KEYMANAGER->isOnceKeyDown('R'))
-	{
-		SCENEMANAGER->changeScene("zeldaTileMapScene");
-	}
-	if (KEYMANAGER->isOnceKeyDown('T'))
-	{
-		SCENEMANAGER->changeScene("ASTAR");
 	}
 }
 

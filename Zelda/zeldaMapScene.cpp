@@ -31,6 +31,11 @@ HRESULT zeldaMapScene::init()
 
 	createMap();
 
+	_tileMapKind = TILEMAP_ONE;
+	_isTileMap = false;
+
+	_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 3480, _camera->getStartY() + 2130, 50, 50);
+
 	return S_OK;
 }
 
@@ -42,53 +47,80 @@ void zeldaMapScene::release()
 
 void zeldaMapScene::update()
 {
-	if (_is_inven == false)
+	if (_isTileMap)
 	{
-	_zeldaMap[_curMap]->update();
-	_camera->update(_zeldaMap[_curMap]->getMapWidth(), _zeldaMap[_curMap]->getMapHeight());
-	rectCollision();
-
-	_link->pixelCollision(_zeldaMap[_curMap]->getPixelImg());
-
-	_sceneEffect->update();
-	effect_alpha -= 20;
-	if (effect_alpha < 0) effect_alpha = 0;
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
-	{
-		effect_alpha = 255;
-		_is_inven = true;
+		_zeldaTileMap[_tileMapKind]->update();
 	}
-	}
-	else if (_is_inven == true)
+	else
 	{
-		effect_alpha -= 20;
-		if (effect_alpha < 0) effect_alpha = 0;
-		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+		//Å¸ÀÏ¸ÊÀ¸·Î ÀÌµ¿ ½ÇÇè.
+		_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 3480, _camera->getStartY() + 2130, 50, 50);
+		RECT rcTmp;
+		if (IntersectRect(&rcTmp, &_rcGoTileMap, &_link->getRect()))
 		{
-			effect_alpha = 255;
-			_is_inven = false;
+			_isTileMap = true;		
+			_camera->setCameraX(0);
+			_camera->setCameraY(0);
+			_link->setDisX(500);
+			_link->setDisY(500);
 		}
-		_inven->update();
+	
+		if (_is_inven == false)
+		{
+			_zeldaMap[_curMap]->update();
+			_camera->update(_zeldaMap[_curMap]->getMapWidth(), _zeldaMap[_curMap]->getMapHeight());
+			rectCollision();
+
+			_link->pixelCollision(_zeldaMap[_curMap]->getPixelImg());
+
+			_sceneEffect->update();
+			effect_alpha -= 20;
+			if (effect_alpha < 0) effect_alpha = 0;
+			if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+			{
+				effect_alpha = 255;
+				_is_inven = true;
+			}
+		}
+		else if (_is_inven == true)
+		{
+			effect_alpha -= 20;
+			if (effect_alpha < 0) effect_alpha = 0;
+			if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+			{
+				effect_alpha = 255;
+				_is_inven = false;
+			}
+			_inven->update();
+		}
 	}
 }
 
 void zeldaMapScene::render()
 { 
-	if (_is_inven == false)
+	if (_isTileMap)
 	{
-	_zeldaMap[_curMap]->render();
+		_zeldaTileMap[_tileMapKind]->render();
+	}
+	else
+	{
+		if (_is_inven == false)
+		{
+			_zeldaMap[_curMap]->render();
+			_sceneEffect->render();
+			IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
+		}
+		else if (_is_inven == true)
+		{
+			_inven->render();
+			IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
+		}
+
+		Rectangle(getMemDC(), _rcGoTileMap.left, _rcGoTileMap.top, _rcGoTileMap.right, _rcGoTileMap.bottom);
+	}
 
 	_camera->render();
 	_camera->drawCameraPos();
-		
-	_sceneEffect->render();
-	IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
-	}
-	else if (_is_inven == true)
-	{
-		_inven->render();
-		IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
-	}
 }
 
 void zeldaMapScene::createMap()
@@ -100,6 +132,9 @@ void zeldaMapScene::createMap()
 
 	_zeldaMap[STORE] = new storeMap;
 	_zeldaMap[STORE]->init("STORE", "STORE_PIXELCOLLISION", _camera, _link);
+
+	_zeldaTileMap[TILEMAP_ONE] = new zeldaTileMap;
+	_zeldaTileMap[TILEMAP_ONE]->init(_link, _camera, "mapSave00.map", TILEX * TILESIZE, TILEY * TILESIZE);
 }
 
 void zeldaMapScene::rectCollision()

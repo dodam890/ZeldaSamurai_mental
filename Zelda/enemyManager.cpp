@@ -4,6 +4,7 @@
 #include "slime.h"
 #include "snail.h"
 #include "camera.h"
+#include "player.h"
 
 enemyManager::enemyManager()
 {
@@ -14,10 +15,11 @@ enemyManager::~enemyManager()
 {
 }
 
-HRESULT enemyManager::init(camera* camera, zeldaTileMap* map)
+HRESULT enemyManager::init(player* player, camera* camera, zeldaTileMap* map)
 {
 	_camera = camera;
 	_map = map;
+	_player = player;
 
 	return S_OK;
 }
@@ -67,7 +69,7 @@ void enemyManager::setOcto()
 	enemy* enemyOcto;
 
 	enemyOcto = new octo;
-	enemyOcto->init(_camera, _map, 5, 5);
+	enemyOcto->init(_player, _camera, _map, 1, 1);
 	_vEm.push_back(enemyOcto);
 }
 
@@ -76,7 +78,7 @@ void enemyManager::setSlime()
 	enemy* enemySlime;
 
 	enemySlime = new slime;
-//	enemySlime->init(_camera, 0, 0);
+	enemySlime->init(_player, _camera, _map, 1, 1);
 	_vEm.push_back(enemySlime);
 }
 
@@ -84,6 +86,6 @@ void enemyManager::setSnail()
 {
 	enemy* enemySnail;
 	enemySnail = new snail;
-	//enemySnail->init(_camera, 0, 0);
+	enemySnail->init(_player, _camera, _map, 1, 1);
 	_vEm.push_back(enemySnail);
 }

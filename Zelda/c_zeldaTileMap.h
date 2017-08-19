@@ -8,7 +8,7 @@ public:
 	zeldaTileMap1() {}
 	virtual ~zeldaTileMap1() {}
 
-	virtual HRESULT init(camera* camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight);
+	virtual HRESULT init(player* player, camera* camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight);
 	virtual void release();
 	virtual void update();
 	virtual void render();
@@ -23,7 +23,7 @@ public:
 	zeldaTileMap2() {}
 	virtual ~zeldaTileMap2() {}
 
-	virtual HRESULT init(camera* camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight);
+	virtual HRESULT init(player* player, camera* camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight);
 	virtual void release();
 	virtual void update();
 	virtual void render();
@@ -38,7 +38,7 @@ public:
 	zeldaTileMap3() {}
 	virtual ~zeldaTileMap3() {}
 
-	virtual HRESULT init(camera* camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight);
+	virtual HRESULT init(player* player, camera* camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight);
 	virtual void release();
 	virtual void update();
 	virtual void render();
