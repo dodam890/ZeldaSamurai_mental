@@ -69,7 +69,7 @@ void enemyManager::setOcto()
 	enemy* enemyOcto;
 
 	enemyOcto = new octo;
-	enemyOcto->init(_player, _camera, _map, 1, 1);
+	enemyOcto->init(_player, _camera, _map, 8, 7);
 	_vEm.push_back(enemyOcto);
 }
 

@@ -8,7 +8,8 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
 	
 	_em = new enemyManager;
-	//_em->init(_player, _camera, );
+	_em->init(_player, _camera, this);
+	_em->setOcto();
 
 	return S_OK;
 }
@@ -21,11 +22,15 @@ void zeldaTileMap1::release()
 void zeldaTileMap1::update()
 {
 	zeldaTileMap::update();
+
+	_em->update();
 }
 
 void zeldaTileMap1::render()
 {
 	zeldaTileMap::render();
+
+	_em->render();
 }
 
 // ----------------------------------------------------------------------------------------------------

@@ -136,7 +136,7 @@ void enemy::addFrame()
 
 void enemy::draw()
 {
-	if (_aStar) _aStar->render();
+	//if (_aStar) _aStar->render();
 
 	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
 	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
