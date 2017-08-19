@@ -43,7 +43,7 @@ HRESULT enemy::init(camera* camera, zeldaTileMap* map, int idxX, int idxY)
 
 	_aStar = new aStar;
 	_aStar->init(_camera);
-	_aStar->setTile(_map, idxX, idxY, 25, 25);
+	_aStar->setTile(_map, idxX, idxY, 14, 8);
 
 	_moveCount = 0;
 
@@ -91,19 +91,19 @@ void enemy::move(int index)
 		_distanceX += 5;
 	}
 
-	else if (_vPath[index]->getDisX() < _distanceX)
+	if (_vPath[index]->getDisX() < _distanceX)
 	{
 		_direction = DIRECTION_LEFT;
 		_distanceX -= 5;
 	}
 
-	else if (_vPath[index]->getDisY() < _distanceY)
+	if (_vPath[index]->getDisY() < _distanceY)
 	{
 		_direction = DIRECTION_UP;
 		_distanceY -= 5;
 	}
 
-	else if (_vPath[index]->getDisY() > _distanceY)
+	if (_vPath[index]->getDisY() > _distanceY)
 	{
 		_direction = DIRECTION_DOWN;
 		_distanceY += 5;
@@ -159,7 +159,7 @@ void enemy::aStarPathFind()
 			(_vPath[_currentTileIndex]->getRect().top == _rc.top) &&
 			(_vPath[_currentTileIndex]->getRect().bottom == _rc.bottom)))
 		{
-			_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), 25, 25);
+			_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), 14, 8);
 			_currentTileIndex++;
 		}
 		else this->move(_currentTileIndex);

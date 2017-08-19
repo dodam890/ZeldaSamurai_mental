@@ -21,7 +21,6 @@ HRESULT zeldaTileMap::init(camera* camera, int mapWidth, int mapHeight)
 	IMAGEMANAGER->addFrameImage("mapTiles", "image/sample_ter.bmp", 0, 0, 180, 120, SAMPLETILEX, SAMPLETILEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("mapTiles2", "image/sample_obj_30_1.bmp", 0, 0, 420, 300, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
 
-
 	loadMap();
 	return S_OK;
 }
@@ -68,7 +67,7 @@ void zeldaTileMap::loadMap()
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("mapSave01.map", GENERIC_READ, 0, NULL,
+	file = CreateFile("mapSave00.map", GENERIC_READ, 0, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);

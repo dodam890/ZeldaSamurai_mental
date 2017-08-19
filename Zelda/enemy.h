@@ -37,6 +37,8 @@ protected:
 	float _distanceX, _distanceY;
 	float _centerX, _centerY;
 
+	float _angle;
+
 	int _indexX, _indexY;
 
 	int _frameCount;
