@@ -39,10 +39,6 @@ void zeldaMap::release()
 
 void zeldaMap::update()	   
 {
-	if (get_is_talk_shop_npc_who(0) == false)
-	{
-		_link->update();
-	}
 	//---------- zOrder ------------
 	if(_kind == TOWN)
 		_npcZorder->setTownNpcByZorder(_link, _townNpc, 10);

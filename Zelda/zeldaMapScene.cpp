@@ -55,9 +55,15 @@ void zeldaMapScene::update()
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->update();
+		_link->update(_zeldaTileMap[_tileMapKind]);
 	}
 	else
 	{
+		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false)
+		{
+			_link->update(NULL);
+		}
+
 		//타일맵으로 이동 실험.
 		_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 3480, _camera->getStartY() + 2130, 50, 50);
 		RECT rcTmp;
@@ -68,6 +74,7 @@ void zeldaMapScene::update()
 			_camera->setCameraY(0);
 			_link->setDisX(500);
 			_link->setDisY(500);
+			_link->setIsInTileMap(true);
 		}
 	
 		if (_is_inven == false)

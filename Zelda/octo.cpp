@@ -19,8 +19,8 @@ HRESULT octo::init(player* player, camera* camera, zeldaTileMap* map, int idxX, 
 	_indexX = idxX;
 	_indexY = idxY;
 
-	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
-	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
+	_moveRc = RectMakeCenter(_moveCenterX, _moveCenterY, _rangeWidth, _rangeHeight);
+	_collisionRc = RectMakeCenter(_collisionCenterX, _collisionCenterY, 800, 800);
 
 	return S_OK;
 }
@@ -35,6 +35,9 @@ void octo::release()
 void octo::update()
 {
 	enemy::update();
+
+	_moveRc = RectMakeCenter(_moveCenterX, _moveCenterY, _rangeWidth, _rangeHeight);
+	_collisionRc = RectMakeCenter(_collisionCenterX, _collisionCenterY, 800, 800);
 }
 
 void octo::render()
@@ -42,9 +45,14 @@ void octo::render()
 	enemy::render();
 }
 
-void octo::move(int index)
+void octo::aStarMove(int index)
 {
-	enemy::move(index);
+	enemy::aStarMove(index);
+}
+
+void octo::normalMove()
+{
+	enemy::normalMove();
 }
 
 void octo::addFrame()
@@ -60,6 +68,11 @@ void octo::draw()
 void octo::aStarPathFind()
 {
 	enemy::aStarPathFind();
+}
+
+void octo::getMapAttribute()
+{
+	enemy::getMapAttribute();
 }
 
 void octo::addImage()

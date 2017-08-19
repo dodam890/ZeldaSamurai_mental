@@ -2,6 +2,7 @@
 #include "gameNode.h"
 
 class camera;
+class zeldaTileMap;
 
 class player : public gameNode
 {
@@ -80,8 +81,11 @@ public:
 		RECT _crushRc;
 		float _damage;
 	};
-private:
 
+private:
+	zeldaTileMap* _zeldaTileMap;
+
+private:
 	RECT_ATTRIBUTE _rcAtr;
 
 private:
@@ -95,6 +99,8 @@ private:
 
 	camera* _cam;
 
+	int tileIndex[2];
+
 	float _damage;
 	int _frameX;
 
@@ -105,8 +111,9 @@ private:
 	float _disX, _disY;
 	float _cenX, _cenY;
 
-	int _idX;
-	int _idY;
+	int _linkIdx;
+	int _linkIdxX;
+	int _linkIdxY;
 
 	int _count;
 	int _currentFrameX, _currentFrameY;
@@ -119,11 +126,14 @@ private:
 	bool _isStore;
 	bool _isCollision;
 
+	bool _isPlayerInTileMap;
+	bool _moveTile;
+
 public:
 
 	HRESULT init(camera* camera);
 	void release(void);
-	void update(void);
+	void update(zeldaTileMap* _tileMap);
 	void render(void);
 
 	void draw(void);
@@ -136,6 +146,8 @@ public:
 
 	void makeCrushRc();
 
+	void dectectionTileMap();
+
 	RECT getRect() { return _playerRc; }
 	LINK_MOTION getMotion() { return L_Motion; }
 
@@ -143,6 +155,10 @@ public:
 	void setDisY(float disY) { _disY = disY; }
 	float getDisX() { return _disX; }
 	float getDisY() { return _disY; }
+
+	int getIndexX() { return _linkIdxX; }
+	int getIndexY() { return _linkIdxY; }
+	int getIndex() { return _linkIdx; }
 
 	void setIsCollision(bool collision, RECT npcRc);
 
@@ -152,6 +168,7 @@ public:
 	void isMove(bool move) { _move = move; }
 	void isStore(bool isStore) { _isStore = isStore; }
 
+	void setIsInTileMap(bool bInTile) { _isPlayerInTileMap = bInTile; }
 
 	player();
 	~player();

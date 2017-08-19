@@ -38,15 +38,24 @@ protected:
 	RECT _collisionRc;
 
 	float _distanceX, _distanceY;
+	float _moveDistanceX, _moveDistanceY;
+	float _collisionDistanceX, _collisionDistanceY;
+
 	float _centerX, _centerY;
+	float _moveCenterX, _moveCenterY;
+	float _collisionCenterX, _collisionCenterY;
 
 	float _angle;
 
 	int _indexX, _indexY;
+	int tileIndex[2];
+	int tileX, tileY;
+	int tileTotalIdx;
+	RECT rcCollision;
 
 	int _frameCount;
 
-	int _moveCount;
+	float _moveCount;
 
 	aStar* _aStar;
 	int _currentTileIndex;
@@ -69,13 +78,15 @@ public:
 	virtual void update();
 	virtual void render();
 
-	virtual void move(int index);
+	virtual void aStarMove(int index);
+	virtual void normalMove();
 	virtual void addFrame();
 	virtual void draw();
 
 	virtual void addImage();
 
 	virtual void aStarPathFind();
+	virtual void getMapAttribute();
 
 	enemy();
 	virtual ~enemy();
