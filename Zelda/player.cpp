@@ -329,27 +329,80 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_GRAB:
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_RIGHT_SHIELD_MOVE;
-
-			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
+		case player::LINK_MOTION_UP_SHIELD_STAND:
+		case player::LINK_MOTION_DOWN_SHIELD_STAND:
+		case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
+		case player::LINK_MOTION_UP_SHIELD_MOVE:
+		case player::LINK_MOTION_DOWN_SHIELD_MOVE:
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
 
+			if (_cam->isCameraXZeroSide())
+			{
+				if (_playerRc.left <= WINSIZEX / 2 - 35 && !_isStore)
+				{
+					_cam->setCameraX(_cam->getCameraX() - _moveSpeed);
+					_disX -= _moveSpeed;
+				}
+				else
+				{
+					_disX -= _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.left >= 0) _disX -= _moveSpeed;
+			}
+
 			break;
-		case player::LINK_MOTION_UP_SHIELD_STAND:
+		case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
+			L_Motion = LINK_MOTION_LEFT_MAGICPOT_ABSORB;
+
+			if (_cam->isCameraXZeroSide())
+			{
+				if (_playerRc.left <= WINSIZEX / 2 - 35 && !_isStore)
+				{
+					_cam->setCameraX(_cam->getCameraX() - _moveSpeed);
+					_disX -= _moveSpeed;
+				}
+				else
+				{
+					_disX -= _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.left >= 0) _disX -= _moveSpeed;
+			}
 
 			break;
-		case player::LINK_MOTION_DOWN_SHIELD_STAND:
+		case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
+		case player::LINK_MOTION_UP_MAGICPOT_FIRE:
+		case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
+			L_Motion = LINK_MOTION_LEFT_MAGICPOT_FIRE;
+
+			if (_cam->isCameraXZeroSide())
+			{
+				if (_playerRc.left <= WINSIZEX / 2 - 35 && !_isStore)
+				{
+					_cam->setCameraX(_cam->getCameraX() - _moveSpeed);
+					_disX -= _moveSpeed;
+				}
+				else
+				{
+					_disX -= _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.left >= 0) _disX -= _moveSpeed;
+			}
 
 			break;
 		default:
@@ -431,27 +484,80 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_GRAB:
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_STAND:
+		case player::LINK_MOTION_LEFT_SHIELD_STAND:
+		case player::LINK_MOTION_UP_SHIELD_STAND:
+		case player::LINK_MOTION_DOWN_SHIELD_STAND:
+		case player::LINK_MOTION_LEFT_SHIELD_MOVE:
+		case player::LINK_MOTION_UP_SHIELD_MOVE:
+		case player::LINK_MOTION_DOWN_SHIELD_MOVE:
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_RIGHT_SHIELD_MOVE;
 
+			if (_cam->isCameraXEndSide())
+			{
+				if (_playerRc.right >= WINSIZEX / 2 + 35 && !_isStore)
+				{
+					_cam->setCameraX(_cam->getCameraX() + _moveSpeed);
+					_disX += _moveSpeed;
+				}
+				else
+				{
+					_disX += _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.right <= WINSIZEX) _disX += _moveSpeed;
+			}
+
 			break;
-		case player::LINK_MOTION_LEFT_SHIELD_STAND:
+		case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
+			L_Motion = LINK_MOTION_RIGHT_MAGICPOT_ABSORB;
+
+			if (_cam->isCameraXEndSide())
+			{
+				if (_playerRc.right >= WINSIZEX / 2 + 35 && !_isStore)
+				{
+					_cam->setCameraX(_cam->getCameraX() + _moveSpeed);
+					_disX += _moveSpeed;
+				}
+				else
+				{
+					_disX += _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.right <= WINSIZEX) _disX += _moveSpeed;
+			}
 
 			break;
-		case player::LINK_MOTION_UP_SHIELD_STAND:
+		case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
+		case player::LINK_MOTION_UP_MAGICPOT_FIRE:
+		case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
+			L_Motion = LINK_MOTION_RIGHT_MAGICPOT_FIRE;
 
-			break;
-		case player::LINK_MOTION_DOWN_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
+			if (_cam->isCameraXEndSide())
+			{
+				if (_playerRc.right >= WINSIZEX / 2 + 35 && !_isStore)
+				{
+					_cam->setCameraX(_cam->getCameraX() + _moveSpeed);
+					_disX += _moveSpeed;
+				}
+				else
+				{
+					_disX += _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.right <= WINSIZEX) _disX += _moveSpeed;
+			}
 
 			break;
 		default:
@@ -533,30 +639,16 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_GRAB:
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_RIGHT_SHIELD_MOVE;
-
-			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
-
-			break;
 		case player::LINK_MOTION_UP_SHIELD_STAND:
+		case player::LINK_MOTION_DOWN_SHIELD_STAND:
+		case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
+		case player::LINK_MOTION_LEFT_SHIELD_MOVE:
+		case player::LINK_MOTION_DOWN_SHIELD_MOVE:
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
 
-			break;
-		case player::LINK_MOTION_DOWN_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
-
-			break;
-		default:
 			if (_cam->isCameraYZeroSide())
 			{
 				if (_playerRc.top <= WINSIZEY / 2 - 35 && !_isStore)
@@ -573,6 +665,74 @@ void player::motionChange(void)
 			{
 				if (_playerRc.top >= 0) _disY -= _moveSpeed;
 			}
+			break;
+		case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
+
+			L_Motion = LINK_MOTION_UP_MAGICPOT_ABSORB;
+			
+			if (_cam->isCameraYZeroSide())
+			{
+				if (_playerRc.top <= WINSIZEY / 2 - 35 && !_isStore)
+				{
+					_cam->setCameraY(_cam->getCameraY() - _moveSpeed);
+					_disY -= _moveSpeed;
+				}
+				else
+				{
+					_disY -= _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.top >= 0) _disY -= _moveSpeed;
+			}
+
+			break;
+		case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
+		case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
+		case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
+
+			L_Motion = LINK_MOTION_UP_MAGICPOT_FIRE;
+
+			if (_cam->isCameraYZeroSide())
+			{
+				if (_playerRc.top <= WINSIZEY / 2 - 35 && !_isStore)
+				{
+					_cam->setCameraY(_cam->getCameraY() - _moveSpeed);
+					_disY -= _moveSpeed;
+				}
+				else
+				{
+					_disY -= _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.top >= 0) _disY -= _moveSpeed;
+			}
+
+			break;
+		default:
+
+			if (_cam->isCameraYZeroSide())
+			{
+				if (_playerRc.top <= WINSIZEY / 2 - 35 && !_isStore)
+				{
+					_cam->setCameraY(_cam->getCameraY() - _moveSpeed);
+					_disY -= _moveSpeed;
+				}
+				else
+				{
+					_disY -= _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.top >= 0) _disY -= _moveSpeed;
+			}
+
 			break;
 		}
 	}
@@ -635,30 +795,16 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_GRAB:
 			break;
 		case player::LINK_MOTION_RIGHT_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_RIGHT_SHIELD_MOVE;
-
-			break;
 		case player::LINK_MOTION_LEFT_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_LEFT_SHIELD_MOVE;
-
-			break;
 		case player::LINK_MOTION_UP_SHIELD_STAND:
-
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_UP_SHIELD_MOVE;
-
-			break;
 		case player::LINK_MOTION_DOWN_SHIELD_STAND:
+		case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
+		case player::LINK_MOTION_LEFT_SHIELD_MOVE:
+		case player::LINK_MOTION_UP_SHIELD_MOVE:
 
 			_currentFrameX = 0;
 			L_Motion = LINK_MOTION_DOWN_SHIELD_MOVE;
 
-			break;
-		default:
 			if (_cam->isCameraYEndSide())
 			{
 				if (_playerRc.bottom >= WINSIZEY / 2 + 35 && !_isStore)
@@ -675,6 +821,74 @@ void player::motionChange(void)
 			{
 				if (_playerRc.bottom <= WINSIZEY) _disY += _moveSpeed;
 			}
+			break;
+		case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
+		case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
+
+			L_Motion = LINK_MOTION_DOWN_MAGICPOT_ABSORB;
+
+			if (_cam->isCameraYEndSide())
+			{
+				if (_playerRc.bottom >= WINSIZEY / 2 + 35 && !_isStore)
+				{
+					_cam->setCameraY(_cam->getCameraY() + _moveSpeed);
+					_disY += _moveSpeed;
+				}
+				else
+				{
+					_disY += _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.bottom <= WINSIZEY) _disY += _moveSpeed;
+			}
+
+			break;
+		case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
+		case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
+		case player::LINK_MOTION_UP_MAGICPOT_FIRE:
+
+			L_Motion = LINK_MOTION_DOWN_MAGICPOT_FIRE;
+
+			if (_cam->isCameraYEndSide())
+			{
+				if (_playerRc.bottom >= WINSIZEY / 2 + 35 && !_isStore)
+				{
+					_cam->setCameraY(_cam->getCameraY() + _moveSpeed);
+					_disY += _moveSpeed;
+				}
+				else
+				{
+					_disY += _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.bottom <= WINSIZEY) _disY += _moveSpeed;
+			}
+
+			break;
+		default:
+
+			if (_cam->isCameraYEndSide())
+			{
+				if (_playerRc.bottom >= WINSIZEY / 2 + 35 && !_isStore)
+				{
+					_cam->setCameraY(_cam->getCameraY() + _moveSpeed);
+					_disY += _moveSpeed;
+				}
+				else
+				{
+					_disY += _moveSpeed;
+				}
+			}
+			else
+			{
+				if (_playerRc.bottom <= WINSIZEY) _disY += _moveSpeed;
+			}
+
 			break;
 		}
 	}
@@ -2275,7 +2489,7 @@ void player::dectectionTileMap()
 				case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
 
 				{
-					_disX = _zeldaTileMap->getTile()[tileIndex[i]].rc.left - _cam->getStartX() - 100;
+					_disX = _zeldaTileMap->getTile()[tileIndex[i]].rc.left - _cam->getStartX() - 170;
 				}
 
 				break;
@@ -2288,7 +2502,7 @@ void player::dectectionTileMap()
 				case player::LINK_MOTION_LEFT_SHIELD_MOVE:
 
 				{
-					_disX = _zeldaTileMap->getTile()[tileIndex[i]].rc.left - _cam->getStartX() + 50;
+					_disX = _zeldaTileMap->getTile()[tileIndex[i]].rc.right - _cam->getStartX() - 100;
 				}
 
 				break;
@@ -2301,7 +2515,7 @@ void player::dectectionTileMap()
 				case player::LINK_MOTION_UP_SHIELD_MOVE:
 
 				{
-					_disY += _moveSpeed;
+					_disY = _zeldaTileMap->getTile()[tileIndex[i]].rc.bottom - _cam->getStartY() - 100;
 				}
 
 				break;
@@ -2314,7 +2528,35 @@ void player::dectectionTileMap()
 				case player::LINK_MOTION_DOWN_SHIELD_MOVE:
 
 				{
-					_disY -= _moveSpeed;
+					_disY = _zeldaTileMap->getTile()[tileIndex[i]].rc.top - _cam->getStartY() - 170;
+				}
+
+				break;
+				}
+			}
+			if (_zeldaTileMap->getAttribute(E_ATR_SLOW)[tileIndex[i]] == FALSE)
+			{
+				switch (L_Motion)
+				{
+				case player::LINK_MOTION_RIGHT_WALK:
+				case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
+				case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
+				case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
+				case player::LINK_MOTION_LEFT_WALK:
+				case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
+				case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
+				case player::LINK_MOTION_LEFT_SHIELD_MOVE:
+				case player::LINK_MOTION_UP_WALK:
+				case player::LINK_MOTION_UP_MAGICPOT_FIRE:
+				case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
+				case player::LINK_MOTION_UP_SHIELD_MOVE:
+				case player::LINK_MOTION_DOWN_WALK:
+				case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
+				case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
+				case player::LINK_MOTION_DOWN_SHIELD_MOVE:
+
+				{
+					_moveSpeed = 2;
 				}
 
 				break;
