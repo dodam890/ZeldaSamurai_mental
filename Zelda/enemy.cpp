@@ -52,10 +52,21 @@ HRESULT enemy::init(player* player, camera* camera, zeldaTileMap* map, int idxX,
 	this->addImage();
 
 	_distanceX = _aStar->getStartTile()->getDisX();
+	_moveDistanceX = _aStar->getStartTile()->getDisX();
+	_collisionDistanceX = _aStar->getStartTile()->getDisX();
+
 	_centerX = _camera->getStartX() + _distanceX;
+	_moveCenterX = _camera->getStartX() + _moveDistanceX;
+	_collisionCenterX = _camera->getStartX() + _collisionDistanceX;
+
 
 	_distanceY = _aStar->getStartTile()->getDisY();
+	_moveDistanceY = _aStar->getStartTile()->getDisY();
+	_collisionDistanceY = _aStar->getStartTile()->getDisY();
+
 	_centerY = _camera->getStartY() + _distanceY;
+	_moveCenterY = _camera->getStartY() + _moveDistanceY;
+	_collisionCenterY = _camera->getStartY() + _collisionDistanceY;
 
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 
@@ -73,32 +84,46 @@ void enemy::update()
 {
 	this->addFrame();
 
-	//if (_isFindPlayer)
-	//{
-		this->aStarPathFind();
-		//_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
+	_aStar->tilesUpdate();
 
-		RECT temp;
-	//	if (IntersectRect(&temp, &_moveRc, &_player->getRect()))
-	//	{
-	//		//_isFindPlayer = false;
-	//	}
+	if (_isFindPlayer)
+	{
+		this->aStarPathFind();
+	}
+	else
+	{
+		normalMove();
+	}
+
+	//RECT temp;
+	//if (IntersectRect(&temp, &_moveRc, &_player->getRect()))
+	//{
+	//	_isFindPlayer = false;
+	//}
+
+	//RECT sour;
+	//if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
+	//{
+	//	_isFindPlayer = true;
 	//}
 	//else
 	//{
-		RECT sour;
-		if (IntersectRect(&sour, &_collisionRc, &_player->getRect()) && !IntersectRect(&sour, &_moveRc, &_player->getRect()))
-		{
-			//_isFindPlayer = true;
-		}
-	//	normalMove();
+	//	_isFindPlayer = false;
 	//}
 
 	_centerX = _camera->getStartX() + _distanceX;
+	_moveCenterX = _camera->getStartX() + _moveDistanceX;
+	_collisionCenterX = _camera->getStartX() + _collisionDistanceX;
+
 	_centerY = _camera->getStartY() + _distanceY;
+	_moveCenterY = _camera->getStartY() + _moveDistanceY;
+	_collisionCenterY = _camera->getStartY() + _collisionDistanceY;
+
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 50, _imgInfo[_direction].image->getFrameHeight());
 
 	//_aStar->update();
+
+	getMapAttribute();
 }
 
 void enemy::render()
@@ -133,12 +158,19 @@ void enemy::aStarMove(int index)
 		_direction = DIRECTION_DOWN;
 		_distanceY += 5;
 	}
-
-	getMapAttribute();
 }
 
 void enemy::normalMove()
 {
+	_moveCount += TIMEMANAGER->getElapsedTime() * 100;
+
+	if (_moveCount > 100.f)
+	{
+		int rndNum = RND->getFromIntTo(0, 3);
+		_direction = (DIRECTION)rndNum;
+		_moveCount = 0.f;
+	}
+
 	switch (_direction)
 	{
 	case enemy::DIRECTION_DOWN:
@@ -179,8 +211,8 @@ void enemy::draw()
 {
 	if (_aStar) _aStar->render();
 
-	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
-	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
 	if (!_imgInfo[_direction].image) return;
@@ -201,7 +233,6 @@ void enemy::addImage()
 
 void enemy::aStarPathFind()
 {
-	_aStar->tilesUpdate();
 	if (_aStar->getIsFindEnd())
 	{
 		_aStar->setCharacterPath(_vPath, &_isFull);

@@ -38,7 +38,12 @@ protected:
 	RECT _collisionRc;
 
 	float _distanceX, _distanceY;
+	float _moveDistanceX, _moveDistanceY;
+	float _collisionDistanceX, _collisionDistanceY;
+
 	float _centerX, _centerY;
+	float _moveCenterX, _moveCenterY;
+	float _collisionCenterX, _collisionCenterY;
 
 	float _angle;
 
@@ -50,7 +55,7 @@ protected:
 
 	int _frameCount;
 
-	int _moveCount;
+	float _moveCount;
 
 	aStar* _aStar;
 	int _currentTileIndex;
