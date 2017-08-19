@@ -168,8 +168,8 @@ void enemy::aStarPathFind()
 			(_vPath[_currentTileIndex]->getRect().top == _rc.top) &&
 			(_vPath[_currentTileIndex]->getRect().bottom == _rc.bottom)))
 		{
-			_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), _player->getIndexX(), _player->getIndexY());
-			_currentTileIndex++;
+				_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), _player->getIndexX(), _player->getIndexY());
+				_currentTileIndex++;
 		}
 		else this->move(_currentTileIndex);
 	}

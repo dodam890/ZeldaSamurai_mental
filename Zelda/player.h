@@ -99,6 +99,8 @@ private:
 
 	camera* _cam;
 
+	int tileIndex[2];
+
 	float _damage;
 	int _frameX;
 

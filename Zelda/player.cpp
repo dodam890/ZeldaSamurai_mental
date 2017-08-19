@@ -94,6 +94,10 @@ void player::draw(void)
 	TextOut(getMemDC(), 400, 110, str, strlen(str));
 	sprintf(str, "idX : %d, idY : %d, realId : %d",	_linkIdxX, _linkIdxY, _linkIdx);
 	TextOut(getMemDC(), 400, 130, str, strlen(str));
+	sprintf(str, "ob0 : %d, ob1 : %d", tileIndex[0], tileIndex[1]);
+	TextOut(getMemDC(), 400, 150, str, strlen(str));
+
+
 
 	switch (L_Motion)
 	{
@@ -2405,12 +2409,10 @@ void player::makeCrushRc()
 
 void player::dectectionTileMap()
 {
-	_linkIdxX = (_playerRc.left - _cam->getStartX()) / TILESIZE;
-	_linkIdxY = (_playerRc.top - _cam->getStartY()) / TILESIZE;
+	_linkIdxX = (((_playerRc.right + _playerRc.left) / 2) - _cam->getStartX()) / TILESIZE;
+	_linkIdxY = (((_playerRc.bottom + _playerRc.top) / 2) - _cam->getStartY()) / TILESIZE;
 
 	_linkIdx = _linkIdxX + _linkIdxY * TILEX;
-
-	int tileIndex[2] = {};
 
 	switch (L_Motion)
 	{
@@ -2422,8 +2424,15 @@ void player::dectectionTileMap()
 	case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
 
 	{
-		tileIndex[0] = (_linkIdxX + TILEX * _linkIdxY) + 1;
-		tileIndex[1] = (_linkIdxX + (_linkIdxY + 1) * TILEX) + 1;
+		tileIndex[0] = _linkIdx + 1;		
+		if (_playerRc.bottom < _zeldaTileMap->getTile()[tileIndex[0]].rc.bottom)
+		{
+			tileIndex[1] = tileIndex[0] - TILEX;
+		}
+		else
+		{
+			tileIndex[1] = tileIndex[0] + TILEX;
+		}
 	}
 
 	break;
@@ -2436,8 +2445,16 @@ void player::dectectionTileMap()
 	case player::LINK_MOTION_LEFT_SHIELD_MOVE:
 
 	{
-		tileIndex[0] = _linkIdxX + TILEX * _linkIdxY;
-		tileIndex[1] = _linkIdxX + (_linkIdxY + 1) * TILEX;
+		tileIndex[0] = _linkIdx - 1;
+
+		if (_playerRc.bottom < _zeldaTileMap->getTile()[tileIndex[0]].rc.bottom)
+		{
+			tileIndex[1] = tileIndex[0] - TILEX;
+		}
+		else
+		{
+			tileIndex[1] = tileIndex[0] + TILEX;
+		}
 	}
 
 	break;
@@ -2450,8 +2467,16 @@ void player::dectectionTileMap()
 	case player::LINK_MOTION_UP_SHIELD_MOVE:
 
 	{
-		tileIndex[0] = _linkIdxX + TILEX * _linkIdxY;
-		tileIndex[1] = _linkIdxX + 1 + TILEX * _linkIdxY;
+		tileIndex[0] = _linkIdx - TILEX;
+
+		if (_playerRc.right < _zeldaTileMap->getTile()[tileIndex[0]].rc.right)
+		{
+			tileIndex[1] = tileIndex[0] - 1;
+		}
+		else
+		{
+			tileIndex[1] = tileIndex[0] + 1;
+		}
 	}
 
 	break;
@@ -2464,8 +2489,15 @@ void player::dectectionTileMap()
 	case player::LINK_MOTION_DOWN_SHIELD_MOVE:
 
 	{
-		tileIndex[0] = (_linkIdxX + _linkIdxY * TILEX) + TILEX;
-		tileIndex[1] = (_linkIdxX + 1 + _linkIdxY * TILEX) + TILEX;
+		tileIndex[0] = _linkIdx + TILEX;
+		if (_playerRc.right < _zeldaTileMap->getTile()[tileIndex[0]].rc.right)
+		{
+			tileIndex[1] = tileIndex[0] - 1;
+		}
+		else
+		{
+			tileIndex[1] = tileIndex[0] + 1;
+		}
 	}
 
 	break;
