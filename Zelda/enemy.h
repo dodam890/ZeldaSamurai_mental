@@ -43,6 +43,10 @@ protected:
 	float _angle;
 
 	int _indexX, _indexY;
+	int tileIndex[2];
+	int tileX, tileY;
+	int tileTotalIdx;
+	RECT rcCollision;
 
 	int _frameCount;
 

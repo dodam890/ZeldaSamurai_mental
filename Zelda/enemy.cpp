@@ -73,26 +73,26 @@ void enemy::update()
 {
 	this->addFrame();
 
-	if (_isFindPlayer)
-	{
+	//if (_isFindPlayer)
+	//{
 		this->aStarPathFind();
 		//_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
 
 		RECT temp;
-		if (IntersectRect(&temp, &_moveRc, &_player->getRect()))
-		{
-			//_isFindPlayer = false;
-		}
-	}
-	else
-	{
+	//	if (IntersectRect(&temp, &_moveRc, &_player->getRect()))
+	//	{
+	//		//_isFindPlayer = false;
+	//	}
+	//}
+	//else
+	//{
 		RECT sour;
 		if (IntersectRect(&sour, &_collisionRc, &_player->getRect()) && !IntersectRect(&sour, &_moveRc, &_player->getRect()))
 		{
 			//_isFindPlayer = true;
 		}
 	//	normalMove();
-	}
+	//}
 
 	_centerX = _camera->getStartX() + _distanceX;
 	_centerY = _camera->getStartY() + _distanceY;
@@ -104,6 +104,8 @@ void enemy::update()
 void enemy::render()
 {
 	this->draw();
+
+	//Rectangle(getMemDC(), rcCollision.left, rcCollision.top, rcCollision.right, rcCollision.bottom);
 }
 
 void enemy::aStarMove(int index)
@@ -184,6 +186,13 @@ void enemy::draw()
 	if (!_imgInfo[_direction].image) return;
 
 	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left - 25, _rc.top, _imgInfo[_direction].currentFrameX, 0);
+
+	char str[128] = "";
+	sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
+	TextOut(getMemDC(), 400, 200, str, strlen(str));
+
+	sprintf_s(str, "eObX : %d, eObY : %d, eTotal : %d", tileIndex[0], tileIndex[1], tileTotalIdx);
+	TextOut(getMemDC(), 400, 230, str, strlen(str));
 }
 
 void enemy::addImage()
@@ -218,31 +227,35 @@ void enemy::getMapAttribute()
 {
 	BOOL* attribute = _map->getAttribute(E_ATR_MOVE);
 
-	RECT rcCollision = _rc;
+	rcCollision = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 52, _imgInfo[_direction].image->getFrameHeight() - 2);
 
-	int tileIndex[2];
-	int tileX, tileY;
+	
+	tileX = _distanceX / TILESIZE;
+	tileY = _distanceY / TILESIZE;
 
-	tileX = (rcCollision.left - _camera->getStartX()) / TILESIZE;
-	tileY = (rcCollision.top - _camera->getStartY()) / TILESIZE;
+	tileTotalIdx = tileX + tileY * TILEX;
 
 	switch (_direction)
 	{
 	case enemy::DIRECTION_DOWN:
-		tileIndex[0] = (tileX + tileY * TILEX) + TILEX;
-		tileIndex[1] = (tileX + 1 + tileY * TILEX) + TILEX;
+		tileIndex[0] = tileTotalIdx + TILEX;
+		if (_rc.left > _map->getTiles()[tileIndex[0]].rc.left) tileIndex[1] = tileIndex[0] + 1;
+		else tileIndex[1] = tileIndex[0] - 1;
 		break;
 	case enemy::DIRECTION_LEFT:
-		tileIndex[0] = tileX + TILEX * tileY;
-		tileIndex[1] = tileX + (tileY + 1) * TILEX;
+		tileIndex[0] = tileTotalIdx - 1;
+		if (_rc.bottom > _map->getTiles()[tileIndex[0]].rc.bottom) tileIndex[1] = tileIndex[0] + TILEX;
+		else tileIndex[1] = tileIndex[0] - TILEX;
 		break;
 	case enemy::DIRECTION_RIGHT:
-		tileIndex[0] = (tileX + TILEX * tileY) + 1;
-		tileIndex[1] = (tileX + (tileY + 1) * TILEX) + 1;
+		tileIndex[0] = tileTotalIdx + 1;
+		if (_rc.bottom > _map->getTiles()[tileIndex[0]].rc.bottom) tileIndex[1] = tileIndex[0] + TILEX;
+		else tileIndex[1] = tileIndex[0] - TILEX;
 		break;
 	case enemy::DIRECTION_UP:
-		tileIndex[0] = tileX + TILEX * tileY;
-		tileIndex[1] = tileX + 1 + TILEX * tileY;
+		tileIndex[0] = tileTotalIdx - TILEX;
+		if (_rc.left > _map->getTiles()[tileIndex[0]].rc.left) tileIndex[1] = tileIndex[0] + 1;
+		else tileIndex[1] = tileIndex[0] - 1;
 		break;
 	}
 
@@ -258,29 +271,21 @@ void enemy::getMapAttribute()
 				_rc.bottom = _map->getTiles()[tileIndex[i]].rc.top;
 				_rc.top = _rc.bottom - _imgInfo[_direction].image->getFrameHeight();
 
-				_distanceY = _rc.top + (_rc.bottom - _rc.top) / 2;
 				break;
 			case enemy::DIRECTION_LEFT:
 				_rc.left = _map->getTiles()[tileIndex[i]].rc.right;
 				_rc.right = _rc.left + (_imgInfo[_direction].image->getFrameWidth() - 50);
 
-				_distanceX = _rc.left + (_rc.right - _rc.left) / 2;
 				break;
 			case enemy::DIRECTION_RIGHT:
 				_rc.right = _map->getTiles()[tileIndex[i]].rc.left;
 				_rc.left = _rc.right - (_imgInfo[_direction].image->getFrameWidth() - 50);
 
-				_distanceX = _rc.left + (_rc.right - _rc.left) / 2;
 				break;
 			case enemy::DIRECTION_UP:
 				_rc.top = _map->getTiles()[tileIndex[i]].rc.bottom;
 				_rc.bottom = _rc.top + _imgInfo[_direction].image->getFrameHeight();
 
-				_distanceY = _rc.top + (_rc.bottom - _rc.top) / 2;
-				break;
-			case enemy::DIRECTION_END:
-				break;
-			default:
 				break;
 			}
 		}
