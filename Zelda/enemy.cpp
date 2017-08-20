@@ -82,9 +82,6 @@ void enemy::release()
 void enemy::update()
 {
 	this->addFrame();
-
-	getMapAttribute();
-
 	_aStar->tilesUpdate();
 
 	if (_isFindPlayer)
@@ -96,7 +93,8 @@ void enemy::update()
 	}
 	else
 	{
-		//normalMove();
+		normalMove();
+		getMapAttribute();
 	}
 
 	RECT sour;
@@ -204,7 +202,7 @@ void enemy::addFrame()
 
 void enemy::draw()
 {
-	if (_aStar) _aStar->render();
+	//if (_aStar) _aStar->render();
 
 	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
 	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
