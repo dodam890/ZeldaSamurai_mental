@@ -137,6 +137,8 @@ HRESULT storeMap::init(string strMapImageKey, string strPixelMapImageKey, camera
 
 	_eventRectInfo[STORE_NEXTDOOR].rc = RectMake(1200, 395, 5, 80);
 
+	SOUNDMANAGER->play("ªÛ¡°¿Ωæ«", 1.f);
+
 	return S_OK;
 }
 

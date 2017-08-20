@@ -21,6 +21,11 @@ HRESULT select_scene::init()
 	_rcSelect[E_SELECT_GAMESTART].img = IMAGEMANAGER->addImage("gameStartMenu", "image/start.bmp", 300, 300, TRUE, RGB(255, 0, 255));
 	_rcSelect[E_SELECT_GAMESTART].rc = RectMakeCenter(WINSIZEX / 2 + 200, WINSIZEY / 2, 300, 300);
 	_rcSelect[E_SELECT_GAMESTART].strSceneKey = "zeldaMapScene";
+
+	if(!SOUNDMANAGER->isPlaySound("º±≈√æ¿¿Ωæ«"))
+		SOUNDMANAGER->play("º±≈√æ¿¿Ωæ«", 1.f);
+
+
 	return S_OK;
 }
 
@@ -45,6 +50,8 @@ void select_scene::update()
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				SCENEMANAGER->changeScene(_rcSelect[i].strSceneKey);
+				SOUNDMANAGER->play("∏ﬁ¥∫º±≈√", 1.f);
+				SOUNDMANAGER->stop("º±≈√æ¿¿Ωæ«");
 			}
 			else
 			{

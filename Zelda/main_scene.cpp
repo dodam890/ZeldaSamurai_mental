@@ -87,6 +87,8 @@ void main_scene::update()
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			ready_to_change = true;
+			SOUNDMANAGER->play("메뉴선택", 1.f);
+			SOUNDMANAGER->stop("메인메뉴음악");
 		}
 	}
 

@@ -233,9 +233,16 @@ void mainGame::addSound()
 
 	//메뉴관련사운드
 	SOUNDMANAGER->addSound("메뉴커서", "sound/MC_Menu_Cursor.wav", false, false);
-	SOUNDMANAGER->addSound("메뉴커서", "sound/MC_Menu_Cursor.wav", false, false);
+	SOUNDMANAGER->addSound("메뉴커서2", "sound/MC_Menu_Cursor2.wav", false, false);
 	SOUNDMANAGER->addSound("메뉴지우기", "sound/MC_Menu_Erase.wav", false, false);
 	SOUNDMANAGER->addSound("메뉴선택", "sound/MC_Menu_Select.wav", false, false);
+	SOUNDMANAGER->addSound("선택씬음악", "sound/MC_Select_Screen.mp3", true, true);
+
+	//마을관련 사운드
+	SOUNDMANAGER->addSound("상점음악", "sound/MC_Syrups_Shop.mp3", true, true);
+	SOUNDMANAGER->addSound("마을음악", "sound/MC_Hyrule_Town.mp3", true, true);
+	SOUNDMANAGER->addSound("마을밖음악", "sound/MC_Hyrule_Field.mp3", true, true);
+	SOUNDMANAGER->addSound("젤다집음악", "sound/MC_House.mp3", true, true);
 
 	//젤다관련사운드
 	SOUNDMANAGER->addSound("젤다검회전소리", "sound/MC_Link_Sword_Spin.wav", false, false);
@@ -267,6 +274,7 @@ void mainGame::addSound()
 	SOUNDMANAGER->addSound("경비병", "sound/MC_CastleGuard_Hey.wav", false, false);
 
 	//던전관련사운드
+	SOUNDMANAGER->addSound("던전음악", "sound/MC_Inside_a_Cave.mp3", true, true);
 	SOUNDMANAGER->addSound("문열림", "sound/MC_Door2.wav", false, false);
 	SOUNDMANAGER->addSound("문닫힘", "sound/MC_Door_Close.wav", false, false);
 	SOUNDMANAGER->addSound("상자나타남", "sound/MC_Chest_Appear.wav", false, false);

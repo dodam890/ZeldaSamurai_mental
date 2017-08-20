@@ -231,6 +231,18 @@ void zeldaMapScene::update()
 		}
 	}
 	_im->update();
+
+	//À½¾ÇÀç»ý
+	if (_curMap == TOWN)
+	{
+		if (!SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+			SOUNDMANAGER->play("¸¶À»À½¾Ç", 1.f);
+	}
+	else if (_curMap == STORE)
+	{
+		if (!SOUNDMANAGER->isPlaySound("»óÁ¡À½¾Ç"))
+			SOUNDMANAGER->play("»óÁ¡À½¾Ç", 1.f);
+	}
 }
 
 void zeldaMapScene::render()
@@ -317,6 +329,11 @@ void zeldaMapScene::rectCollision()
 				if (!_sceneEffect->getChangeScene())
 				{
 					setScene(i);
+					//À½¾Ç²¨ÁÜ
+					if (SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+						SOUNDMANAGER->stop("¸¶À»À½¾Ç");
+					if (SOUNDMANAGER->isPlaySound("»óÁ¡À½¾Ç"))
+						SOUNDMANAGER->stop("»óÁ¡À½¾Ç");
 				}
 			}
 		}
