@@ -260,6 +260,9 @@ void zeldaTileMap2::update()
 		if (IntersectRect(&temp, &_buttonTile[i].rc, &_player->getRect()))
 		{
 			_buttonTile[i].isOn = true;
+
+			if (!SOUNDMANAGER->isPlaySound("บาฤัมü"))
+				SOUNDMANAGER->play("บาฤัมü");
 		}
 
 		if (_buttonTile[i].isOn)
