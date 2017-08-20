@@ -48,6 +48,9 @@ HRESULT player::init(camera* camera)
 
 	setHpImage();
 
+	//À½¾ÇÄ«¿îÆ®
+	_soundCount = 0;
+
 	return S_OK;
 }
 
@@ -1030,6 +1033,8 @@ void player::motionChange(void)
 
 	if (KEYMANAGER->isOnceKeyDown('S'))
 	{
+		SOUNDMANAGER->play("Á©´Ù±¸¸£±â", 1.f);
+
 		switch (L_Motion)
 		{
 		case player::LINK_MOTION_RIGHT:
@@ -1084,6 +1089,9 @@ void player::motionChange(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
+		SOUNDMANAGER->play("Á©´Ù°Ë±âº»¼Ò¸®", 1.f);
+		SOUNDMANAGER->play("Á©´Ù±âº»º£±â±âÇÕ", 1.f);
+
 		switch (L_Motion)
 		{
 		case player::LINK_MOTION_RIGHT:
@@ -1118,6 +1126,9 @@ void player::motionChange(void)
 	}
 	if (KEYMANAGER->isStayKeyDown('X'))
 	{
+		if (!SOUNDMANAGER->isPlaySound("Á©´Ù¹æÆÐµé±â"))
+			SOUNDMANAGER->play("Á©´Ù¹æÆÐµé±â");
+
 		switch (L_Motion)
 		{
 		case player::LINK_MOTION_RIGHT:
@@ -1198,6 +1209,9 @@ void player::motionChange(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown('A'))
 	{
+		SOUNDMANAGER->play("Á©´Ù°ËÈ¸Àü¼Ò¸®", 1.f);
+		SOUNDMANAGER->play("Á©´ÙÈ¸Àüº£±â±âÇÕ", 1.f);
+
 		switch (L_Motion)
 		{
 		case player::LINK_MOTION_RIGHT:
@@ -1418,20 +1432,48 @@ void player::move(void)
 
 		_moveSpeed = 5;
 
+		_soundCount++;
+		if (_soundCount % 20 == 0)
+		{
+			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			_soundCount = 0;
+		}
+
 		break;
 	case player::LINK_MOTION_LEFT_WALK:
 
 		_moveSpeed = 5;
+
+		_soundCount++;
+		if (_soundCount % 20 == 0)
+		{
+			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			_soundCount = 0;
+		}
 
 		break;
 	case player::LINK_MOTION_UP_WALK:
 
 		_moveSpeed = 5;
 
+		_soundCount++;
+		if (_soundCount % 20 == 0)
+		{
+			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			_soundCount = 0;
+		}
+
 		break;
 	case player::LINK_MOTION_DOWN_WALK:
 
 		_moveSpeed = 5;
+
+		_soundCount++;
+		if (_soundCount % 20 == 0)
+		{
+			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			_soundCount = 0;
+		}
 
 		break;
 	case player::LINK_MOTION_RIGHT_TUMBLE:
@@ -1454,6 +1496,7 @@ void player::move(void)
 		{
 			if (_playerRc.right <= WINSIZEX) _disX += _moveSpeed;
 		}
+
 		break;
 	case player::LINK_MOTION_LEFT_TUMBLE:
 

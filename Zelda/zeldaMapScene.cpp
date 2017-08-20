@@ -302,12 +302,12 @@ void zeldaMapScene::update()
 	if (_curMap == TOWN)
 	{
 		if (!SOUNDMANAGER->isPlaySound("∏∂¿ª¿Ωæ«"))
-			SOUNDMANAGER->play("∏∂¿ª¿Ωæ«", 1.f);
+			SOUNDMANAGER->play("∏∂¿ª¿Ωæ«", 0.5f);
 	}
 	else if (_curMap == STORE)
 	{
 		if (!SOUNDMANAGER->isPlaySound("ªÛ¡°¿Ωæ«"))
-			SOUNDMANAGER->play("ªÛ¡°¿Ωæ«", 1.f);
+			SOUNDMANAGER->play("ªÛ¡°¿Ωæ«", 0.5f);
 	}
 }
 
