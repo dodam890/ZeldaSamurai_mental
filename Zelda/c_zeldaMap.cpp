@@ -162,10 +162,7 @@ void storeMap::render()
 
 	IMAGEMANAGER->findImage("STORE_DOOR")->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
 
-<<<<<<< HEAD
 
-=======
->>>>>>> faa51494a3995ebed3afd28452f4df8108899cb6
 	for (int i = 0; i < 3; i++)
 	{
 		if(_storeNpc[i]->getTalkOn())

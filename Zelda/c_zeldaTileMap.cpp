@@ -68,40 +68,8 @@ void zeldaTileMap1::update()
 {
 	zeldaTileMap::update();
 
-<<<<<<< HEAD
 	_door[UP].rc = RectMake(_camera->getStartX() + 625, _camera->getStartY() + 70, 80, 30);
 
-=======
-	int j = 0;
-	int k = 0;
-
-	for (int i = 0; i < TILEX * TILEY; i++)
-	{
-		if (_tiles[i].terrain == TR_ROCK)
-		{
-			_rockTile[j].image = IMAGEMANAGER->findImage("TILE_ROCK");
-			_rockTile[j].rc = _tiles[i].rc;
-
-			j++;
-		}
-		else if (_tiles[i].obj2 == OBJ_POT)
-		{
-			_potTile[k].rc = _tiles[i].rc;
-
-			k++;
-		}
-	}
-
-	RECT temp;
-
-	for (int i = 0; i < 3; i++)
-	{
-		if (IntersectRect(&temp, &_rockTile[i].rc, &_player->getRect()))
-		{
-
-		}
-	}
->>>>>>> faa51494a3995ebed3afd28452f4df8108899cb6
 	//int j = 0;
 	//int k = 0;
 

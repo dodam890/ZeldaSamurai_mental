@@ -108,12 +108,7 @@ void zeldaMapScene::update()
 	}
 	else
 	{
-<<<<<<< HEAD
-		changeTileScene();
-		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false)
-=======
 		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false)
->>>>>>> faa51494a3995ebed3afd28452f4df8108899cb6
 		{
 			_link->update(NULL);
 		}
