@@ -59,6 +59,8 @@ protected:
 
 	int _mapWidth;
 	int _mapHeight;
+	int emIdx;
+	int testIdx;
 
 protected:
 	tagTile _tiles[TILEX * TILEY];
@@ -78,7 +80,6 @@ public:
 	virtual void render();
 
 	virtual void loadMap(const CHAR* pSaveMapFileName);
-	void drawTileAttribute();
 	void cameraSetTile();
 
 	int getMapWidth() { return _mapWidth; }
@@ -88,6 +89,9 @@ public:
 
 	BOOL* getAttribute(ATTRIBUTE attribute) { return _attribute[attribute]; }
 	tagTile* getTiles() { return _tiles; }
+
+	void playerToEnemyCollision();
+	void enemyToPlayerCollision();
 
 	tagDoorRect& getDoorRect(int mapNum) { return _door[mapNum]; }
 };

@@ -1430,7 +1430,6 @@ void mapTool::setupTiles(void)
 
 void mapTool::setMap(void)
 {
-
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
 		if (_tiles[i].rc.left >= WINSIZEX - 519) continue;

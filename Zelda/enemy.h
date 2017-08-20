@@ -70,6 +70,10 @@ protected:
 	int _rangeWidth;
 	int _rangeHeight;
 
+	bool _absorb;
+	bool _normal;
+	bool _pull;
+
 public:
 	virtual HRESULT init(player* player, camera* camera, zeldaTileMap* map, int idxX, int idxY);
 	virtual void release();
@@ -87,6 +91,23 @@ public:
 	virtual void getMapAttribute();
 
 	int getCenterY() { return _centerY; }
+
+	RECT getEnemyRc() { return _rc; }
+
+	void absorb(float playerCenX, float playerCenY);
+	void pulling();
+
+	void setAbs(bool abs) { _absorb = abs; }
+	void setNormal(bool nor) { _normal = nor; }
+	void setPull(bool pull) { _pull = pull; }
+
+	float getDistanceX() { return _distanceX; }
+	float getDistanceY() { return _distanceY; }
+
+	void setDistanceX(float disX) { _distanceX = disX; }
+	void setDistanceY(float disY) { _distanceY = disY; }
+
+	int getTotalIndex() { return tileTotalIdx; }
 
 	enemy();
 	virtual ~enemy();

@@ -24,15 +24,15 @@ void item_class::release()
 
 void item_class::update()
 {
-	renderX = _x - carmeraX;
-	renderY = _y - carmeraY;
+	renderX = _x + carmeraX;
+	renderY = _y + carmeraY;
 
 	_rc = RectMakeCenter(_x, _y, _image->getWidth(), _image->getHeight());
 }
 
 void item_class::render()
 {
-	_image->render(getMemDC(), _rc.left, _rc.top);
+	_image->render(getMemDC(), renderX, renderY);
 }
 
 void item_class::trow_move(float angle)

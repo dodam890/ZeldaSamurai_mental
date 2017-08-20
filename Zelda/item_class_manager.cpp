@@ -26,6 +26,8 @@ void item_class_manager::update()
 	for (_vit = _vt.begin(); _vit != _vt.end(); ++_vit)
 	{
 		(*_vit)->update();
+		(*_vit)->set_cameraX(_ca->getStartX());
+		(*_vit)->set_cameraY(_ca->getStartY());
 	}
 }
 
@@ -228,6 +230,19 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			init_y,
 			vol,
 			using_item,
+			inventory_item,
+			equip,
+			_io
+		);
+		break;
+	case 13:
+		calling->setting_items(IMAGEMANAGER->findImage("ring"),
+			"반지", " 빨간 보석이 들어있는 반지이다 ",
+			13,
+			init_x,
+			init_y,
+			vol,
+			special_item,
 			inventory_item,
 			equip,
 			_io

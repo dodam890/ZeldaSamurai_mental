@@ -55,7 +55,7 @@ HRESULT zeldaMapScene::init()
 
 void zeldaMapScene::release()
 {
-	SAFE_RELEASE(_camera);
+	/*SAFE_RELEASE(_camera);
 	SAFE_DELETE(_camera);
 
 	SAFE_RELEASE(_inven);
@@ -71,7 +71,7 @@ void zeldaMapScene::release()
 	{
 		SAFE_RELEASE(_zeldaMap[i]);
 		SAFE_DELETE(_zeldaMap[i]);
-	}
+	}*/
 
 	//SAFE_RELEASE(_link);
 	//SAFE_DELETE(_link);
@@ -82,6 +82,26 @@ void zeldaMapScene::update()
 {
 	returnToMainMenu();
 
+<<<<<<< HEAD
+=======
+	changeTileScene();
+
+	_inven->get_iim()->set_is_town(_isTileMap);
+
+	_im->set_camera(_camera);
+
+	if (_curMap == STORE)
+	{
+		_inven->get_iim()->set_P_x(3200.0F);
+		_inven->get_iim()->set_P_y(1700.0F);
+	}
+	else
+	{
+		_inven->get_iim()->set_P_x(_link->getDisX());
+		_inven->get_iim()->set_P_y(_link->getDisY());
+	}
+
+>>>>>>> cade5454b5e394021ab791f40dc81e646632b595
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->update();
@@ -108,7 +128,7 @@ void zeldaMapScene::update()
 	}
 	else
 	{
-		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false)
+		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false && _is_inven == false)
 		{
 			_link->update(NULL);
 		}
@@ -281,6 +301,18 @@ void zeldaMapScene::update()
 		}
 	}
 	_im->update();
+
+	//À½¾ÇÀç»ý
+	if (_curMap == TOWN)
+	{
+		if (!SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+			SOUNDMANAGER->play("¸¶À»À½¾Ç", 1.f);
+	}
+	else if (_curMap == STORE)
+	{
+		if (!SOUNDMANAGER->isPlaySound("»óÁ¡À½¾Ç"))
+			SOUNDMANAGER->play("»óÁ¡À½¾Ç", 1.f);
+	}
 }
 
 void zeldaMapScene::render()
@@ -372,6 +404,11 @@ void zeldaMapScene::rectCollision()
 				if (!_sceneEffect->getChangeScene())
 				{
 					setScene(i);
+					//À½¾Ç²¨ÁÜ
+					if (SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+						SOUNDMANAGER->stop("¸¶À»À½¾Ç");
+					if (SOUNDMANAGER->isPlaySound("»óÁ¡À½¾Ç"))
+						SOUNDMANAGER->stop("»óÁ¡À½¾Ç");
 				}
 			}
 		}

@@ -31,7 +31,6 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
 
-
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
 		if (_tiles[i].obj == OBJ_OCTOPUS)
@@ -136,6 +135,7 @@ void zeldaTileMap1::render()
 	//{
 	//	_rockTile[i].image->render(getMemDC(), _rockTile[i].rc.left, _rockTile[i].rc.top);
 	//}
+	//_em->render();
 
 	_emZorder->render();
 }

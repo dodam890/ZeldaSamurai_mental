@@ -6,7 +6,7 @@
 #pragma comment(lib, "lib/fmodex_vc.lib")
 
 #define D_SOUNDBUFFER_MAX 20
-#define D_CHANNELBUFFER_MAX 5
+#define D_CHANNELBUFFER_MAX 50
 #define D_TOTALBUFFER_MAX D_SOUNDBUFFER_MAX + D_CHANNELBUFFER_MAX
 
 using namespace FMOD;
