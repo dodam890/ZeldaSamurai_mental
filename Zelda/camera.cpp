@@ -51,10 +51,10 @@ void camera::drawCameraPos()
 {
 	char str[128] = "";
 
-	sprintf_s(str, "[startX : %1.f, startY : %1.f]", _startX, _startY);
-	TextOut(getMemDC(), WINSIZEX / 2 + 50, 0, str, strlen(str));
-	sprintf_s(str, "[cameraX : %1.f, cameraY : %1.f]", _cameraX, _cameraY);
-	TextOut(getMemDC(), WINSIZEX / 2 + 50, 30, str, strlen(str));
+	//sprintf_s(str, "[startX : %1.f, startY : %1.f]", _startX, _startY);
+	//TextOut(getMemDC(), WINSIZEX / 2 + 50, 0, str, strlen(str));
+	//sprintf_s(str, "[cameraX : %1.f, cameraY : %1.f]", _cameraX, _cameraY);
+	//TextOut(getMemDC(), WINSIZEX / 2 + 50, 30, str, strlen(str));
 
 }
 

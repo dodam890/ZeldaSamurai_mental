@@ -51,7 +51,8 @@ void townMap::render()
 {
 	zeldaMap::render();
 
-	Rectangle(getMemDC(), _eventRectInfo[TOWN_STORE].rc.left, _eventRectInfo[TOWN_STORE].rc.top, _eventRectInfo[TOWN_STORE].rc.right, _eventRectInfo[TOWN_STORE].rc.bottom);
+	if (_rectView)
+		Rectangle(getMemDC(), _eventRectInfo[TOWN_STORE].rc.left, _eventRectInfo[TOWN_STORE].rc.top, _eventRectInfo[TOWN_STORE].rc.right, _eventRectInfo[TOWN_STORE].rc.bottom);
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -155,6 +156,11 @@ void storeMap::render()
 
 	IMAGEMANAGER->findImage("STORE_DOOR")->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
 
+	if (_rectView)
+	{
+		Rectangle(getMemDC(), _eventRectInfo[STORE_TOWN].rc.left, _eventRectInfo[STORE_TOWN].rc.top, _eventRectInfo[STORE_TOWN].rc.right,
+			_eventRectInfo[STORE_TOWN].rc.bottom);
+	}
 
 	for (int i = 0; i < 3; i++)
 	{
