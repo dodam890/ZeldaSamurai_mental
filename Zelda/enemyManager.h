@@ -26,9 +26,9 @@ public:
 	void update();
 	void render();
 
-	void setOcto(int num);
-	void setSlime(int num);
-	void setSnail(int num);
+	void setOcto(float distanceX, float distanceY);
+	void setSlime(float distanceX, float distanceY);
+	void setSnail(float distanceX, float distanceY);
 	
 	vector<enemy*>& getVEnemy() { return _vEm; }
 	vector<enemy*>::iterator& getVIEnemy() { return _viEm; }
