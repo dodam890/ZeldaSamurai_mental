@@ -59,7 +59,6 @@ void zeldaTileMap1::update()
 {
 	zeldaTileMap::update();
 
-<<<<<<< HEAD
 	int j = 0;
 	int k = 0;
 
@@ -89,7 +88,6 @@ void zeldaTileMap1::update()
 
 		}
 	}
-=======
 	//int j = 0;
 	//int k = 0;
 
@@ -142,7 +140,7 @@ void zeldaTileMap1::update()
 
 	_emZorder->update();
 	_em->update();
->>>>>>> 1567585530f23238a1f934e0082835663fa5e842
+
 }
 
 void zeldaTileMap1::render()
