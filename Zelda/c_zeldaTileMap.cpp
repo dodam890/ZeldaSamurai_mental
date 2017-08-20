@@ -29,6 +29,14 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 		{
 			_em->setOcto(_tiles[i].rc.left, _tiles[i].rc.top);
 		}
+		else if (_tiles[i].obj == OBJ_SNAIL)
+		{
+			_em->setSnail(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SLIME)
+		{
+			_em->setSlime(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
 	}
 
 	_emZorder = new emZorder;
@@ -132,6 +140,22 @@ HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSav
 
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj == OBJ_OCTOPUS)
+		{
+			_em->setOcto(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SNAIL)
+		{
+			_em->setSnail(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SLIME)
+		{
+			_em->setSlime(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+	}
 
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
@@ -319,6 +343,22 @@ HRESULT zeldaTileMap3::init(player* player, camera * camera, const CHAR* pMapSav
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
 
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj == OBJ_OCTOPUS)
+		{
+			_em->setOcto(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SNAIL)
+		{
+			_em->setSnail(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SLIME)
+		{
+			_em->setSlime(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+	}
+
 	_door[DOWN].rc = RectMake(720, 1400, 80, 30);
 	_door[DOWN].nextMap = TILEMAP_TWO;
 	_door[DOWN].x = 625;
@@ -376,6 +416,22 @@ HRESULT zeldaTileMap4::init(player* player, camera * camera, const CHAR* pMapSav
 
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj == OBJ_OCTOPUS)
+		{
+			_em->setOcto(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SNAIL)
+		{
+			_em->setSnail(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SLIME)
+		{
+			_em->setSlime(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+	}
 
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
@@ -453,6 +509,22 @@ HRESULT zeldaTileMap5::init(player* player, camera * camera, const CHAR* pMapSav
 
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj == OBJ_OCTOPUS)
+		{
+			_em->setOcto(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SNAIL)
+		{
+			_em->setSnail(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+		else if (_tiles[i].obj == OBJ_SLIME)
+		{
+			_em->setSlime(_tiles[i].rc.left, _tiles[i].rc.top);
+		}
+	}
 
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
