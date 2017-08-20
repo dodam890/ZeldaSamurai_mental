@@ -166,14 +166,12 @@ void npc::update(string npcSort)
 
 void npc::render()
 {
-	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
-	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+	if (_rectView)
+	{
+		Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+		Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+	}
 	_npc[_direction].image->frameRender(getMemDC(), _rc.left, _rc.top, _npc[_direction].currentFrameX, 0);
-
-	TextOut(getMemDC(), _moveRc.left, _moveRc.top, "무브렉트", strlen("무브렉트"));
-
-	/*if(_talkOn)
-		drawTextBox();*/
 }
 
 void npc::setImages(string imageKeyNameDown, string imageKeyNameLeft, string imageKeyNameRight, string imageKeyNameUp)

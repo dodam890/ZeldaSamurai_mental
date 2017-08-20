@@ -73,7 +73,6 @@ void player::update(zeldaTileMap* tileMap)
 		_hurtCount++;
 		if (_hurtCount % 50 == 0)
 		{
-
 			_hurt = false;
 			_hurtCount = 0;
 		}
@@ -97,31 +96,30 @@ void player::render(void)
 {
 	draw();
 	drawHpImage();
-	//_hp[2].hpImg[LINK_HP_MAX]->render(getMemDC(), 500, 500);
 }
 
 void player::draw(void)
 {
 	char str[128] = "";
 
-	sprintf(str, "[_probeX : %d _probeY : %d]", _probeX, _probeY);
-	TextOut(getMemDC(), 400, 30, str, strlen(str));
-	sprintf_s(str, "[player _X : %1.f, player _Y : %1.f]", _X, _Y);
-	TextOut(getMemDC(), 400, 50, str, strlen(str));
-	sprintf_s(str, "[disX : %1.f, disY : %1.f]", _disX, _disY);
-	TextOut(getMemDC(), 400, 70, str, strlen(str));
-	sprintf(str, "[frameX : %d]", _currentFrameX);
-	TextOut(getMemDC(), 400, 90, str, strlen(str));
-	sprintf_s(str, "[rcCrush cenX : %d, rcCrush cenY : %d]", _rcCrushCenX, _rcCrushCenY);
-	TextOut(getMemDC(), 400, 110, str, strlen(str));
-	sprintf(str, "idX : %d, idY : %d, realId : %d",	_linkIdxX, _linkIdxY, _linkIdx);
-	TextOut(getMemDC(), 400, 130, str, strlen(str));
-	sprintf(str, "ob0 : %d, ob1 : %d", tileIndex[0], tileIndex[1]);
-	TextOut(getMemDC(), 400, 150, str, strlen(str));
+	//sprintf(str, "[_probeX : %d _probeY : %d]", _probeX, _probeY);
+	//TextOut(getMemDC(), 400, 30, str, strlen(str));
+	//sprintf_s(str, "[player _X : %1.f, player _Y : %1.f]", _X, _Y);
+	//TextOut(getMemDC(), 400, 50, str, strlen(str));
+	//sprintf_s(str, "[disX : %1.f, disY : %1.f]", _disX, _disY);
+	//TextOut(getMemDC(), 400, 70, str, strlen(str));
+	//sprintf(str, "[frameX : %d]", _currentFrameX);
+	//TextOut(getMemDC(), 400, 90, str, strlen(str));
+	//sprintf_s(str, "[rcCrush cenX : %d, rcCrush cenY : %d]", _rcCrushCenX, _rcCrushCenY);
+	//TextOut(getMemDC(), 400, 110, str, strlen(str));
+	//sprintf(str, "idX : %d, idY : %d, realId : %d",	_linkIdxX, _linkIdxY, _linkIdx);
+	//TextOut(getMemDC(), 400, 130, str, strlen(str));
+	//sprintf(str, "ob0 : %d, ob1 : %d", tileIndex[0], tileIndex[1]);
+	//TextOut(getMemDC(), 400, 150, str, strlen(str));
 
 
 
-	switch (L_Motion)
+	/*switch (L_Motion)
 	{
 	case player::LINK_MOTION_RIGHT:
 		TextOut(getMemDC(), 500, 10, "오른쪽기본", strlen("오른쪽기본"));
@@ -267,11 +265,7 @@ void player::draw(void)
 	case player::LINK_MOTION_DOWN_ROLLING_ATTACK:
 		TextOut(getMemDC(), 500, 10, "아래쪽롤링썬더", strlen("아래쪽롤링썬더"));
 		break;
-	}
-
-	Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
-	Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
-	
+	}*/
 	if (L_Motion == LINK_MOTION_UP_GRAB)
 	{
 		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X - 5, _Y - 15, _currentFrameX, 0);
@@ -291,6 +285,12 @@ void player::draw(void)
 	else
 	{
 		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X, _Y, _currentFrameX, 0);
+	}
+
+	if (_rectView)
+	{
+		Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
+		Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
 	}
 }
 
@@ -2837,14 +2837,11 @@ void player::drawHpImage()
 	{
 		_hp[i].hpImg[_hp[i].hpKind]->render(getMemDC(), 50 + i * 78, 20);
 	}
-	controlHeart();
+	//controlHeart();
 }
 
 void player::controlHeart()
 {
-
-	if (KEYMANAGER->isStayKeyDown('P'))
-	{
 		if (_hp[_curHeart].hpKind >= 4)
 		{
 			if (_curHeart < 4)
@@ -2856,7 +2853,6 @@ void player::controlHeart()
 		{
 			_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind + 1);
 		}
-	}
 }
 
 void player::decreaseHeart()
@@ -2872,4 +2868,5 @@ void player::decreaseHeart()
 	{
 		_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind - 1);
 	}
+
 }

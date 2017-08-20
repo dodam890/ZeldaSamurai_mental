@@ -12,6 +12,8 @@ BOOL _rightButtonDown;
 
 float _bgmVolume;
 float _effectVolume;
+bool _rectView;
+bool _pixelView;
 
 //=============================================================================
 

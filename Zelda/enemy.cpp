@@ -136,15 +136,6 @@ void enemy::update()
 void enemy::render()
 {
 	this->draw();
-	if (_isFindPlayer)
-	{
-		TextOut(getMemDC(), 500, 500, "발견!", strlen("발견!"));
-	}
-	else
-	{
-		TextOut(getMemDC(), 500, 500, "노발견!", strlen("노발견!"));
-	}
-	//Rectangle(getMemDC(), rcCollision.left, rcCollision.top, rcCollision.right, rcCollision.bottom);
 }
 
 void enemy::aStarMove(int index)
@@ -222,19 +213,24 @@ void enemy::addFrame()
 }
 
 void enemy::draw()
-{
+{		
 	//if (_aStar) _aStar->render();
+	if (_rectView)
+	{
 
-	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
-	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
-	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+		Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+		Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+		Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+		//Rectangle(getMemDC(), rcCollision.left, rcCollision.top, rcCollision.right, rcCollision.bottom);
 
-	char str[128] = "";
-	sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
-	TextOut(getMemDC(), 400, 200, str, strlen(str));
+	}
 
-	sprintf_s(str, "eObX : %d, eObY : %d, eTotal : %d", tileIndex[0], tileIndex[1], tileTotalIdx);
-	TextOut(getMemDC(), 400, 230, str, strlen(str));
+	//char str[128] = "";
+	//sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
+	//TextOut(getMemDC(), 400, 200, str, strlen(str));
+
+	//sprintf_s(str, "eObX : %d, eObY : %d, eTotal : %d", tileIndex[0], tileIndex[1], tileTotalIdx);
+	//TextOut(getMemDC(), 400, 230, str, strlen(str));
 }
 
 void enemy::addImage()

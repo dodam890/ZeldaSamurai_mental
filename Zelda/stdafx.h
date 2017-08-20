@@ -71,3 +71,6 @@ extern BOOL _rightButtonDown;
 
 extern float _bgmVolume;
 extern float _effectVolume;
+
+extern bool _rectView;
+extern bool _pixelView;

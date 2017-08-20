@@ -95,7 +95,17 @@ void zeldaMapScene::update()
 			RECT rctemp;
 			if (IntersectRect(&rctemp, &_im->get_vt()[i]->get_rc(), &_link->getRect()))
 			{
-				_inven->set_P_P_money(_im->get_vt()[i]->get_item_option().Price);
+				if (!SOUNDMANAGER->isPlaySound("·çºñ½Àµæ"))
+					SOUNDMANAGER->play("·çºñ½Àµæ", 0.5f);
+
+				if (_im->get_vt()[i]->get_item_num() == 9)
+				{
+					_link->controlHeart();
+				}
+				else
+				{
+					_inven->set_P_P_money(_im->get_vt()[i]->get_item_option().Price);
+				}
 				_im->eraser(i);
 			}
 		}
@@ -114,8 +124,14 @@ void zeldaMapScene::update()
 
 	if (_isTileMap)
 	{
-		_zeldaTileMap[_tileMapKind]->update();
-		_link->update(_zeldaTileMap[_tileMapKind]);
+
+		if (_tile_inven == false)
+		{
+			_link->update(_zeldaTileMap[_tileMapKind]);
+			_zeldaTileMap[_tileMapKind]->update();
+		}
+
+		
 
 		if (SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
 			SOUNDMANAGER->stop("¸¶À»À½¾Ç");
@@ -339,7 +355,7 @@ void zeldaMapScene::render()
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->render();
-
+		_im->render();
 		if (_tile_inven == true)
 		{
 			_inven->render();
@@ -363,14 +379,15 @@ void zeldaMapScene::render()
 		}
 		else if (_is_inven == true)
 		{
+			_im->render();
 			_inven->render();
 			IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
 		}
-
-		Rectangle(getMemDC(), _rcGoTileMap.left, _rcGoTileMap.top, _rcGoTileMap.right, _rcGoTileMap.bottom);
+		if (_rectView)
+			Rectangle(getMemDC(), _rcGoTileMap.left, _rcGoTileMap.top, _rcGoTileMap.right, _rcGoTileMap.bottom);
 	}
 
-	_im->render();
+	
 
 	_camera->render();
 	_camera->drawCameraPos();

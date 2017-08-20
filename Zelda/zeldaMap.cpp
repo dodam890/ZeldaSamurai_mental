@@ -49,8 +49,12 @@ void zeldaMap::update()
 void zeldaMap::render()	   
 {
 	_mapImg->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
-	//_mapPixelImg->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
-	//_link->render();
+
+	if (_pixelView)
+	{
+		_mapPixelImg->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
+	}
+
 	_npcZorder->render();
 }
 
