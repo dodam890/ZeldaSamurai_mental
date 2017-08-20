@@ -15,6 +15,7 @@ HRESULT mainGame::init(void)
 
 	//여기서 각각의 이미지 add하는 함수 돌아감.
 	addImage();
+	addSound();
 
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	SCENEMANAGER->addScene("main_scene", new main_scene);
@@ -44,7 +45,8 @@ void mainGame::render(void)
 
 	SCENEMANAGER->render();
 
-		TIMEMANAGER->render(getMemDC());
+	TIMEMANAGER->render(getMemDC());
 	//===============아래도 건들지마라 =================
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 }
+

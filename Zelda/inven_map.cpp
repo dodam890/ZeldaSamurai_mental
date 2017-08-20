@@ -27,4 +27,5 @@ void inven_map::update()
 void inven_map::render()
 {
 	IMAGEMANAGER->findImage("인벤토리내용3")->render(getMemDC(), 38, 14);
+	IMAGEMANAGER->findImage("town_map")->render(getMemDC(), 480, 250);
 }

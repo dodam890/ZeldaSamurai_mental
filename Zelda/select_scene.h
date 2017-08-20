@@ -13,8 +13,10 @@ public:
 
 	struct S_SELECT_RC_INFO
 	{
+		image* img;
 		RECT rc;
 		string strSceneKey;
+		int alpha;
 	};
 
 private:

@@ -132,8 +132,6 @@ HRESULT storeMap::init(string strMapImageKey, string strPixelMapImageKey, camera
 
 	_eventRectInfo[STORE_NEXTDOOR].rc = RectMake(1200, 395, 5, 80);
 
-	_sc = new shop_class;
-
 	return S_OK;
 }
 
@@ -164,7 +162,10 @@ void storeMap::render()
 
 	IMAGEMANAGER->findImage("STORE_DOOR")->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> faa51494a3995ebed3afd28452f4df8108899cb6
 	for (int i = 0; i < 3; i++)
 	{
 		if(_storeNpc[i]->getTalkOn())
@@ -184,7 +185,6 @@ void storeMap::talkToStoreNpc()
 				if (!_storeNpc[i]->getTalkOn())
 				{
 					_storeNpc[i]->setTalkOn(true);
-					if (_storeNpc[0]->getTalkOn() == true)_sc->init();
 				}
 				else
 					_storeNpc[i]->setTalkOn(false);

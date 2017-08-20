@@ -18,7 +18,7 @@ public:
 	void addMapImage();
 
 	void addImage();
-
+	void addSound();
 	mainGame();
 	~mainGame();
 };

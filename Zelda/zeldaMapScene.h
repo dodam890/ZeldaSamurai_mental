@@ -6,6 +6,8 @@
 #include "player.h"
 #include "inven_all.h"
 #include "shop_class.h"
+#include "up_grade_complete.h"
+#include "item_class_manager.h"
 #include "sceneEffect.h"
 #include "c_zeldaTileMap.h"
 
@@ -18,15 +20,19 @@ private:
 	player* _link;
 	inven_all* _inven;
 	shop_class* _sc;
+	up_grade_complete* _ugc;
 	image* _imgTmpBackbuffer;
 	MAP_KIND _curMap;
 	zeldaMap* _zeldaMap[MAP_KIND_END];
 	sceneEffect* _sceneEffect;
 
+	item_class_manager* _im;
+
 	bool _isCameraMove;
 	bool _isLeft;
 
 	bool _is_inven;
+	bool _tile_inven;
 	int effect_alpha;
 
 private:
