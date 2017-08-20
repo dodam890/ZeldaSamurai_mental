@@ -21,6 +21,13 @@ HRESULT player::init(camera* camera)
 	_isPush = false;
 	_isPlayerInTileMap = false;
 
+	_hurt = false;
+
+	_sword = false;
+	_shield = false;
+	_magicpot = false;
+	_rollingAttack = false;
+
 	_damage = 0;
 	_frameX = 0;
 	_keyCount = 0;
@@ -33,18 +40,16 @@ HRESULT player::init(camera* camera)
 	_rcCrushCenX = -100000;
 	_rcCrushCenY = -100000;
 	_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
-	
+
 	_disX = WINSIZEX / 2 - 135;
 	_disY = WINSIZEY / 2 + 100;
 
 	_X = _cam->getStartX() + _disX;
 	_Y = _cam->getStartY() + _disY;
-	
+
 	_playerRc = RectMake(_X + 102, _Y + 100, 66, 70);
 
 	_curHeart = HEART_COUNT - 1;
-
-	_hurt = false;
 
 	setHpImage();
 
@@ -58,6 +63,22 @@ void player::release(void) {}
 
 void player::update(zeldaTileMap* tileMap)
 {
+	if (_sword == false || _shield == false || _magicpot == false || _rollingAttack == false)
+	{
+		if (_ia->get_vi().size() > 0)
+		{
+			for (int i = 0; i < _ia->get_vi().size(); i++)
+			{
+				if (_ia->get_vi()[i]->get_item_num() == 0) _sword = true;
+				if (_ia->get_vi()[i]->get_item_num() == 1) _shield = true;
+				if (_ia->get_vi()[i]->get_item_num() == 2) _magicpot = true;
+				if (_ia->get_vi()[i]->get_item_num() == 14) _rollingAttack = true;
+			}
+		}
+	}
+
+
+
 	if (_isPlayerInTileMap)
 	{
 		_zeldaTileMap = tileMap;
@@ -73,6 +94,7 @@ void player::update(zeldaTileMap* tileMap)
 		_hurtCount++;
 		if (_hurtCount % 50 == 0)
 		{
+
 			_hurt = false;
 			_hurtCount = 0;
 		}
@@ -96,30 +118,31 @@ void player::render(void)
 {
 	draw();
 	drawHpImage();
+	//_hp[2].hpImg[LINK_HP_MAX]->render(getMemDC(), 500, 500);
 }
 
 void player::draw(void)
 {
 	char str[128] = "";
 
-	//sprintf(str, "[_probeX : %d _probeY : %d]", _probeX, _probeY);
-	//TextOut(getMemDC(), 400, 30, str, strlen(str));
-	//sprintf_s(str, "[player _X : %1.f, player _Y : %1.f]", _X, _Y);
-	//TextOut(getMemDC(), 400, 50, str, strlen(str));
-	//sprintf_s(str, "[disX : %1.f, disY : %1.f]", _disX, _disY);
-	//TextOut(getMemDC(), 400, 70, str, strlen(str));
-	//sprintf(str, "[frameX : %d]", _currentFrameX);
-	//TextOut(getMemDC(), 400, 90, str, strlen(str));
-	//sprintf_s(str, "[rcCrush cenX : %d, rcCrush cenY : %d]", _rcCrushCenX, _rcCrushCenY);
-	//TextOut(getMemDC(), 400, 110, str, strlen(str));
-	//sprintf(str, "idX : %d, idY : %d, realId : %d",	_linkIdxX, _linkIdxY, _linkIdx);
-	//TextOut(getMemDC(), 400, 130, str, strlen(str));
-	//sprintf(str, "ob0 : %d, ob1 : %d", tileIndex[0], tileIndex[1]);
-	//TextOut(getMemDC(), 400, 150, str, strlen(str));
+	sprintf(str, "[_probeX : %d _probeY : %d]", _probeX, _probeY);
+	TextOut(getMemDC(), 400, 30, str, strlen(str));
+	sprintf_s(str, "[player _X : %1.f, player _Y : %1.f]", _X, _Y);
+	TextOut(getMemDC(), 400, 50, str, strlen(str));
+	sprintf_s(str, "[disX : %1.f, disY : %1.f]", _disX, _disY);
+	TextOut(getMemDC(), 400, 70, str, strlen(str));
+	sprintf(str, "[frameX : %d]", _currentFrameX);
+	TextOut(getMemDC(), 400, 90, str, strlen(str));
+	sprintf_s(str, "[rcCrush cenX : %d, rcCrush cenY : %d]", _rcCrushCenX, _rcCrushCenY);
+	TextOut(getMemDC(), 400, 110, str, strlen(str));
+	sprintf(str, "idX : %d, idY : %d, realId : %d", _linkIdxX, _linkIdxY, _linkIdx);
+	TextOut(getMemDC(), 400, 130, str, strlen(str));
+	sprintf(str, "ob0 : %d, ob1 : %d", tileIndex[0], tileIndex[1]);
+	TextOut(getMemDC(), 400, 150, str, strlen(str));
 
 
 
-	/*switch (L_Motion)
+	switch (L_Motion)
 	{
 	case player::LINK_MOTION_RIGHT:
 		TextOut(getMemDC(), 500, 10, "오른쪽기본", strlen("오른쪽기본"));
@@ -265,7 +288,11 @@ void player::draw(void)
 	case player::LINK_MOTION_DOWN_ROLLING_ATTACK:
 		TextOut(getMemDC(), 500, 10, "아래쪽롤링썬더", strlen("아래쪽롤링썬더"));
 		break;
-	}*/
+	}
+
+	Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
+	Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
+
 	if (L_Motion == LINK_MOTION_UP_GRAB)
 	{
 		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X - 5, _Y - 15, _currentFrameX, 0);
@@ -285,12 +312,6 @@ void player::draw(void)
 	else
 	{
 		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X, _Y, _currentFrameX, 0);
-	}
-
-	if (_rectView)
-	{
-		Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
-		Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
 	}
 }
 
@@ -697,7 +718,7 @@ void player::motionChange(void)
 		case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
 
 			L_Motion = LINK_MOTION_UP_MAGICPOT_ABSORB;
-			
+
 			if (_cam->isCameraYZeroSide())
 			{
 				if (_playerRc.top <= WINSIZEY / 2 - 35 && !_isStore)
@@ -1088,74 +1109,80 @@ void player::motionChange(void)
 			break;
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown('Z'))
+	if (_sword)
 	{
-		SOUNDMANAGER->play("젤다검기본소리", 0.5f);
-		SOUNDMANAGER->play("젤다기본베기기합", 0.5f);
-
-		switch (L_Motion)
+		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
-		case player::LINK_MOTION_RIGHT:
-		case player::LINK_MOTION_RIGHT_WALK:
+			SOUNDMANAGER->play("젤다검기본소리", 0.5f);
+			SOUNDMANAGER->play("젤다기본베기기합", 0.5f);
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_RIGHT_SWORD_ATTACK;
+			switch (L_Motion)
+			{
+			case player::LINK_MOTION_RIGHT:
+			case player::LINK_MOTION_RIGHT_WALK:
 
-			break;
-		case player::LINK_MOTION_LEFT:
-		case player::LINK_MOTION_LEFT_WALK:
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_RIGHT_SWORD_ATTACK;
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_LEFT_SWORD_ATTACK;
+				break;
+			case player::LINK_MOTION_LEFT:
+			case player::LINK_MOTION_LEFT_WALK:
 
-			break;
-		case player::LINK_MOTION_UP:
-		case player::LINK_MOTION_UP_WALK:
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_LEFT_SWORD_ATTACK;
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_UP_SWORD_ATTACK;
+				break;
+			case player::LINK_MOTION_UP:
+			case player::LINK_MOTION_UP_WALK:
 
-			break;
-		case player::LINK_MOTION_DOWN:
-		case player::LINK_MOTION_DOWN_WALK:
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_UP_SWORD_ATTACK;
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_DOWN_SWORD_ATTACK;
+				break;
+			case player::LINK_MOTION_DOWN:
+			case player::LINK_MOTION_DOWN_WALK:
 
-			break;
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_DOWN_SWORD_ATTACK;
+
+				break;
+			}
 		}
 	}
-	if (KEYMANAGER->isStayKeyDown('X'))
+	if (_shield)
 	{
-		if (!SOUNDMANAGER->isPlaySound("젤다방패들기"))
-			SOUNDMANAGER->play("젤다방패들기", 0.5f);
-
-		switch (L_Motion)
+		if (KEYMANAGER->isStayKeyDown('X'))
 		{
-		case player::LINK_MOTION_RIGHT:
-		case player::LINK_MOTION_RIGHT_WALK:
+			if (!SOUNDMANAGER->isPlaySound("젤다방패들기"))
+				SOUNDMANAGER->play("젤다방패들기", 0.5f);
 
-			L_Motion = LINK_MOTION_RIGHT_SHIELD_OPEN;
+			switch (L_Motion)
+			{
+			case player::LINK_MOTION_RIGHT:
+			case player::LINK_MOTION_RIGHT_WALK:
 
-			break;
-		case player::LINK_MOTION_LEFT:
-		case player::LINK_MOTION_LEFT_WALK:
+				L_Motion = LINK_MOTION_RIGHT_SHIELD_OPEN;
 
-			L_Motion = LINK_MOTION_LEFT_SHIELD_OPEN;
+				break;
+			case player::LINK_MOTION_LEFT:
+			case player::LINK_MOTION_LEFT_WALK:
 
-			break;
-		case player::LINK_MOTION_UP:
-		case player::LINK_MOTION_UP_WALK:
+				L_Motion = LINK_MOTION_LEFT_SHIELD_OPEN;
 
-			L_Motion = LINK_MOTION_UP_SHIELD_OPEN;
+				break;
+			case player::LINK_MOTION_UP:
+			case player::LINK_MOTION_UP_WALK:
 
-			break;
-		case player::LINK_MOTION_DOWN:
-		case player::LINK_MOTION_DOWN_WALK:
+				L_Motion = LINK_MOTION_UP_SHIELD_OPEN;
 
-			L_Motion = LINK_MOTION_DOWN_SHIELD_OPEN;
+				break;
+			case player::LINK_MOTION_DOWN:
+			case player::LINK_MOTION_DOWN_WALK:
 
-			break;
+				L_Motion = LINK_MOTION_DOWN_SHIELD_OPEN;
+
+				break;
+			}
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp('X'))
@@ -1208,99 +1235,105 @@ void player::motionChange(void)
 			break;
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown('A'))
+	if (_rollingAttack && _sword)
 	{
-		SOUNDMANAGER->play("젤다검회전소리", 0.5f);
-		SOUNDMANAGER->play("젤다회전베기기합", 0.5f);
-
-		switch (L_Motion)
+		if (KEYMANAGER->isOnceKeyDown('A'))
 		{
-		case player::LINK_MOTION_RIGHT:
-		case player::LINK_MOTION_RIGHT_WALK:
+			SOUNDMANAGER->play("젤다검회전소리", 0.5f);
+			SOUNDMANAGER->play("젤다회전베기기합", 0.5f);
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_RIGHT_ROLLING_ATTACK;
+			switch (L_Motion)
+			{
+			case player::LINK_MOTION_RIGHT:
+			case player::LINK_MOTION_RIGHT_WALK:
 
-			break;
-		case player::LINK_MOTION_LEFT:
-		case player::LINK_MOTION_LEFT_WALK:
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_RIGHT_ROLLING_ATTACK;
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_LEFT_ROLLING_ATTACK;
+				break;
+			case player::LINK_MOTION_LEFT:
+			case player::LINK_MOTION_LEFT_WALK:
 
-			break;
-		case player::LINK_MOTION_UP:
-		case player::LINK_MOTION_UP_WALK:
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_LEFT_ROLLING_ATTACK;
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_UP_ROLLING_ATTACK;
+				break;
+			case player::LINK_MOTION_UP:
+			case player::LINK_MOTION_UP_WALK:
 
-			break;
-		case player::LINK_MOTION_DOWN:
-		case player::LINK_MOTION_DOWN_WALK:
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_UP_ROLLING_ATTACK;
 
-			_currentFrameX = 0;
-			L_Motion = LINK_MOTION_DOWN_ROLLING_ATTACK;
+				break;
+			case player::LINK_MOTION_DOWN:
+			case player::LINK_MOTION_DOWN_WALK:
 
-			break;
+				_currentFrameX = 0;
+				L_Motion = LINK_MOTION_DOWN_ROLLING_ATTACK;
+
+				break;
+			}
 		}
 	}
-	if (KEYMANAGER->isStayKeyDown('C'))
+	if (_magicpot)
 	{
-		switch (L_Motion)
+		if (KEYMANAGER->isStayKeyDown('C'))
 		{
-		case player::LINK_MOTION_RIGHT:
-		case player::LINK_MOTION_RIGHT_WALK:
+			switch (L_Motion)
+			{
+			case player::LINK_MOTION_RIGHT:
+			case player::LINK_MOTION_RIGHT_WALK:
 
-			L_Motion = LINK_MOTION_RIGHT_MAGICPOT_ABSORB;
+				L_Motion = LINK_MOTION_RIGHT_MAGICPOT_ABSORB;
 
-			break;
-		case player::LINK_MOTION_LEFT:
-		case player::LINK_MOTION_LEFT_WALK:
+				break;
+			case player::LINK_MOTION_LEFT:
+			case player::LINK_MOTION_LEFT_WALK:
 
-			L_Motion = LINK_MOTION_LEFT_MAGICPOT_ABSORB;
+				L_Motion = LINK_MOTION_LEFT_MAGICPOT_ABSORB;
 
-			break;
-		case player::LINK_MOTION_UP:
-		case player::LINK_MOTION_UP_WALK:
+				break;
+			case player::LINK_MOTION_UP:
+			case player::LINK_MOTION_UP_WALK:
 
-			L_Motion = LINK_MOTION_UP_MAGICPOT_ABSORB;
+				L_Motion = LINK_MOTION_UP_MAGICPOT_ABSORB;
 
-			break;
-		case player::LINK_MOTION_DOWN:
-		case player::LINK_MOTION_DOWN_WALK:
+				break;
+			case player::LINK_MOTION_DOWN:
+			case player::LINK_MOTION_DOWN_WALK:
 
-			L_Motion = LINK_MOTION_DOWN_MAGICPOT_ABSORB;
+				L_Motion = LINK_MOTION_DOWN_MAGICPOT_ABSORB;
 
-			break;
-		case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
+				break;
+			case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
 
-			_rcCrushCenX = -100000;
-			_rcCrushCenY = -100000;
-			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+				_rcCrushCenX = -100000;
+				_rcCrushCenY = -100000;
+				_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
-			break;
-		case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
+				break;
+			case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
 
-			_rcCrushCenX = -100000;
-			_rcCrushCenY = -100000;
-			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+				_rcCrushCenX = -100000;
+				_rcCrushCenY = -100000;
+				_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
-			break;
-		case player::LINK_MOTION_UP_MAGICPOT_FIRE:
+				break;
+			case player::LINK_MOTION_UP_MAGICPOT_FIRE:
 
-			_rcCrushCenX = -100000;
-			_rcCrushCenY = -100000;
-			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+				_rcCrushCenX = -100000;
+				_rcCrushCenY = -100000;
+				_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
-			break;
-		case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
+				break;
+			case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
 
-			_rcCrushCenX = -100000;
-			_rcCrushCenY = -100000;
-			_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+				_rcCrushCenX = -100000;
+				_rcCrushCenY = -100000;
+				_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
 
-			break;
+				break;
+			}
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp('C'))
@@ -2416,18 +2449,18 @@ void player::makeCrushRc()
 		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 500, 150);
 		_damage = 1.F;
 		_linkCrushRc = { _rcCrush, _damage };
-		_rcAtr = RC_ATR_ABSORB;		
+		_rcAtr = RC_ATR_ABSORB;
 
 		break;
 	case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
-		
+
 		_rcCrushCenX = _X - 145;
 		_rcCrushCenY = _Y + 125;
 		_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 500, 150);
 		_damage = 1.F;
 		_linkCrushRc = { _rcCrush, _damage };
 		_rcAtr = RC_ATR_ABSORB;
-		
+
 		break;
 	case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
 
@@ -2550,7 +2583,7 @@ void player::dectectionTileMap()
 	case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
 
 	{
-		tileIndex[0] = _linkIdx + 1;		
+		tileIndex[0] = _linkIdx + 1;
 		if (_playerRc.bottom < _zeldaTileMap->getTile()[tileIndex[0]].rc.bottom)
 		{
 			tileIndex[1] = tileIndex[0] - TILEX;
@@ -2842,17 +2875,17 @@ void player::drawHpImage()
 
 void player::controlHeart()
 {
-		if (_hp[_curHeart].hpKind >= 4)
+	if (_hp[_curHeart].hpKind >= 4)
+	{
+		if (_curHeart < 4)
 		{
-			if (_curHeart < 4)
-			{
-				_curHeart++;
-			}
+			_curHeart++;
 		}
-		else
-		{
-			_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind + 1);
-		}
+	}
+	else
+	{
+		_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind + 1);
+	}
 }
 
 void player::decreaseHeart()
@@ -2868,5 +2901,4 @@ void player::decreaseHeart()
 	{
 		_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind - 1);
 	}
-
 }

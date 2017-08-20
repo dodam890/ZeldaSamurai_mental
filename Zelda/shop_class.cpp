@@ -164,10 +164,10 @@ void shop_class::render()
 			IMAGEMANAGER->findImage("250루비")->render(getMemDC(), item_rc[i].left + 340, item_rc[i].top + 15);
 		if (i == 3)IMAGEMANAGER->findImage("글자요술지팡이")->render(getMemDC(), item_rc[i].left + 20, item_rc[i].top + 15),
 			IMAGEMANAGER->findImage("250루비")->render(getMemDC(), item_rc[i].left + 340, item_rc[i].top + 15);
-		if (i == 4)IMAGEMANAGER->findImage("글자병")->render(getMemDC(), item_rc[i].left + 20, item_rc[i].top + 15),
-			IMAGEMANAGER->findImage("70루비")->render(getMemDC(), item_rc[i].left + 340, item_rc[i].top + 15);
-		if (i == 5)IMAGEMANAGER->findImage("글자하트")->render(getMemDC(), item_rc[i].left + 20, item_rc[i].top + 15),
-			IMAGEMANAGER->findImage("60루비")->render(getMemDC(), item_rc[i].left + 340, item_rc[i].top + 15);
+		if (i == 4)IMAGEMANAGER->findImage("글자반지")->render(getMemDC(), item_rc[i].left + 20, item_rc[i].top + 15),
+			IMAGEMANAGER->findImage("5000루비")->render(getMemDC(), item_rc[i].left + 340, item_rc[i].top + 15);
+		if (i == 5)IMAGEMANAGER->findImage("글자책")->render(getMemDC(), item_rc[i].left + 20, item_rc[i].top + 15),
+			IMAGEMANAGER->findImage("10000루비")->render(getMemDC(), item_rc[i].left + 340, item_rc[i].top + 15);
 	}
 
 	scoreRender();
@@ -271,18 +271,18 @@ item_class* shop_class::buy_what(int arry)
 	case 4:
 
 		_io_temp.ATK = 0;
-		_io_temp.ATK_SPEED = 1;
+		_io_temp.ATK_SPEED = 0;
 		_io_temp.DEF = 0;
-		_io_temp.Price = 70;
+		_io_temp.Price = 5000;
 		_io_temp.Upgrade = 0;
 
-		temp->setting_items(IMAGEMANAGER->findImage("빈병"),
-			"빈병", "무언가를 담을 수 있다",
-			4,
+		temp->setting_items(IMAGEMANAGER->findImage("반지"),
+			"반지", " 빨간 보석이 들어있는 반지이다 ",
+			13,
 			NULL,
 			NULL,
 			1,
-			Interaction_item,
+			special_item,
 			inventory_item,
 			false, _io_temp
 		);
@@ -291,18 +291,18 @@ item_class* shop_class::buy_what(int arry)
 	case 5:
 
 		_io_temp.ATK = 0;
-		_io_temp.ATK_SPEED = 1;
+		_io_temp.ATK_SPEED = 0;
 		_io_temp.DEF = 0;
-		_io_temp.Price = 60;
+		_io_temp.Price = 10000;
 		_io_temp.Upgrade = 0;
 
-		temp->setting_items(IMAGEMANAGER->findImage("하트추가"),
-			"하트", "생명력을 올려준다.",
-			9,
+		temp->setting_items(IMAGEMANAGER->findImage("책"),
+			"책", " 롤링썬더!!!!! ",
+			14,
 			NULL,
 			NULL,
 			1,
-			using_item,
+			special_item,
 			inventory_item,
 			false, _io_temp
 		);

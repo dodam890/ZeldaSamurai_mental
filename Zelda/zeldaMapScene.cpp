@@ -50,6 +50,8 @@ HRESULT zeldaMapScene::init()
 	_im = new item_class_manager;
 	_im->init();
 
+	_link->set_in(_inven);
+
 	return S_OK;
 }
 

@@ -91,8 +91,12 @@ void mainGame::addItemImage()
 	IMAGEMANAGER->addImage("글자요술지팡이", "image/image_pbs/shop/글자/요술지팡이.bmp", 108, 19, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("글자병", "image/image_pbs/shop/글자/병.bmp", 15, 19, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("글자하트", "image/image_pbs/shop/글자/하트.bmp", 40, 19, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("글자반지", "image/image_pbs/shop/글자/반지.bmp", 36, 18, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("글자책", "image/image_pbs/shop/글자/책.bmp", 17, 18, true, RGB(255, 0, 255));
 
 	//Rubi
+	IMAGEMANAGER->addImage("10000루비", "image/image_pbs/shop/글자/R10000.bmp", 79, 15, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("5000루비", "image/image_pbs/shop/글자/R5000.bmp", 67, 15, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("250루비", "image/image_pbs/shop/글자/250루비.bmp", 55, 15, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("200루비", "image/image_pbs/shop/글자/200루비.bmp", 55, 15, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("100루비", "image/image_pbs/shop/글자/100루비.bmp", 55, 15, true, RGB(255, 0, 255));
@@ -118,8 +122,8 @@ void mainGame::addItemImage()
 	IMAGEMANAGER->addImage("town_map", "image/image_pbs/map/town.bmp", 528, 360, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("zelda_map_icon", "image/image_pbs/map/zelda_face.bmp", 32, 32, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->addImage("ring", "image/image_pbs/items/ring.bmp", 64, 52, true, RGB(255, 0, 255));
-
+	IMAGEMANAGER->addImage("반지", "image/image_pbs/items/ring.bmp", 56, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("책", "image/image_pbs/items/book.bmp", 56, 64, true, RGB(255, 0, 255));
 }
 
 void mainGame::addNpcImage()

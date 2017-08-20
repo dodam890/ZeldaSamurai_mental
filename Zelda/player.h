@@ -124,6 +124,8 @@ private:
 	camera* _cam;
 	enemy* _enemy;
 
+	inven_all* _ia;
+
 	int tileIndex[2];
 
 	float _damage;
@@ -155,6 +157,11 @@ private:
 	bool _isPlayerInTileMap;
 	bool _moveTile;
 	bool _hurt;
+
+	bool _sword;
+	bool _shield;
+	bool _magicpot;
+	bool _rollingAttack;
 
 	int _keyCount;
 
@@ -210,12 +217,14 @@ public:
 
 	int getKeyCount() { return _keyCount; }
 
-	
+
 	void setHpImage();
 	void drawHpImage();
 	void controlHeart();
 
 	void decreaseHeart();
+
+	void set_in(inven_all* _i) { _ia = _i; }
 
 	player();
 	~player();

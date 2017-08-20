@@ -236,9 +236,23 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 		);
 		break;
 	case 13:
-		calling->setting_items(IMAGEMANAGER->findImage("ring"),
+		calling->setting_items(IMAGEMANAGER->findImage("반지"),
 			"반지", " 빨간 보석이 들어있는 반지이다 ",
 			13,
+			init_x,
+			init_y,
+			vol,
+			special_item,
+			inventory_item,
+			equip,
+			_io
+		);
+		break;
+
+	case 14:
+		calling->setting_items(IMAGEMANAGER->findImage("책"),
+			"책", " 롤링썬더!!!!! ",
+			14,
 			init_x,
 			init_y,
 			vol,
