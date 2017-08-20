@@ -28,6 +28,14 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 		}
 	}
 
+
+	_em = new enemyManager;
+	_em->init(_player, _camera, this);
+	_em->setOcto(2);
+
+	_emZorder = new emZorder;
+	_emZorder->init(_em, _player);
+
 	return S_OK;
 }
 
@@ -69,6 +77,9 @@ void zeldaTileMap1::update()
 
 		}
 	}
+
+	_emZorder->update();
+	_em->update();
 }
 
 void zeldaTileMap1::render()
@@ -81,6 +92,8 @@ void zeldaTileMap1::render()
 
 		//Rectangle(getMemDC(), _potTile[i].rc.left + _camera->getStartX(), _potTile[i].rc.top + _camera->getStartY(), _potTile[i].rc.right + _camera->getStartX(), _potTile[i].rc.bottom + _camera->getStartY());
 	}
+
+	_emZorder->render();
 }
 
 // ----------------------------------------------------------------------------------------------------

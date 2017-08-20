@@ -174,7 +174,7 @@ struct tagTile
 	TERRAIN terrain;
 	OBJECT obj;
 	OBJECT obj2;
-
+	//OBJECT obj3;
 	TILE_KIND tileKind;
 
 	POINT posCenter;
