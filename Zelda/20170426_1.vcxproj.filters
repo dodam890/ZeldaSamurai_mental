@@ -151,6 +151,9 @@
     <ClCompile Include="c_zeldaTileMap.cpp">
       <Filter>mainGame\map\zeldaTileMap\c_zeldaTileMap</Filter>
     </ClCompile>
+    <ClCompile Include="emZorder.cpp">
+      <Filter>mainGame\enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h">
@@ -314,6 +317,9 @@
     </ClInclude>
     <ClInclude Include="c_zeldaTileMap.h">
       <Filter>mainGame\map\zeldaTileMap\c_zeldaTileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="emZorder.h">
+      <Filter>mainGame\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

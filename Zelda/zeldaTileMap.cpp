@@ -282,11 +282,14 @@ void zeldaTileMap::render()
 		}
 	}
 
+<<<<<<< HEAD
 	//에너미 플레이어 에이스타 맵 확인용
 
-	_em->render();
+	//_em->render();
 
 	_player->render();
+=======
+>>>>>>> 64aea2e0a62f0969fe01d4ced1fb1a0c6d72e97c
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
@@ -347,6 +350,7 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 			_attribute[E_ATR_SLIDE][i] = FALSE;
 		}
 	}
+
 
 	CloseHandle(file);
 }
