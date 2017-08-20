@@ -55,18 +55,19 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	_door[DOWN].cameraX = 790;
 	_door[DOWN].cameraY = 510;
 
-	//_door[LEFT].rc = RectMake(720, 150, 80, 30);
-	//_door[LEFT].nextMap = TILEMAP_TWO;
-	//_door[LEFT].x = 630;
-	//_door[LEFT].y = 1200;
-	//_door[LEFT].cameraX = 145;
-	//_door[LEFT].cameraY = 800;
-
-	//_door[RIGHT].rc = RectMake(720, 1400, 80, 30);
-	//_door[RIGHT].x = 1250;
-	//_door[RIGHT].y = 790;
-	//_door[RIGHT].cameraX = 790;
-	//_door[RIGHT].cameraY = 510;
+	_door[LEFT].rc = RectMake(320, 480, 80, 30);
+	_door[LEFT].nextMap = TILEMAP_FOUR;
+	_door[LEFT].x = 220;
+	_door[LEFT].y = 500;
+	_door[LEFT].cameraX = 0;
+	_door[LEFT].cameraY = 200;
+	
+	_door[RIGHT].rc = RectMake(1200, 480, 80, 30);
+	_door[RIGHT].nextMap = TILEMAP_FOUR;
+	_door[RIGHT].x = 1100;
+	_door[RIGHT].y = 500;
+	_door[RIGHT].cameraX = 400;
+	_door[RIGHT].cameraY = 200;
 
 	return S_OK;
 }
@@ -84,6 +85,8 @@ void zeldaTileMap1::update()
 
 	_door[UP].rc = RectMake(_camera->getStartX() + 720, _camera->getStartY() + 150, 80, 30);
 	_door[DOWN].rc = RectMake(_camera->getStartX() + 720, _camera->getStartY() + 1400, 80, 30);
+	_door[LEFT].rc = RectMake(_camera->getStartX() + 320, _camera->getStartY() + 480, 80, 30);
+	_door[RIGHT].rc = RectMake(_camera->getStartX() + 1200, _camera->getStartY() + 480, 80, 30);
 
 	//int j = 0;
 	//int k = 0;
@@ -274,6 +277,20 @@ HRESULT zeldaTileMap4::init(player* player, camera * camera, const CHAR* pMapSav
 	_door[UP].cameraX = 145;
 	_door[UP].cameraY = 800;
 
+	_door[LEFT].rc = RectMake(320, 480, 80, 30);
+	_door[LEFT].nextMap = TILEMAP_ONE;
+	_door[LEFT].x = 220;
+	_door[LEFT].y = 500;
+	_door[LEFT].cameraX = 0;
+	_door[LEFT].cameraY = 200;
+
+	_door[RIGHT].rc = RectMake(1200, 480, 80, 30);
+	_door[RIGHT].nextMap = TILEMAP_ONE;
+	_door[RIGHT].x = 1100;
+	_door[RIGHT].y = 500;
+	_door[RIGHT].cameraX = 400;
+	_door[RIGHT].cameraY = 200;
+
 	return S_OK;
 }
 
@@ -289,6 +306,8 @@ void zeldaTileMap4::update()
 	zeldaTileMap::update();
 
 	_door[UP].rc = RectMake(_camera->getStartX() + 720, _camera->getStartY() + 150, 80, 30);
+	_door[LEFT].rc = RectMake(_camera->getStartX() + 320, _camera->getStartY() + 480, 80, 30);
+	_door[RIGHT].rc = RectMake(_camera->getStartX() + 1200, _camera->getStartY() + 480, 80, 30);
 
 	_emZorder->update();
 	_em->update();
