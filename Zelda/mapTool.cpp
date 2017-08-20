@@ -2267,7 +2267,7 @@ void mapTool::drawTileName()
 
 TERRAIN mapTool::terrainSelect(int frameX, int frameY)
 {
-	if (frameX == 0 & frameY == 0)
+	if (frameX == 0 && frameY == 0)
 	{
 		return TR_BASE;
 	}
