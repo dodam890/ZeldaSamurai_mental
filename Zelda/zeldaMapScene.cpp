@@ -61,22 +61,54 @@ void zeldaMapScene::update()
 	}
 	else
 	{
+		changeTileScene();
 		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false)
 		{
 			_link->update(NULL);
 		}
 
+		//if (_curMap == TOWN)
+		//{
+			//RECT temp;
+			//if (IntersectRect(&temp, &_zeldaMap[_curMap]->getEventRect(TOWN_STAGE).rc, &_link->getRect()))
+			//{
+			//	_isTileMap = true;
+			//	_camera->setCameraX(0);
+			//	_camera->setCameraY(0);
+			//	_link->setDisX(500);
+			//	_link->setDisY(500);
+			//	_link->setIsInTileMap(true);
+			//}
+		//}
+		
+		//_eventRectInfo[TOWN_STAGE].rc = RectMake(1349, 851, 80, 30);
+		//_eventRectInfo[TOWN_STAGE].cameraX = 790;
+		//_eventRectInfo[TOWN_STAGE].cameraY = 490;
+		//_eventRectInfo[TOWN_STAGE].x = 490;
+		//_eventRectInfo[TOWN_STAGE].y = 370;
+
 		//타일맵으로 이동 실험.
-		_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 3480, _camera->getStartY() + 2130, 50, 50);
+		_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 1370, _camera->getStartY() + 851, 80, 30);
+
 		RECT rcTmp;
 		if (IntersectRect(&rcTmp, &_rcGoTileMap, &_link->getRect()))
 		{
-			_isTileMap = true;		
-			_camera->setCameraX(0);
-			_camera->setCameraY(0);
-			_link->setDisX(500);
-			_link->setDisY(500);
-			_link->setIsInTileMap(true);
+			_link->setMove(false);
+			_sceneEffect->setFadeOUT(true);
+
+			//씬 전환 끝나면 씬 체인지
+			if (!_sceneEffect->getChangeScene())
+			{
+				_camera->setCameraX(145);
+				_camera->setCameraY(800);
+				_link->setDisX(630);
+				_link->setDisY(1200);
+				_link->setIsInTileMap(true);
+				_isTileMap = true;
+
+				//_sceneEffect->init();
+				_link->setMove(true);
+			}
 		}
 	
 		if (_is_inven == false)
@@ -195,7 +227,7 @@ void zeldaMapScene::render()
 
 void zeldaMapScene::createMap()
 {
-	_curMap = STORE;
+	_curMap = TOWN;
 
 	_zeldaMap[TOWN] = new townMap;
 	_zeldaMap[TOWN]->init("TOWN_BACKGROUND", "TOWN_BACKGROUND_PIXELCOLLISION", _camera, _link);
@@ -304,11 +336,37 @@ void zeldaMapScene::setScene(int num)
 
 void zeldaMapScene::changeTileScene()
 {
+	if (_tileMapKind == TILEMAP_ONE)
+	{
+		for (int i = 0; i < DOOR_POS_END; i++)
+		{
+			RECT temp;
+			if (IntersectRect(&temp, &_zeldaTileMap[_tileMapKind]->getDoorRect(i).rc, &_link->getRect()))
+			{
+				setTileScene(i);
+			}
+		}
+	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD1)) _tileMapKind = TILEMAP_ONE;
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD2)) _tileMapKind = TILEMAP_TWO;
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD3)) _tileMapKind = TILEMAP_THREE;
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD4)) _tileMapKind = TILEMAP_FOUR;
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD5)) _tileMapKind = TILEMAP_BOSS;
+}
+
+void zeldaMapScene::setTileScene(int num)
+{
+	_link->setDisX(_zeldaTileMap[_tileMapKind]->getDoorRect(num).x);
+	_link->setDisY(_zeldaTileMap[_tileMapKind]->getDoorRect(num).y);
+
+	_camera->setCameraX(_zeldaTileMap[_tileMapKind]->getDoorRect(num).cameraX);
+	_camera->setCameraY(_zeldaTileMap[_tileMapKind]->getDoorRect(num).cameraY);
+
+	_tileMapKind = _zeldaTileMap[_tileMapKind]->getDoorRect(num).nextMap;
+
+	_sceneEffect->init();
+	_link->setMove(true);
 }
 
 void zeldaMapScene::returnToMainMenu()

@@ -12,15 +12,6 @@
 class zeldaMapScene : public gameNode
 {
 public:
-	enum TILEMAP_KIND
-	{
-		TILEMAP_ONE,
-		TILEMAP_TWO,
-		TILEMAP_THREE,
-		TILEMAP_FOUR,
-		TILEMAP_BOSS,
-		TILEMAP_END = 5
-	};
 
 private:
 	camera* _camera;
@@ -58,6 +49,7 @@ public:
 	void createMap();
 	void rectCollision();
 	void setScene(int num);
+	void setTileScene(int num);
 
 	void changeTileScene();
 

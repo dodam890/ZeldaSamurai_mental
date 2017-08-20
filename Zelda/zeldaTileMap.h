@@ -7,9 +7,36 @@
 
 class player;
 
+enum TILEMAP_KIND
+{
+	TILEMAP_ONE,
+	TILEMAP_TWO,
+	TILEMAP_THREE,
+	TILEMAP_FOUR,
+	TILEMAP_BOSS,
+	TILEMAP_END = 5
+};
+
+enum DOOR_POS
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	DOOR_POS_END
+};
+
 class zeldaTileMap : public gameNode
 {
 protected:
+	struct tagDoorRect
+	{
+		RECT rc;
+		TILEMAP_KIND nextMap;
+		int x, y;
+		int cameraX, cameraY;
+	};
+
 	struct tagTileRect
 	{
 		RECT rc;
@@ -19,6 +46,8 @@ protected:
 
 		int tileIndex;
 	};
+
+	tagDoorRect _door[DOOR_POS_END];
 
 protected:
 	emZorder* _emZorder;
@@ -58,5 +87,7 @@ public:
 
 	BOOL* getAttribute(ATTRIBUTE attribute) { return _attribute[attribute]; }
 	tagTile* getTiles() { return _tiles; }
+
+	tagDoorRect& getDoorRect(int mapNum) { return _door[mapNum]; }
 };
 

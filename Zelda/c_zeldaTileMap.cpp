@@ -47,6 +47,13 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
 
+	_door[UP].rc = RectMake(625, 70, 80, 30);
+	_door[UP].nextMap = TILEMAP_TWO;
+	_door[UP].x = 630;
+	_door[UP].y = 1200;
+	_door[UP].cameraX = 145;
+	_door[UP].cameraY = 800;
+
 	return S_OK;
 }
 
@@ -58,6 +65,8 @@ void zeldaTileMap1::release()
 void zeldaTileMap1::update()
 {
 	zeldaTileMap::update();
+
+	_door[UP].rc = RectMake(_camera->getStartX() + 625, _camera->getStartY() + 70, 80, 30);
 
 	//int j = 0;
 	//int k = 0;
