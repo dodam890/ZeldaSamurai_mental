@@ -123,7 +123,7 @@ void player::render(void)
 
 void player::draw(void)
 {
-	char str[128] = "";
+	/*char str[128] = "";
 
 	sprintf(str, "[_probeX : %d _probeY : %d]", _probeX, _probeY);
 	TextOut(getMemDC(), 400, 30, str, strlen(str));
@@ -288,10 +288,13 @@ void player::draw(void)
 	case player::LINK_MOTION_DOWN_ROLLING_ATTACK:
 		TextOut(getMemDC(), 500, 10, "아래쪽롤링썬더", strlen("아래쪽롤링썬더"));
 		break;
-	}
+	}*/
 
-	Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
-	Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
+	if (_rectView)
+	{
+		Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
+		Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
+	}
 
 	if (L_Motion == LINK_MOTION_UP_GRAB)
 	{
