@@ -3,9 +3,24 @@
 
 class select_scene : public gameNode
 {
+public:
+	enum E_SELECT_RC
+	{
+		E_SELECT_MAPTOOL,
+		E_SELECT_GAMESTART,
+		E_SELECT_END = 2
+	};
+
+	struct S_SELECT_RC_INFO
+	{
+		RECT rc;
+		string strSceneKey;
+	};
+
 private:
 	int count;
 	int carrentX;
+	S_SELECT_RC_INFO _rcSelect[E_SELECT_END];
 
 public:
 
