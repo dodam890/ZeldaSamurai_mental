@@ -4,7 +4,6 @@
 class zeldaTileMap1 : public zeldaTileMap
 {
 private:
-	tagTileRect _rockTile[3];
 	tagTileRect _potTile[4];
 
 public:
@@ -16,7 +15,7 @@ public:
 	virtual void update();
 	virtual void render();
 
-	tagTileRect& getRockTile() { return _rockTile[3]; }
+	tagTileRect& getPotTile() { return _potTile[4]; }
 };
 
 class zeldaTileMap2 : public zeldaTileMap
@@ -24,6 +23,9 @@ class zeldaTileMap2 : public zeldaTileMap
 private:
 	tagTileRect _fireTile[4];
 	tagTileRect _buttonTile[4];
+	tagTileRect _chestTile;
+
+	bool _isChest;
 
 	int _alphaValue;
 	int _count;

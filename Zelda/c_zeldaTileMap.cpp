@@ -8,25 +8,17 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 {
 	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
 
-	//int j = 0;
-	//int k = 0;
+	int j = 0;
 
-	//for (int i = 0; i < TILEX * TILEY; i++)
-	//{
-	//	if (_tiles[i].terrain == TR_ROCK)
-	//	{
-	//		_rockTile[j].image = IMAGEMANAGER->findImage("TILE_ROCK");
-	//		_rockTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj2 == OBJ_POT)
+		{
+			_potTile[j].rc = _tiles[i].rc;
 
-	//		j++;
-	//	}
-	//	else if (_tiles[i].obj2 == OBJ_POT)
-	//	{
-	//		_potTile[k].rc = _tiles[i].rc;
-
-	//		k++;
-	//	}
-	//}
+			j++;
+		}
+	}
 
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
@@ -88,55 +80,17 @@ void zeldaTileMap1::update()
 	_door[LEFT].rc = RectMake(_camera->getStartX() + 320, _camera->getStartY() + 480, 80, 30);
 	_door[RIGHT].rc = RectMake(_camera->getStartX() + 1200, _camera->getStartY() + 480, 80, 30);
 
-	//int j = 0;
-	//int k = 0;
+	int j = 0;
 
-	//for (int i = 0; i < TILEX * TILEY; i++)
-	//{
-	//	if (_tiles[i].terrain == TR_ROCK)
-	//	{
-	//		_rockTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 10, _tiles[i].rc.bottom - _tiles[i].rc.top - 10);
-	//		//_rockTile[j].rc = RectMake(_rockTile[j].rc.left + _camera->getStartX(), _rockTile[j].rc.top + _camera->getStartY(), 70, 70);
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj2 == OBJ_POT)
+		{
+			_potTile[j].rc = _tiles[i].rc;
 
-	//		_rockTile[j].tileIndex = i;
-	//		j++;
-	//	}
-	//	else if (_tiles[i].obj2 == OBJ_POT)
-	//	{
-	//		_potTile[k].rc = _tiles[i].rc;
-
-	//		k++;
-	//	}
-	//}
-
-	//RECT temp;
-
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	if (IntersectRect(&temp, &_rockTile[i].rc, &_player->getRect()))
-	//	{
-	//		//_tiles[_rockTile[i].tileIndex].terrain = TR_BASE;
-	//		_tiles[_rockTile[i].tileIndex].terrainFrameX = 0;
-	//		_tiles[_rockTile[i].tileIndex].terrainFrameY = 0;
-
-	//		_player->setPush(true);
-
-	//		for (int j = 0; j < TILEX * TILEY; j++)
-	//		{
-	//			if (IntersectRect(&temp, &_rockTile[i].rc, &_tiles[j].rc))
-	//			{	
-	//				if (_tiles[j].obj == OBJ_WALL)
-	//				{
-	//				//	if(_rockTile[i].rc.left <= 
-	//					_rockTile[i].rc.left = _player->getRect().left - 80;
-	//					_rockTile[i].rc.right = _player->getRect().right - 80;
-
-	//				}
-	//			}
-	//		}
-
-	//	}
-	//}
+			j++;
+		}
+	}
 
 	_emZorder->update();
 	_em->update();
@@ -201,6 +155,11 @@ HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSav
 
 			k++;
 		}
+		else if (_tiles[i].obj2 == OBJ_SMALL_BOX1)
+		{
+			_chestTile.image = IMAGEMANAGER->findImage("OPEN_CHEST");
+			_chestTile.rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);		
+		}
 	}
 
 	_frameCount = 0;
@@ -211,6 +170,7 @@ HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSav
 
 	_alphaValue = 200;
 	_count = 0;
+	_isChest = false;
 
 	return S_OK;
 }
@@ -249,6 +209,11 @@ void zeldaTileMap2::update()
 
 			k++;
 		}
+		else if (_tiles[i].obj2 == OBJ_SMALL_BOX1)
+		{
+			_chestTile.image = IMAGEMANAGER->findImage("OPEN_CHEST");
+			_chestTile.rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
+		}
 	}
 
 	RECT temp;
@@ -269,8 +234,19 @@ void zeldaTileMap2::update()
 		{
 			_count++;
 
-			if (_count >= 4) _count = 4;
+			if (_count >= 4)
+			{
+				_count = 4;
+				_isChest = true;
+			}
 		}
+	}
+
+	//보물상자 충돌
+	if (IntersectRect(&temp, &_chestTile.rc, &_player->getRect()) && _isChest)
+	{
+		_chestTile.isOn = true;
+
 	}
 
 
@@ -298,6 +274,18 @@ void zeldaTileMap2::render()
 			_buttonTile[i].image->render(getMemDC(), _buttonTile[i].rc.left, _buttonTile[i].rc.top);
 			_fireTile[i].image->frameRender(getMemDC(), _fireTile[i].rc.left, _fireTile[i].rc.top, _currentFrameX[i], _fireTile[i].image->getFrameY());
 		}
+	}
+
+	if (_isChest)
+	{
+		if (_chestTile.isOn)
+		{
+			_chestTile.image->render(getMemDC(), _chestTile.rc.left, _chestTile.rc.top);
+		}
+	}
+	else
+	{
+		IMAGEMANAGER->findImage("TILE")->render(getMemDC(), _chestTile.rc.left, _chestTile.rc.top);
 	}
 
 	_emZorder->render();

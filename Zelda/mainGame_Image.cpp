@@ -209,8 +209,10 @@ void mainGame::addMapImage()
 	IMAGEMANAGER->addImage("MAPTOOL_FRAME", "image/MAPTOOL_FRAME.bmp", 1200, 800, true, RGB(255, 0, 255));
 
 	//오브젝트 이미지
-	IMAGEMANAGER->addImage("TILE_ROCK", "image/map/TILE_ROCK.bmp", 80, 80, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("TIL.E_ROCK", "image/map/TILE_ROCK.bmp", 80, 80, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("OPEN_CHEST", "image/map/OPEN_CHEST.bmp", 80, 80, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("TILE_BUTTON_DOWN", "image/map/TILE_BUTTON_DOWN.bmp", 80, 80, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("TILE", "image/map/TILE.bmp", 80, 80, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("OBJECT_BIG_CHEST", "image/map/OBJECT_BIG_CHEST.bmp", 640, 190, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TILE_FIRE", "image/map/TILE_FIRE.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
 
