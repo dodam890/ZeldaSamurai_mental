@@ -38,8 +38,10 @@ protected:
 	RECT _collisionRc;
 
 	float _distanceX, _distanceY;
+	float _distanceMoveX, _distanceMoveY;
 
 	float _centerX, _centerY;
+	float _centerMoveX, _centerMoveY;
 
 	float _angle;
 

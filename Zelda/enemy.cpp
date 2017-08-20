@@ -24,7 +24,11 @@ enemy::enemy() :
 	_rangeWidth(0),
 	_rangeHeight(0),
 	_direction(DIRECTION_DOWN),
-	_isFindPlayer(false)
+	_isFindPlayer(false),
+	_distanceMoveX(0.F),
+	_distanceMoveY(0.F),
+	_centerMoveX(0.F),
+	_centerMoveY(0.F)
 {
 }
 
@@ -57,6 +61,12 @@ HRESULT enemy::init(player* player, camera* camera, zeldaTileMap* map, int idxX,
 	_distanceY = _aStar->getStartTile()->getDisY();
 	_centerY = _camera->getStartY() + _distanceY;
 
+	_distanceMoveX = _distanceX;
+	_distanceMoveY = _distanceY;
+
+	_centerMoveX = _centerX;
+	_centerMoveY = _centerY;
+
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 
 	_isFindPlayer = false;
@@ -85,17 +95,23 @@ void enemy::update()
 	}
 
 	RECT sour;
-	if (IntersectRect(&sour, &_collisionRc, &_player->getRect()) && !IntersectRect(&sour, &_moveRc, &_player->getRect()))
+	if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
 	{
+		_distanceMoveX = _distanceX;
+		_distanceMoveY = _distanceY;
 		_isFindPlayer = true;
 	}
 	else
 	{
+
 		_isFindPlayer = false;
 	}
 
 	_centerX = _camera->getStartX() + _distanceX;
 	_centerY = _camera->getStartY() + _distanceY;
+
+	_centerMoveX = _camera->getStartX() + _distanceMoveX;
+	_centerMoveY = _camera->getStartY() + _distanceMoveY;
 
 	//_aStar->update();
 
@@ -111,15 +127,6 @@ void enemy::render()
 
 void enemy::aStarMove(int index)
 {
-	_moveCount += TIMEMANAGER->getElapsedTime() * 100;
-
-	if (_moveCount > 100.f)
-	{
-		int rndNum = RND->getFromIntTo(0, 3);
-		_direction = (DIRECTION)rndNum;
-		_moveCount = 0.f;
-	}
-
 	if (_vPath[index]->getDisX() > _distanceX)
 	{
 		_direction = DIRECTION_RIGHT;
@@ -147,6 +154,15 @@ void enemy::aStarMove(int index)
 
 void enemy::normalMove()
 {
+	_moveCount += TIMEMANAGER->getElapsedTime() * 100;
+
+	if (_moveCount > 100.f)
+	{
+		int rndNum = RND->getFromIntTo(0, 3);
+		_direction = (DIRECTION)rndNum;
+		_moveCount = 0.f;
+	}
+
 	switch (_direction)
 	{
 	case enemy::DIRECTION_DOWN:
@@ -166,6 +182,8 @@ void enemy::normalMove()
 			_distanceY -= 5;
 		break;
 	}
+
+
 }
 
 void enemy::addFrame()
@@ -187,9 +205,9 @@ void enemy::draw()
 {
 	if (_aStar) _aStar->render();
 
-	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
-	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
-	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
 	char str[128] = "";
 	sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
@@ -231,7 +249,6 @@ void enemy::getMapAttribute()
 	BOOL* attribute = _map->getAttribute(E_ATR_MOVE);
 
 	rcCollision = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 52, _imgInfo[_direction].image->getFrameHeight() - 2);
-
 	
 	tileX = _distanceX / TILESIZE;
 	tileY = _distanceY / TILESIZE;
@@ -241,24 +258,32 @@ void enemy::getMapAttribute()
 	switch (_direction)
 	{
 	case enemy::DIRECTION_DOWN:
+
 		tileIndex[0] = tileTotalIdx + TILEX;
 		if (_rc.left > _map->getTiles()[tileIndex[0]].rc.left) tileIndex[1] = tileIndex[0] + 1;
 		else tileIndex[1] = tileIndex[0] - 1;
+
 		break;
 	case enemy::DIRECTION_LEFT:
+
 		tileIndex[0] = tileTotalIdx - 1;
 		if (_rc.bottom > _map->getTiles()[tileIndex[0]].rc.bottom) tileIndex[1] = tileIndex[0] + TILEX;
 		else tileIndex[1] = tileIndex[0] - TILEX;
+
 		break;
 	case enemy::DIRECTION_RIGHT:
+
 		tileIndex[0] = tileTotalIdx + 1;
 		if (_rc.bottom > _map->getTiles()[tileIndex[0]].rc.bottom) tileIndex[1] = tileIndex[0] + TILEX;
 		else tileIndex[1] = tileIndex[0] - TILEX;
+
 		break;
 	case enemy::DIRECTION_UP:
+
 		tileIndex[0] = tileTotalIdx - TILEX;
 		if (_rc.left > _map->getTiles()[tileIndex[0]].rc.left) tileIndex[1] = tileIndex[0] + 1;
 		else tileIndex[1] = tileIndex[0] - 1;
+
 		break;
 	}
 
@@ -271,26 +296,27 @@ void enemy::getMapAttribute()
 			switch (_direction)
 			{
 			case enemy::DIRECTION_DOWN:
-				_rc.bottom = _map->getTiles()[tileIndex[i]].rc.top;
-				_rc.top = _rc.bottom - _imgInfo[_direction].image->getFrameHeight();
+
+				_distanceY -= 5.F;
 
 				break;
 			case enemy::DIRECTION_LEFT:
-				_rc.left = _map->getTiles()[tileIndex[i]].rc.right;
-				_rc.right = _rc.left + (_imgInfo[_direction].image->getFrameWidth() - 50);
+
+				_distanceX += 5.F;
 
 				break;
 			case enemy::DIRECTION_RIGHT:
-				_rc.right = _map->getTiles()[tileIndex[i]].rc.left;
-				_rc.left = _rc.right - (_imgInfo[_direction].image->getFrameWidth() - 50);
+
+				_distanceX -= 5.F;
 
 				break;
 			case enemy::DIRECTION_UP:
-				_rc.top = _map->getTiles()[tileIndex[i]].rc.bottom;
-				_rc.bottom = _rc.top + _imgInfo[_direction].image->getFrameHeight();
+
+				_distanceY += 5.F;
 
 				break;
 			}
 		}
 	}
+
 }

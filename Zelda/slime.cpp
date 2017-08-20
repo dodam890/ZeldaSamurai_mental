@@ -31,7 +31,7 @@ void slime::update()
 {
 	enemy::update();
 
-	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
+	_moveRc = RectMakeCenter(_centerMoveX, _centerMoveY, _rangeWidth, _rangeHeight);
 	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 20, _imgInfo[_direction].image->getFrameHeight() - 50);
 }

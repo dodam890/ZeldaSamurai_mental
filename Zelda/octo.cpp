@@ -16,7 +16,7 @@ HRESULT octo::init(player* player, camera* camera, zeldaTileMap* map, int idxX, 
 	_rangeWidth = 400;
 	_rangeHeight = 400;
 
-	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
+	_moveRc = RectMakeCenter(_centerMoveX, _centerMoveY, _rangeWidth, _rangeHeight);
 	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
 
 	return S_OK;
@@ -33,7 +33,7 @@ void octo::update()
 {
 	enemy::update();
 
-	_moveRc = RectMakeCenter(_centerX, _centerY, _rangeWidth, _rangeHeight);
+	_moveRc = RectMakeCenter(_centerMoveX, _centerMoveY, _rangeWidth, _rangeHeight);
 	_collisionRc = RectMakeCenter(_centerX, _centerY, 800, 800);
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 50, _imgInfo[_direction].image->getFrameHeight());
 }
