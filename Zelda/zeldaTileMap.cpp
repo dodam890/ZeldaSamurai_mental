@@ -45,6 +45,7 @@ void zeldaTileMap::update()
 	cameraSetTile();
 	_camera->update(_mapWidth, _mapHeight);
 	_emZorder->update();
+	_em->update();
 	//controlCamera();
 }
 
@@ -292,15 +293,7 @@ void zeldaTileMap::render()
 	//에너미 플레이어 에이스타 맵 확인용
 
 
-<<<<<<< HEAD
-	//_emZorder->render();
-	_em->render();
-=======
 	_emZorder->render();
-	//_em->render();
->>>>>>> 52a56c12a88d441c3f18bb3a18ba865e24671abf
-
-	_player->render();
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
