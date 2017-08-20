@@ -95,7 +95,7 @@ void zeldaTileMap1::update()
 		if (_tiles[i].obj2 == OBJ_POT)
 		{
 			_potTile[j].rc = _tiles[i].rc;
-
+			
 			j++;
 		}
 	}
@@ -281,12 +281,43 @@ void zeldaTileMap2::update()
 	}
 
 	//보물상자 충돌
-	if (IntersectRect(&temp, &_chestTile.rc, &_player->getRect()) && _isChest)
+	if (!_chestTile.isOn)
 	{
-		_chestTile.isOn = true;
+		if (IntersectRect(&temp, &_chestTile.rc, &_player->getRect()) && _isChest)
+		{
+			_chestTile.isOn = true;
+			item_option* temp;
+			temp = new item_option;
 
+			temp->ATK = 0;
+			temp->ATK_SPEED = 0;
+			temp->DEF = 0;
+			temp->Price = 0;
+			temp->Upgrade = 0;
+
+			_rndItem = RND->getFromIntTo(1, 4);
+
+			if (_rndItem == 1)
+			{
+				temp->Price = 10;
+				_im->add_items_init(_chestTile.rc.left + _camera->getCameraX() + 20, _chestTile.rc.top + _camera->getCameraY() - 50, 10, 1, false, (*temp));
+			}
+			if (_rndItem == 2)
+			{
+				temp->Price = 50;
+				_im->add_items_init(_chestTile.rc.left + _camera->getCameraX() + 20, _chestTile.rc.top + _camera->getCameraY() - 50, 11, 1, false, (*temp));
+			}
+			if (_rndItem == 3)
+			{
+				temp->Price = 100;
+				_im->add_items_init(_chestTile.rc.left + _camera->getCameraX() + 20, _chestTile.rc.top + _camera->getCameraY() - 50, 12, 1, false, (*temp));
+			}
+			if (_rndItem == 4)
+			{
+				_im->add_items_init(_chestTile.rc.left + _camera->getCameraX() + 20, _chestTile.rc.top + _camera->getCameraY() - 50, 9, 1, false, (*temp));
+			}
+		}
 	}
-
 
 	_frameCount++;
 	if (_frameCount % 10 == 0)
