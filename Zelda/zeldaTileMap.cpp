@@ -19,6 +19,8 @@ HRESULT zeldaTileMap::init(player* player, camera* camera, const CHAR* pSaveMapF
 	_mapWidth = mapWidth;
 	_mapHeight = mapHeight;
 
+	_rndItem = RND->getFromIntTo(1, 4);
+
 	IMAGEMANAGER->addFrameImage("mapTiles_ter", "image/sample80_ter.bmp", 0, 0, 480, 320, SAMPLETILEX, SAMPLETILEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_1", "image/sample_obj_80_1.bmp", 0, 0, 1120, 800, SAMPLETILEX2, SAMPLETILEY2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_2", "image/sample_obj_80_2.bmp", 0, 0, 1200, 880, SAMPLETILEX3, SAMPLETILEY3, true, RGB(255, 0, 255));
@@ -389,6 +391,8 @@ void zeldaTileMap::playerToEnemyCollision()
 	temp->Price = 0;
 	temp->Upgrade = 0;
 
+	_rndItem = RND->getFromIntTo(1, 4);
+
 	player::RECT_ATTRIBUTE atr = _player->getAtr();
 
 	vector<enemy*>& em = _em->getVEnemy();
@@ -402,10 +406,25 @@ void zeldaTileMap::playerToEnemyCollision()
 			{
 				if (!SOUNDMANAGER->isPlaySound("에너미죽음"))
 					SOUNDMANAGER->play("에너미죽음");
-
-				temp->Price = 50;
-				_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 11, 1, false, (*temp));
-
+				if(_rndItem == 1)
+				{
+					temp->Price = 10;
+					_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 10, 1, false, (*temp));
+				}
+				if (_rndItem == 2)
+				{
+					temp->Price = 50;
+					_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 11, 1, false, (*temp));
+				}
+				if (_rndItem == 3)
+				{
+					temp->Price = 100;
+					_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 12, 1, false, (*temp));
+				}
+				if (_rndItem == 4)
+				{
+					_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 9, 1, false, (*temp));
+				}
 				em.erase(em.begin() + i);
 				break;
 			}
@@ -419,10 +438,28 @@ void zeldaTileMap::playerToEnemyCollision()
 				{
 					if (!SOUNDMANAGER->isPlaySound("에너미죽음"))
 						SOUNDMANAGER->play("에너미죽음");
+
+					if (_rndItem == 1)
+					{
+						temp->Price = 10;
+						_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 10, 1, false, (*temp));
+					}
+					if (_rndItem == 2)
+					{
+						temp->Price = 50;
+						_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 11, 1, false, (*temp));
+					}
+					if (_rndItem == 3)
+					{
+						temp->Price = 100;
+						_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 12, 1, false, (*temp));
+					}
+
 					em.erase(em.begin() + i);
+					break;
 				}
 
-				break;
+				
 			}
 		}
 
@@ -444,8 +481,21 @@ void zeldaTileMap::enemyToPlayerCollision()
 	RECT rcTmp = {};
 	RECT rcCrush = _player->getCrushRect();
 	RECT rcPlayer = _player->getRect();
+	item_option* temp;
+	temp = new item_option;
 
+	temp->ATK = 0;
+	temp->ATK_SPEED = 0;
+	temp->DEF = 0;
+	temp->Price = 0;
+	temp->Upgrade = 0;
 	player::RECT_ATTRIBUTE atr = _player->getAtr();
+
+
+	player::LINK_MOTION lmotion = _player->getMotion();
+
+	int temp_x = 0;
+	int temp_y = 0;
 
 	vector<enemy*>& em = _em->getVEnemy();
 
@@ -460,6 +510,27 @@ void zeldaTileMap::enemyToPlayerCollision()
 				emIdx = em[i]->getTotalIndex();
 				if (_attribute[E_ATR_MOVE][emIdx] == FALSE)
 				{
+					if (lmotion == player::LINK_MOTION_RIGHT_SHIELD_MOVE) temp_x = -50, temp_y = 0;
+					else if (lmotion == player::LINK_MOTION_LEFT_SHIELD_MOVE) temp_x = 50, temp_y = 0;
+					else if (lmotion == player::LINK_MOTION_UP_SHIELD_MOVE) temp_x = 0, temp_y = 50;
+					else if (lmotion == player::LINK_MOTION_DOWN_SHIELD_MOVE) temp_x = 0, temp_y = -50;
+
+						if (_rndItem == 1)
+						{
+							temp->Price = 10;
+							_im->add_items_init(em[i]->getDistanceX() + temp_x, em[i]->getDistanceY() + temp_y, 10, 1, false, (*temp));
+						}
+						if (_rndItem == 2)
+						{
+							temp->Price = 50;
+							_im->add_items_init(em[i]->getDistanceX() + temp_x, em[i]->getDistanceY() + temp_y, 11, 1, false, (*temp));
+						}
+						if (_rndItem == 3)
+						{
+							temp->Price = 100;
+							_im->add_items_init(em[i]->getDistanceX() + temp_x, em[i]->getDistanceY() + temp_y, 12, 1, false, (*temp));
+						}
+					
 					em.erase(em.begin() + i);
 					break;
 				}
@@ -484,16 +555,5 @@ void zeldaTileMap::enemyToPlayerCollision()
 				SOUNDMANAGER->play("젤다다침" , 0.5f);
 			_player->decreaseHeart();
 		}
-
-		//if (IntersectRect(&rcTmp, &rcCrush, &rcEm))
-		//{
-		//	//막아서 피가 안단다
-
-	
-		//	if (atr == player::RC_ATR_GRAB)
-		//	{
-
-		//	}*/
-		//}
 	}
 }
