@@ -289,9 +289,9 @@ void zeldaTileMap::render()
 
 
 	//_emZorder->render();
-	//_em->render();
+	_em->render();
 
-	//_player->render();
+	_player->render();
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
