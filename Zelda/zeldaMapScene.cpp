@@ -84,6 +84,21 @@ void zeldaMapScene::update()
 
 	changeTileScene();
 
+	_inven->get_iim()->set_is_town(_isTileMap);
+
+	_im->set_camera(_camera);
+
+	if (_curMap == STORE)
+	{
+		_inven->get_iim()->set_P_x(3200.0F);
+		_inven->get_iim()->set_P_y(1700.0F);
+	}
+	else
+	{
+		_inven->get_iim()->set_P_x(_link->getDisX());
+		_inven->get_iim()->set_P_y(_link->getDisY());
+	}
+
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->update();
@@ -108,7 +123,7 @@ void zeldaMapScene::update()
 	}
 	else
 	{
-		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false)
+		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false && _is_inven == false)
 		{
 			_link->update(NULL);
 		}
