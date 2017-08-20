@@ -80,6 +80,7 @@ void shop_class::update()
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (corcer_x > (message_x + 120))
 			{
 				corcer_x -= 100;
@@ -92,6 +93,7 @@ void shop_class::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (corcer_x < (message_x + 120 + 100))
 			{
 				corcer_x += 100;
@@ -105,15 +107,18 @@ void shop_class::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (temp_now_pick > 0) temp_now_pick--;
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (temp_now_pick < 5) temp_now_pick++;
 		}
 
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			SOUNDMANAGER->play("메뉴선택", 0.5f);
 			if (pick_where == 0)
 			{
 				give_item_is_true = true;

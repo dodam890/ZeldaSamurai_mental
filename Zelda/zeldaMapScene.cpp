@@ -103,6 +103,12 @@ void zeldaMapScene::update()
 		_zeldaTileMap[_tileMapKind]->update();
 		_link->update(_zeldaTileMap[_tileMapKind]);
 
+		if (SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+			SOUNDMANAGER->stop("¸¶À»À½¾Ç");
+
+		if (!SOUNDMANAGER->isPlaySound("´øÀüÀ½¾Ç"))
+			SOUNDMANAGER->play("´øÀüÀ½¾Ç", 0.3f);
+
 		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 		{
 			if (_tile_inven == true)
@@ -486,6 +492,12 @@ void zeldaMapScene::changeTileScene()
 
 					if (i == DOWN)
 					{
+						if (SOUNDMANAGER->isPlaySound("´øÀüÀ½¾Ç"))
+							SOUNDMANAGER->stop("´øÀüÀ½¾Ç");
+
+						if (!SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+							SOUNDMANAGER->play("¸¶À»À½¾Ç", 0.3f);
+
 						_isTileMap = false;
 						_link->setIsInTileMap(false);
 
