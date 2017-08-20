@@ -55,7 +55,7 @@ HRESULT zeldaMapScene::init()
 
 void zeldaMapScene::release()
 {
-	SAFE_RELEASE(_camera);
+	/*SAFE_RELEASE(_camera);
 	SAFE_DELETE(_camera);
 
 	SAFE_RELEASE(_inven);
@@ -71,7 +71,7 @@ void zeldaMapScene::release()
 	{
 		SAFE_RELEASE(_zeldaMap[i]);
 		SAFE_DELETE(_zeldaMap[i]);
-	}
+	}*/
 
 	//SAFE_RELEASE(_link);
 	//SAFE_DELETE(_link);
