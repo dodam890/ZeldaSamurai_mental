@@ -2,7 +2,8 @@
 #include "inven_ALL.h"
 
 
-inven_all::inven_all()
+inven_all::inven_all() :
+	m_arScore()
 {
 }
 
@@ -13,6 +14,10 @@ inven_all::~inven_all()
 
 HRESULT inven_all::init()
 {
+	P_money = 10000;
+
+	loadNumberImg();
+
 	temp_item12_vol = 0;
 	temp_Sitem4_vol = 0;
 
@@ -22,8 +27,6 @@ HRESULT inven_all::init()
 	_icl->init();
 	_im = new inven_map;
 	_im->init();
-	_item_m = new item_class_manager;
-	_item_m->init();
 
 	//_item_m->add_items_init(100, 200, 0, 1, false);
 	//_item_m->add_items_init(100, 300, 1, 1, false);
@@ -47,10 +50,11 @@ HRESULT inven_all::init()
 
 	change_view_I = 0;
 
-	equip_z = 0;
-	equip_x = 0;
-
-	P_money = 0;
+	equip_0 = 0;
+	equip_1 = 0;
+	equip_2 = 0;
+	equip_3 = 0;
+	key_vol = 0;
 
 	change_view = item_part;
 
@@ -186,11 +190,13 @@ void inven_all::update()
 		_im->update();
 	}
 	inven_controll();
-	_item_m->update();
 }
 
 void inven_all::render()
 {
+
+	char str[128];
+
 	IMAGEMANAGER->findImage("인벤토리배경화면")->render(getMemDC(), 0, 0);
 	if (change_view == item_part)
 	{
@@ -227,127 +233,190 @@ void inven_all::render()
 				index,
 				0);
 		}
-		_item_m->render();
 		select_item();
 	}
 	else if (change_view == collect_part)
 	{
 		_icl->render();
 		IMAGEMANAGER->findImage("초록루비")->render(getMemDC(), 650, 575);
-		number_control();
 
-		int tmep_numbering = _icl->get_num_x() + (5 * _icl->get_num_y());
+		int tmep_numbering = _icl->get_num_x() + (4 * _icl->get_num_y());
+
+		if (tmep_numbering < 4)
+		{
+			select_render(0,
+				_icl->get_collect_o4()[_icl->get_num_x()]._rc.left - 8,
+				_icl->get_collect_o4()[_icl->get_num_x()]._rc.top - 8,
+				_icl->get_collect_o4()[_icl->get_num_x()]._rc.right + 8,
+				_icl->get_collect_o4()[_icl->get_num_x()]._rc.bottom + 8,
+				index,
+				0);
+		}
+		else if (tmep_numbering > 3)
+		{
+			select_render(0,
+				_icl->get_collect_o3()[_icl->get_num_x()]._rc.left - 8,
+				_icl->get_collect_o3()[_icl->get_num_x()]._rc.top - 8,
+				_icl->get_collect_o3()[_icl->get_num_x()]._rc.right + 8,
+				_icl->get_collect_o3()[_icl->get_num_x()]._rc.bottom + 8,
+				index,
+				0);
+		}
+		/*int tmep_numbering = _icl->get_num_x() + (5 * _icl->get_num_y());
 
 		if (tmep_numbering == 0 ||
-			tmep_numbering == 1 ||
-			tmep_numbering == 6 ||
-			tmep_numbering == 7)
+		tmep_numbering == 1 ||
+		tmep_numbering == 6 ||
+		tmep_numbering == 7)
 		{
-			if (tmep_numbering == 6)
-			{
-				select_render(1,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.left - 8,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.top - 8,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.right + 8,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.bottom + 8,
-					index,
-					0);
-			}
-			else if (tmep_numbering == 7)
-			{
-				select_render(0,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.left - 8,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.top - 8,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.right + 8,
-					_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.bottom + 8,
-					index,
-					0);
-			}
-			else if (tmep_numbering == 0)
-			{
-				select_render(1,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.left - 8,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.top - 8,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.right + 8,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.bottom + 8,
-					index,
-					0);
-			}
-			else if (tmep_numbering == 1)
-			{
-				select_render(0,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.left - 8,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.top - 8,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.right + 8,
-					_icl->get_collect_m()[_icl->get_num_x()]._rc.bottom + 8,
-					index,
-					0);
-			}
+		if (tmep_numbering == 6)
+		{
+		select_render(1,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.left - 8,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.top - 8,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.right + 8,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.bottom + 8,
+		index,
+		0);
+		}
+		else if (tmep_numbering == 7)
+		{
+		select_render(0,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.left - 8,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.top - 8,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.right + 8,
+		_icl->get_collect_m()[_icl->get_num_x() + 1]._rc.bottom + 8,
+		index,
+		0);
+		}
+		else if (tmep_numbering == 0)
+		{
+		select_render(1,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.left - 8,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.top - 8,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.right + 8,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.bottom + 8,
+		index,
+		0);
+		}
+		else if (tmep_numbering == 1)
+		{
+		select_render(0,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.left - 8,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.top - 8,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.right + 8,
+		_icl->get_collect_m()[_icl->get_num_x()]._rc.bottom + 8,
+		index,
+		0);
+		}
 		}
 		else if (tmep_numbering == 2 ||
-			tmep_numbering == 3 ||
-			tmep_numbering == 4 ||
-			tmep_numbering == 5)
+		tmep_numbering == 3 ||
+		tmep_numbering == 4 ||
+		tmep_numbering == 5)
 		{
-			select_render(0,
-				_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.left - 8,
-				_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.top - 8,
-				_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.right + 8,
-				_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.bottom + 8,
-				index,
-				0);
+		select_render(0,
+		_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.left - 8,
+		_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.top - 8,
+		_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.right + 8,
+		_icl->get_collect_o4()[_icl->get_num_x() - 2]._rc.bottom + 8,
+		index,
+		0);
 		}
 		else if (tmep_numbering == 8 ||
-			tmep_numbering == 9 ||
-			tmep_numbering == 10)
+		tmep_numbering == 9 ||
+		tmep_numbering == 10)
 		{
-			select_render(0,
-				_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.left - 8,
-				_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.top - 8,
-				_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.right + 8,
-				_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.bottom + 8,
-				index,
-				0);
+		select_render(0,
+		_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.left - 8,
+		_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.top - 8,
+		_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.right + 8,
+		_icl->get_collect_o3()[_icl->get_num_x() - 3]._rc.bottom + 8,
+		index,
+		0);
 		}
 		else if (tmep_numbering == 11 ||
-			tmep_numbering == 12 ||
-			tmep_numbering == 13)
+		tmep_numbering == 12 ||
+		tmep_numbering == 13)
 		{
-			select_render(0,
-				_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.left - 8,
-				_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.top - 8,
-				_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.right + 8,
-				_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.bottom + 8,
-				index,
-				0);
+		select_render(0,
+		_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.left - 8,
+		_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.top - 8,
+		_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.right + 8,
+		_icl->get_collect_s()[_icl->get_num_x() - 1]._rc.bottom + 8,
+		index,
+		0);
 		}
 		else if (tmep_numbering == 14)
 		{
-			select_render(1,
-				_icl->get_sleep_b()._rc.left - 8,
-				_icl->get_sleep_b()._rc.top - 8,
-				_icl->get_sleep_b()._rc.right + 8,
-				_icl->get_sleep_b()._rc.bottom + 8,
-				index,
-				0);
+		select_render(1,
+		_icl->get_sleep_b()._rc.left - 8,
+		_icl->get_sleep_b()._rc.top - 8,
+		_icl->get_sleep_b()._rc.right + 8,
+		_icl->get_sleep_b()._rc.bottom + 8,
+		index,
+		0);
 		}
 		else if (tmep_numbering == 15)
 		{
-			select_render(1,
-				_icl->get_save_b()._rc.left - 8,
-				_icl->get_save_b()._rc.top - 8,
-				_icl->get_save_b()._rc.right + 8,
-				_icl->get_save_b()._rc.bottom + 8,
-				index,
-				0);
+		select_render(1,
+		_icl->get_save_b()._rc.left - 8,
+		_icl->get_save_b()._rc.top - 8,
+		_icl->get_save_b()._rc.right + 8,
+		_icl->get_save_b()._rc.bottom + 8,
+		index,
+		0);
 		}
 
 		if (_vi.size() > 0)
 		{
-			_vi[equip_z]->get_image()->render(getMemDC(), 655, 242);
-			_vi[equip_x]->get_image()->render(getMemDC(), 900, 242);
-		}
+		_vi[equip_z]->get_image()->render(getMemDC(), 655, 242);
+		_vi[equip_x]->get_image()->render(getMemDC(), 900, 242);
+		}*/
 
+		if (_vi.size() > 0)
+		{
+			int temp;
+
+			switch (tmep_numbering)
+			{
+			case 0:
+				temp = equip_0;
+				break;
+			case 1:
+				temp = equip_1;
+				break;
+			case 2:
+				temp = equip_2;
+				break;
+			case 3:
+				temp = equip_3;
+				break;
+			}
+
+			sprintf(str, "공격력 : %d", _vi[temp]->get_item_option().ATK);
+			TextOut(getMemDC(), 250, 250, str, strlen(str));
+
+			sprintf(str, "공격속도 : %d", _vi[temp]->get_item_option().ATK_SPEED);
+			TextOut(getMemDC(), 250, 300, str, strlen(str));
+
+			sprintf(str, "방어력 : %d", _vi[temp]->get_item_option().DEF);
+			TextOut(getMemDC(), 250, 350, str, strlen(str));
+
+			sprintf(str, "가격 : %d", _vi[temp]->get_item_option().Price);
+			TextOut(getMemDC(), 250, 400, str, strlen(str));
+
+			sprintf(str, "강화 : %d", _vi[temp]->get_item_option().Upgrade);
+			TextOut(getMemDC(), 250, 450, str, strlen(str));
+
+
+			if (_vi[equip_0]->get_is_equip() == true)_vi[equip_0]->get_image()->render(getMemDC(), 655, 242);
+			if (_vi[equip_1]->get_is_equip() == true)_vi[equip_1]->get_image()->render(getMemDC(), 778, 183);
+			if (_vi[equip_2]->get_is_equip() == true)_vi[equip_2]->get_image()->render(getMemDC(), 900, 242);
+			if (_vi[equip_3]->get_is_equip() == true)_vi[equip_3]->get_image()->render(getMemDC(), 778, 312);
+		}
+		IMAGEMANAGER->findImage("키")->render(getMemDC(), 650, 432);
+		scoreRender();
 	}
 	else if (change_view == map_part)
 	{
@@ -371,14 +440,14 @@ void inven_all::render()
 	//
 	//
 	//char str[128];
-	//sprintf(str, "%d", _vi.size());
-	//TextOut(getMemDC(), 20, 20, str, strlen(str));
+	//sprintf(str, "%d", P_money);
+	//TextOut(getMemDC(), 200,200, str, strlen(str));
 }
 
-void inven_all::add_to_inven(image * img, string name, string text, int num, int vol, item_type type, item_where _where, bool equip)
+void inven_all::add_to_inven(image * img, string name, string text, int num, int vol, item_type type, item_where _where, bool equip, item_option _io)
 {
 	item_class* temp = new item_class;
-	temp->setting_items(img, name, text, num, 0, 0, vol, type, _where, equip);
+	temp->setting_items(img, name, text, num, 0, 0, vol, type, _where, equip, _io);
 	_vi.push_back(temp);
 }
 
@@ -570,6 +639,13 @@ void inven_all::change_bowl(int vol)
 {
 	if (vol > 4) return;
 
+	item_option _io_temp;
+	_io_temp.ATK = 0;
+	_io_temp.ATK_SPEED = 1;
+	_io_temp.DEF = 0;
+	_io_temp.Price = 200;
+	_io_temp.Upgrade = 0;
+
 	for (int i = 0; i < vol; i++)
 	{
 		for (_vii = _vi.begin(); _vii != _vi.end();)
@@ -582,7 +658,7 @@ void inven_all::change_bowl(int vol)
 					1,
 					Interaction_item,
 					inventory_item,
-					false);
+					false, _io_temp);
 				_vii = _vi.erase(_vii);
 				break;
 			}
@@ -611,56 +687,125 @@ void inven_all::select_render(int type, float left, float top, float right, floa
 
 void inven_all::select_item(void)
 {
-	if (_vi.size() == 1)
+
+	if (_vi.size() > 0)
 	{
-		_vi[equip_z]->set_equip(true);
-		_vi[equip_x]->set_equip(true);
+		_vi[equip_0]->set_equip(true);
+		_vi[equip_1]->set_equip(true);
+		_vi[equip_2]->set_equip(true);
+		_vi[equip_3]->set_equip(true);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
 		if (_vi.size() == 0) return;
 
-		_vi[equip_z]->set_equip(false);
+		_vi[equip_0]->set_equip(false);
 
-		if (equip_z == equip_x)
-		{
-			_vi[equip_x]->set_equip(true);
-		}
+		if (equip_0 == equip_1) _vi[equip_1]->set_equip(true);
+		if (equip_0 == equip_2) _vi[equip_2]->set_equip(true);
+		if (equip_0 == equip_3) _vi[equip_3]->set_equip(true);
 
 		for (int i = 0; i < _vi.size(); i++)
 		{
 			if (_vi[i]->get_numbering_where() == _iit->get_num_x() + (4 * _iit->get_num_y()))
 			{
-				equip_z = i;
+				equip_0 = i;
 			}
 		}
 
-		_vi[equip_z]->set_equip(true);
+		_vi[equip_0]->set_equip(true);
 	}
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
 		if (_vi.size() == 0) return;
 
-		_vi[equip_x]->set_equip(false);
+		_vi[equip_1]->set_equip(false);
 
-		if (equip_z == equip_x)
-		{
-			_vi[equip_z]->set_equip(true);
-		}
+		if (equip_1 == equip_0) _vi[equip_0]->set_equip(true);
+		if (equip_1 == equip_2) _vi[equip_2]->set_equip(true);
+		if (equip_1 == equip_3) _vi[equip_3]->set_equip(true);
 
 		for (int i = 0; i < _vi.size(); i++)
 		{
 			if (_vi[i]->get_numbering_where() == _iit->get_num_x() + (4 * _iit->get_num_y()))
 			{
-				equip_x = i;
+				equip_1 = i;
 			}
 		}
-		_vi[equip_x]->set_equip(true);
+		_vi[equip_1]->set_equip(true);
 	};
+	if (KEYMANAGER->isOnceKeyDown('C'))
+	{
+		if (_vi.size() == 0) return;
+
+		_vi[equip_2]->set_equip(false);
+
+		if (equip_2 == equip_0) _vi[equip_0]->set_equip(true);
+		if (equip_2 == equip_1) _vi[equip_1]->set_equip(true);
+		if (equip_2 == equip_3) _vi[equip_3]->set_equip(true);
+
+		for (int i = 0; i < _vi.size(); i++)
+		{
+			if (_vi[i]->get_numbering_where() == _iit->get_num_x() + (4 * _iit->get_num_y()))
+			{
+				equip_2 = i;
+			}
+		}
+
+		_vi[equip_2]->set_equip(true);
+	}
+	if (KEYMANAGER->isOnceKeyDown('V'))
+	{
+		if (_vi.size() == 0) return;
+
+		_vi[equip_3]->set_equip(false);
+
+		if (equip_3 == equip_0) _vi[equip_0]->set_equip(true);
+		if (equip_3 == equip_1) _vi[equip_1]->set_equip(true);
+		if (equip_3 == equip_2) _vi[equip_2]->set_equip(true);
+
+		for (int i = 0; i < _vi.size(); i++)
+		{
+			if (_vi[i]->get_numbering_where() == _iit->get_num_x() + (4 * _iit->get_num_y()))
+			{
+				equip_3 = i;
+			}
+		}
+
+		_vi[equip_3]->set_equip(true);
+	}
 }
 
-void inven_all::number_control()
+void inven_all::loadNumberImg()
 {
-	//P_moneny
+	int nRest = 10;
+	int nDiv = 1;
+
+	for (int i = 0; i < 10; i++)
+	{
+		m_arScore[i].nDiv = nDiv;
+		m_arScore[i].nRest = nRest;
+		m_arScore[i].pImg[0] = IMAGEMANAGER->findImage("00");
+		m_arScore[i].pImg[1] = IMAGEMANAGER->findImage("11");
+		m_arScore[i].pImg[2] = IMAGEMANAGER->findImage("22");
+		m_arScore[i].pImg[3] = IMAGEMANAGER->findImage("33");
+		m_arScore[i].pImg[4] = IMAGEMANAGER->findImage("44");
+		m_arScore[i].pImg[5] = IMAGEMANAGER->findImage("55");
+		m_arScore[i].pImg[6] = IMAGEMANAGER->findImage("66");
+		m_arScore[i].pImg[7] = IMAGEMANAGER->findImage("77");
+		m_arScore[i].pImg[8] = IMAGEMANAGER->findImage("88");
+		m_arScore[i].pImg[9] = IMAGEMANAGER->findImage("99");
+		nDiv *= 10;
+	}
+}
+
+void inven_all::scoreRender()
+{
+	for (int i = 0; i < 5; i++)
+	{
+		int nScoreIdx = 0;
+		nScoreIdx = P_money / m_arScore[i].nDiv % m_arScore[i].nRest;
+		m_arScore[i].pImg[nScoreIdx]->render(getMemDC(), -i * 40 + WINSIZEX - 320, 580);
+	}
 }

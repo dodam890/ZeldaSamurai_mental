@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "camera.h"
 
 enum item_where
 {
@@ -17,9 +18,22 @@ enum item_type
 	using_item
 };
 
+struct item_option
+{
+	int ATK;
+	int DEF;
+	float ATK_SPEED;
+	int Price;
+	int Upgrade;
+};
+
 class item_class : public gameNode
 {
 private:
+
+	camera* _ca;
+
+	item_option _item_option;
 	item_where _item_where;
 	item_type _itemtype;
 	string _item_name;
@@ -51,7 +65,7 @@ public:
 	void trow_move(float angle);
 
 	void set_camera(float cax, float cay) { carmeraX = cax, carmeraY = cay; }
-	void setting_items(image* img, string name, string text, int num, float x, float y, int vol, item_type type, item_where _where, bool equip);
+	void setting_items(image* img, string name, string text, int num, float x, float y, int vol, item_type type, item_where _where, bool equip, item_option _io);
 	void set_equip(bool bo) { is_equip = bo; }
 	void set_numbering_where(int nums) { numbering_where = nums; }
 
@@ -69,6 +83,14 @@ public:
 	int get_volume() { return _volume; }
 	bool get_is_equip() { return is_equip; }
 	int get_numbering_where() { return numbering_where; }
+	item_option get_item_option() { return _item_option; }
+
+
+	void set_volume(int vo) { _volume = vo; }
+	void set_item_option(item_option io) { _item_option = io; }
+
+	void set_camera(camera* ca) { _ca = ca; }
+
 
 	item_class();
 	~item_class();

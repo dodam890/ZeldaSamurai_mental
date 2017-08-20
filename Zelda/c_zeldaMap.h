@@ -1,6 +1,5 @@
 #pragma once
 #include "zeldaMap.h"
-#include "shop_class.h"
 
 class townMap : public zeldaMap
 {
@@ -20,8 +19,6 @@ public:
 
 class storeMap : public zeldaMap
 {
-private:
-	shop_class* _sc;
 public:
 	virtual HRESULT init(string strMapImageKey, string strPixelMapImageKey, camera* camera, player* player);
 	virtual void release();

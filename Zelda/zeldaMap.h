@@ -71,5 +71,6 @@ public:
 	tagEventRect& getEventRect(int mapNum) { return _eventRectInfo[mapNum]; }
 
 	bool get_is_talk_shop_npc_who(int arry);
+	void set_is_talk_shop_npc_who(int arry, bool bo);
 };
 

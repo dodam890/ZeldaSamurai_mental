@@ -37,6 +37,7 @@ public:
 	void render();
 
 	void keypad();
+	void keypad2();
 
 	inven_collect_part_struct* get_collect_m() { return  collect_main4; }
 	inven_collect_part_struct* get_collect_s() { return  collect_sub; }

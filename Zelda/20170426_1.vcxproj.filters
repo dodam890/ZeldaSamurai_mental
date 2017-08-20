@@ -154,6 +154,9 @@
     <ClCompile Include="emZorder.cpp">
       <Filter>mainGame\enemy</Filter>
     </ClCompile>
+    <ClCompile Include="up_grade_complete.cpp">
+      <Filter>mainGame\shop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h">
@@ -320,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="emZorder.h">
       <Filter>mainGame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="up_grade_complete.h">
+      <Filter>mainGame\shop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

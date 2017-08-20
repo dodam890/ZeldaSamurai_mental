@@ -51,7 +51,7 @@ void item_class::trow_move(float angle)
 	}
 }
 
-void item_class::setting_items(image* img, string name, string text, int num, float x, float y, int vol, item_type type, item_where _where, bool equip)
+void item_class::setting_items(image* img, string name, string text, int num, float x, float y, int vol, item_type type, item_where _where, bool equip, item_option _io)
 {
 
 	_item_where = _where;
@@ -64,6 +64,7 @@ void item_class::setting_items(image* img, string name, string text, int num, fl
 	_itemtype = type;
 	_volume = vol;
 	is_equip = equip;
+	_item_option = _io;
 }
 
 

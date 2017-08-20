@@ -37,6 +37,7 @@ public:
 
 	void keypad();
 
+	vector<item_class*> get_inven_v() { return _vi; }
 	void set_inven_v(vector<item_class*> _VI) { _vi = _VI; }
 
 	inven_item_part_struct* get_item_part_12() { return item_12; }
