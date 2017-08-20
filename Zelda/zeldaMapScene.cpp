@@ -82,9 +82,6 @@ void zeldaMapScene::update()
 {
 	returnToMainMenu();
 
-<<<<<<< HEAD
-=======
-	changeTileScene();
 
 	_inven->get_iim()->set_is_town(_isTileMap);
 
@@ -101,9 +98,10 @@ void zeldaMapScene::update()
 		_inven->get_iim()->set_P_y(_link->getDisY());
 	}
 
->>>>>>> cade5454b5e394021ab791f40dc81e646632b595
 	if (_isTileMap)
 	{
+		changeTileScene();
+
 		_zeldaTileMap[_tileMapKind]->update();
 		_link->update(_zeldaTileMap[_tileMapKind]);
 

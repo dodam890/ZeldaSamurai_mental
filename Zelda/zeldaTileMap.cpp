@@ -282,18 +282,14 @@ void zeldaTileMap::render()
 		}
 	}
 
-<<<<<<< HEAD
 	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
 	Rectangle(getMemDC(), _door[DOWN].rc.left, _door[DOWN].rc.top, _door[DOWN].rc.right, _door[DOWN].rc.bottom);
-=======
+
 	char str[128] = "";
 	sprintf(str, "%d", testIdx);
 	TextOut(getMemDC(), 10, 200, str, strlen(str));
 
 	//에너미 플레이어 에이스타 맵 확인용
->>>>>>> cade5454b5e394021ab791f40dc81e646632b595
-
-	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
