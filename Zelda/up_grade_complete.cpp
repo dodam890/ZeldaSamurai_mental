@@ -80,6 +80,7 @@ void up_grade_complete::update()
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (corcer_x > (650 + 120))
 				{
 					corcer_x -= 100;
@@ -92,6 +93,7 @@ void up_grade_complete::update()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (corcer_x < (650 + 120 + 100))
 				{
 					corcer_x += 100;
@@ -104,15 +106,18 @@ void up_grade_complete::update()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_UP))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (temp_now_pick > 0) temp_now_pick--;
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (temp_now_pick < 1) temp_now_pick++;
 			}
 
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
+				SOUNDMANAGER->play("메뉴선택", 0.5f);
 				if (pick_where == 0)
 				{
 					invens_view = upgrade_state_view_select;
@@ -130,6 +135,7 @@ void up_grade_complete::update()
 
 		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			num_x--;
 
 			if (num_x < 0 && num_x + (4 * num_y) == 11)
@@ -144,6 +150,7 @@ void up_grade_complete::update()
 
 		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			num_x++;
 			if (num_x > 3 && num_x + (4 * num_y) <= 12)
 			{
@@ -156,6 +163,7 @@ void up_grade_complete::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (num_x + (4 * num_y) == 14 || num_x + (4 * num_y) == 15 || num_x + (4 * num_y) == 16)
 			{
 				num_y--;
@@ -183,6 +191,7 @@ void up_grade_complete::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (num_x + (4 * num_y) == 10 || num_x + (4 * num_y) == 11)
 			{
 				num_y++;
@@ -211,6 +220,7 @@ void up_grade_complete::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			SOUNDMANAGER->play("메뉴선택", 0.5f);
 			_uss = upgrade_confirm;
 
 			if (num_x + (4 * num_y) < _vi.size())

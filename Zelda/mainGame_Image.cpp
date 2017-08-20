@@ -236,10 +236,10 @@ void mainGame::addSound()
 	SOUNDMANAGER->addSound("메인메뉴음악", "sound/메인메뉴.mp3", TRUE, TRUE);
 
 	//메뉴관련사운드
-	SOUNDMANAGER->addSound("메뉴커서", "sound/MC_Menu_Cursor.wav", FALSE, FALSE);
-	SOUNDMANAGER->addSound("메뉴커서2", "sound/MC_Menu_Cursor2.wav", FALSE, FALSE);
-	SOUNDMANAGER->addSound("메뉴지우기", "sound/MC_Menu_Erase.wav", FALSE, FALSE);
-	SOUNDMANAGER->addSound("메뉴선택", "sound/MC_Menu_Select.wav", FALSE, FALSE);
+	SOUNDMANAGER->addSound("메뉴커서", "sound/MC_Menu_Cursor.wav", TRUE, FALSE);
+	SOUNDMANAGER->addSound("메뉴커서2", "sound/MC_Menu_Cursor2.wav", TRUE, FALSE);
+	SOUNDMANAGER->addSound("메뉴지우기", "sound/MC_Menu_Erase.wav", TRUE, FALSE);
+	SOUNDMANAGER->addSound("메뉴선택", "sound/MC_Menu_Select.wav", TRUE, FALSE);
 	SOUNDMANAGER->addSound("선택씬음악", "sound/MC_Select_Screen.mp3", TRUE, TRUE);
 
 	//마을관련 사운드
