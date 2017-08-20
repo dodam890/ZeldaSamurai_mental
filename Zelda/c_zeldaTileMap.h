@@ -4,6 +4,9 @@
 class zeldaTileMap1 : public zeldaTileMap
 {
 private:
+	tagTileRect _rockTile[3];
+	tagTileRect _potTile[4];
+
 public:
 	zeldaTileMap1() {}
 	virtual ~zeldaTileMap1() {}

@@ -129,6 +129,8 @@ private:
 	bool _isPlayerInTileMap;
 	bool _moveTile;
 
+	int _keyCount;
+
 public:
 
 	HRESULT init(camera* camera);
@@ -169,6 +171,8 @@ public:
 	void isStore(bool isStore) { _isStore = isStore; }
 
 	void setIsInTileMap(bool bInTile) { _isPlayerInTileMap = bInTile; }
+
+	int getKeyCount() { return _keyCount; }
 
 	player();
 	~player();

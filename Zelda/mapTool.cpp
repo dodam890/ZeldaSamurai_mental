@@ -2093,6 +2093,9 @@ void mapTool::drawTileName()
 		case TR_DESERT:
 			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "모래", strlen("모래"));
 			break;
+		case TR_ROCK:
+			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "돌", strlen("돌"));
+			break;
 		case TR_WATER:
 			TextOut(getMemDC(), _tiles[i].rc.left + 10, _tiles[i].rc.top + 10, "물", strlen("물"));
 			break;
@@ -2271,6 +2274,11 @@ TERRAIN mapTool::terrainSelect(int frameX, int frameY)
 	else if (frameX == 1 && frameY == 0)
 	{
 		return TR_GRASS;
+	}
+
+	else if (frameX == 4 && frameY == 0)
+	{
+		return TR_ROCK;
 	}
 
 	else if (frameX == 4 && frameY == 1)

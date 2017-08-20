@@ -9,6 +9,14 @@ class player;
 class zeldaTileMap : public gameNode
 {
 protected:
+	struct tagTileRect
+	{
+		RECT rc;
+		image* image;
+		bool isOn = false;
+	};
+
+protected:
 	camera* _camera;
 	image* _imgTmpBackbuffer;
 

@@ -42,6 +42,8 @@ HRESULT player::init(camera* camera)
 
 	_isPlayerInTileMap = false;
 
+	_keyCount = 0;
+
 	return S_OK;
 }
 
