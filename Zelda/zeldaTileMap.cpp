@@ -282,14 +282,12 @@ void zeldaTileMap::render()
 		}
 	}
 
-<<<<<<< HEAD
 	//에너미 플레이어 에이스타 맵 확인용
 
 	//_em->render();
 
 	_player->render();
-=======
->>>>>>> 64aea2e0a62f0969fe01d4ced1fb1a0c6d72e97c
+
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
@@ -339,6 +337,11 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 		{
 			_attribute[E_ATR_SLOW][i] = FALSE;
 		}
+
+		if (_tiles[i].terrain == TR_WATER)
+		{
+			_attribute[E_ATR_MOVE][i] = FALSE;
+		}
 		
 		if (_tiles[i].obj == OBJ_WALL)
 		{
@@ -348,6 +351,11 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 		if (_tiles[i].obj2 == OBJ_COLUMN1)
 		{
 			_attribute[E_ATR_SLIDE][i] = FALSE;
+		}
+
+		if (_tiles[i].obj2 == OBJ_WALL)
+		{
+			_attribute[E_ATR_MOVE][i] = FALSE;
 		}
 	}
 

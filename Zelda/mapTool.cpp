@@ -1465,7 +1465,7 @@ void mapTool::setMap(void)
 
 				_tiles[i].objFrameX = _currentTile.objFrameX;
 				_tiles[i].objFrameY = _currentTile.objFrameY;
-				//_tiles[i].obj3 = objSelect3(_tiles[i].objFrameX, _tiles[i].objFrameY);
+				_tiles[i].obj = objSelect3(_tiles[i].objFrameX, _tiles[i].objFrameY);
 				_tiles[i].tileKind = KIND_OBJ3;
 				break;
 
@@ -1490,7 +1490,7 @@ void mapTool::save(void)
 	HANDLE file;
 	DWORD write;
 
-	file = CreateFile("mapSave01.map", GENERIC_WRITE, 0, NULL,
+	file = CreateFile("mapSave05.map", GENERIC_WRITE, 0, NULL,
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
@@ -1503,7 +1503,7 @@ void mapTool::load(void)
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("mapSave02.map", GENERIC_READ, 0, NULL,
+	file = CreateFile("mapSave05.map", GENERIC_READ, 0, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
@@ -1879,13 +1879,13 @@ void mapTool::drawTile()
 			if (_showCamera) _imgTile4->frameRender(getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].objFrameX, _tiles[i].objFrameY);
 			else _imgTile2->frameRender(getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].objFrameX, _tiles[i].objFrameY);
 		}
-		/*else if (_tiles[i].tileKind == KIND_OBJ3)
+		else if (_tiles[i].tileKind == KIND_OBJ3)
 		{
 			if (_tiles[i].rc.left >= WINSIZEX - WINSIZEX / 3 + 50) continue;
-			if (_tiles[i].obj3 == OBJ_NONE)continue;
+			if (_tiles[i].obj == OBJ_NONE)continue;
 			if (_showCamera) _imgTile8->frameRender(getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].objFrameX, _tiles[i].objFrameY);
 			else _imgTile7->frameRender(getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].objFrameX, _tiles[i].objFrameY);
-		}*/
+		}
 	}
 
 	for (int i = 0; i < TILEX * TILEY; i++)
@@ -2556,8 +2556,6 @@ OBJECT mapTool::objSelect2(int frameX, int frameY)
 	{
 		return OBJ_DOOR2_DOWN_OPEN;
 	}
-
-
 
 	return OBJ_WALL;
 }
