@@ -37,10 +37,10 @@ void item_class_manager::render()
 	}
 }
 
-void item_class_manager::add_items_init(float x, float y, int numbering, int vol, bool equip)
+void item_class_manager::add_items_init(float x, float y, int numbering, int vol, bool equip, item_option _io)
 {
 	item_class* temp = new item_class;
-	item_search(temp, numbering, x, y, vol, equip);
+	item_search(temp, numbering, x, y, vol, equip, _io);
 	_vt.push_back(temp);
 }
 void item_class_manager::eraser(int arr)
@@ -48,7 +48,7 @@ void item_class_manager::eraser(int arr)
 	_vt.erase(_vt.begin() + arr);
 }
 
-void item_class_manager::item_search(item_class* calling, int num, float init_x, float init_y, int vol, bool equip)
+void item_class_manager::item_search(item_class* calling, int num, float init_x, float init_y, int vol, bool equip, item_option _io)
 {
 	switch (num)
 	{
@@ -62,7 +62,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			weapon,
 			inventory_item,
-			equip);
+			equip,
+			_io);
 		break;
 		//방패
 	case 1:
@@ -74,7 +75,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			Armor,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//항아리
@@ -87,7 +89,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			special_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//지팡이
@@ -100,7 +103,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			special_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//빈병
@@ -113,7 +117,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			Interaction_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//요정병
@@ -126,7 +131,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			Interaction_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//폭탄
@@ -139,7 +145,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			using_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//키
@@ -152,7 +159,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			using_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//보스방키
@@ -165,7 +173,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			using_item,
 			inventory_map,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//하트추가
@@ -178,7 +187,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			using_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//초록루비
@@ -191,7 +201,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			using_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//파란루비
@@ -204,7 +215,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			using_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 		//빨간루비
@@ -217,7 +229,8 @@ void item_class_manager::item_search(item_class* calling, int num, float init_x,
 			vol,
 			using_item,
 			inventory_item,
-			equip
+			equip,
+			_io
 		);
 		break;
 	}

@@ -3,7 +3,6 @@
 #include "inven_item.h"
 #include "inven_collect.h"
 #include "inven_map.h"
-#include "item_class_manager.h"
 #include "item_class.h"
 #include <vector>
 
@@ -16,7 +15,16 @@ enum inven_tory_type
 
 class inven_all : public gameNode
 {
+	struct S_SCORE
+	{
+		int nRest;
+		int nDiv;
+		image* pImg[10];
+	};
+
 private:
+
+	S_SCORE m_arScore[10];
 
 	vector<item_class*> _vi;
 	vector<item_class*>::iterator _vii;
@@ -25,8 +33,6 @@ private:
 	inven_item* _iit;
 	inven_collect* _icl;
 	inven_map* _im;
-	item_class_manager* _item_m;
-
 
 	//	equip_item
 
@@ -58,8 +64,10 @@ private:
 	bool key_A;
 	bool key_B;
 
-	int equip_z;
-	int equip_x;
+	int equip_0;
+	int equip_1;
+	int equip_2;
+	int equip_3;
 
 	int change_view_I;
 
@@ -67,7 +75,7 @@ private:
 	int ZX_I_UP;
 
 	int P_money;
-
+	int key_vol;
 
 public:
 	inven_all();
@@ -80,7 +88,7 @@ public:
 	void render();
 
 	//플레이어가 item을 부딪힌것에 대해서 가져와서 인벤에 적재하는 함수 맵에 떨어진 함수에 대해서 얻는다.
-	void add_to_inven(image* img, string name, string text, int num, int vol, item_type type, item_where _where, bool equip);
+	void add_to_inven(image* img, string name, string text, int num, int vol, item_type type, item_where _where, bool equip, item_option _io);
 	void eraser(int arr);
 
 	void change_bowl(int vol);
@@ -97,15 +105,20 @@ public:
 	int get_temp_Sitem4_vol() { return temp_Sitem4_vol; }
 	int get_P_money() { return P_money; }
 	void set_P_money(int _set) { P_money = _set; }
+	void set_M_P_money(int _set) { P_money -= _set; }
+	void set_P_P_money(int _set) { P_money += _set; }
 
 	vector<item_class*> get_vi() { return _vi; }
 	vector<item_class*>::iterator get_vii() { return _vii; }
 
 	inven_item* get_iit() { return _iit; }
 
+	void M_key_vol(int M) { key_vol -= M; }
+	void P_key_vol(int P) { key_vol += P; }
 
 	void inven_controll();
 
-	void number_control();
+	void loadNumberImg();
+	void scoreRender();
 };
 

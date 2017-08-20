@@ -22,6 +22,7 @@ HRESULT main_scene::init()
 	sub_logo_x = -800;
 	alpha_num = 255;
 	change_alpha = 0;
+	SOUNDMANAGER->play("메인메뉴음악", 1.F);
 	return S_OK;
 }
 
@@ -86,6 +87,8 @@ void main_scene::update()
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			ready_to_change = true;
+			SOUNDMANAGER->play("메뉴선택", 1.f);
+			SOUNDMANAGER->stop("메인메뉴음악");
 		}
 	}
 

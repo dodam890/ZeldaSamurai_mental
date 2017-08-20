@@ -13,21 +13,21 @@ inven_collect::~inven_collect()
 
 HRESULT inven_collect::init()
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (i <= 1)
-		{
-			collect_main4[i]._rc = RectMake(182 + (i % 2) * 215, 210, 174, 160);
-		}
-		else if (i > 1)
-		{
-			collect_main4[i]._rc = RectMake(182 + (i % 2) * 215, 400, 180, 130);
-		}
-	}
-	for (int j = 0; j < 3; j++)
-	{
-		collect_sub[j]._rc = RectMake(208 + (j % 3) * 125, 555, 100, 100);
-	}
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	if (i <= 1)
+	//	{
+	//		collect_main4[i]._rc = RectMake(182 + (i % 2) * 215, 210, 174, 160);
+	//	}
+	//	else if (i > 1)
+	//	{
+	//		collect_main4[i]._rc = RectMake(182 + (i % 2) * 215, 400, 180, 130);
+	//	}
+	//}
+	//for (int j = 0; j < 3; j++)
+	//{
+	//	collect_sub[j]._rc = RectMake(208 + (j % 3) * 125, 555, 100, 100);
+	//}
 
 	collect_ob4[0]._rc = RectMake(640, 225, 110, 110);
 	collect_ob4[1]._rc = RectMake(762, 158, 105, 110);
@@ -54,12 +54,12 @@ void inven_collect::release()
 
 void inven_collect::update()
 {
-	keypad();
+	keypad2();
 }
 
 void inven_collect::render()
 {
-	IMAGEMANAGER->findImage("인벤토리내용2")->render(getMemDC(), 85, 90);
+	IMAGEMANAGER->findImage("인벤토리내용2_1")->render(getMemDC(), 85, 90);
 	//IMAGEMANAGER->findImage("인벤토리세이브")->render(getMemDC(), it_save_button._rc.left, it_save_button._rc.top);
 	//IMAGEMANAGER->findImage("인벤토리sleep")->render(getMemDC(), it_sleep_button._rc.left, it_sleep_button._rc.top);
 
@@ -73,10 +73,66 @@ void inven_collect::render()
 	//	Rectangle(getMemDC(), collect_sub[i]._rc.left, collect_sub[i]._rc.top, collect_sub[i]._rc.right, collect_sub[i]._rc.bottom);
 	//	Ellipse(getMemDC(), collect_sub_ob3[i]._rc.left, collect_sub_ob3[i]._rc.top, collect_sub_ob3[i]._rc.right, collect_sub_ob3[i]._rc.bottom);
 	//}
-	char str[128];
-	sprintf(str, "%d,%d", num_x, num_y);
-	TextOut(getMemDC(), 200, 200, str, strlen(str));
+	//char str[128];
+	//sprintf(str, "%d,%d", num_x, num_y);
+	//TextOut(getMemDC(), 200, 400, str, strlen(str));
 
+}
+
+void inven_collect::keypad2()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	{
+		if (num_x == 3 && num_y == 0)
+		{
+			num_x -= 3;
+		}
+		else
+		{
+			num_x--;
+		}
+
+		if (num_x < 0)
+		{
+			num_x = 2;
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	{
+		if (num_x == 3 && num_y == 0)
+		{
+			num_x--;
+		}
+		else
+		{
+			num_x++;
+		}
+
+
+		if (num_x > 2)
+		{
+			num_x = 0;
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	{
+		if (num_x == 3 && num_y == 0)
+		{
+			num_x -= 2;
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	{
+		if (num_x == 1 && num_y == 0)
+		{
+			num_x += 2;
+		}
+
+		if (num_y > 1)
+		{
+			num_y = 0;
+		}
+	}
 }
 
 void inven_collect::keypad()

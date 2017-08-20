@@ -25,6 +25,13 @@ HRESULT zeldaTileMap::init(player* player, camera* camera, const CHAR* pSaveMapF
 
 	loadMap(pSaveMapFileName);
 
+	//_em = new enemyManager;
+	//_em->init(_player, _camera, this);
+	//_em->setOcto();
+
+	//_emZorder = new emZorder;
+	//_emZorder->init(_em, _player);
+
 	return S_OK;
 }
 
@@ -37,9 +44,15 @@ void zeldaTileMap::update()
 	cameraSetTile();
 	_camera->update(_mapWidth, _mapHeight);
 
+<<<<<<< HEAD
 	//플레이어 vs 에너미
 	playerToEnemyCollision();
 	enemyToPlayerCollision();
+=======
+	//_emZorder->update();
+
+	//controlCamera();
+>>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
 }
 
 void zeldaTileMap::render()
@@ -283,6 +296,7 @@ void zeldaTileMap::render()
 		}
 	}
 
+<<<<<<< HEAD
 	char str[128] = "";
 	sprintf(str, "%d", testIdx);
 	TextOut(getMemDC(), 10, 200, str, strlen(str));
@@ -292,6 +306,10 @@ void zeldaTileMap::render()
 	//_em->render();
 	_player->render();
 
+=======
+	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
+
+>>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
@@ -341,15 +359,25 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 		{
 			_attribute[E_ATR_SLOW][i] = FALSE;
 		}
+
+		else if (_tiles[i].terrain == TR_WATER)
+		{
+			_attribute[E_ATR_MOVE][i] = FALSE;
+		}
 		
-		if (_tiles[i].obj == OBJ_WALL)
+		else if (_tiles[i].obj == OBJ_WALL)
 		{
 			_attribute[E_ATR_MOVE][i] = FALSE;
 		}
 
-		if (_tiles[i].obj2 == OBJ_COLUMN1)
+		else if (_tiles[i].obj2 == OBJ_COLUMN1)
 		{
 			_attribute[E_ATR_SLIDE][i] = FALSE;
+		}
+
+		else if (_tiles[i].obj2 == OBJ_WALL)
+		{
+			//_attribute[E_ATR_MOVE][i] = FALSE;
 		}
 	}
 

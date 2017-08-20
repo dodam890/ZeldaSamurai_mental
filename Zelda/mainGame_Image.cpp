@@ -37,6 +37,9 @@ void mainGame::addItemImage()
 	IMAGEMANAGER->addImage("인벤토리내용1", "image/image_pbs/inven/item_view.bmp", 1040, 665, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리세이브", "image/image_pbs/inven/inven_save.bmp", 210, 90, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리내용2", "image/image_pbs/inven/item_view2.bmp", 1040, 665, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("인벤토리내용2_1", "image/image_pbs/inven/item_view_another_2.bmp", 1040, 665, true, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addImage("인벤토리sleep", "image/image_pbs/inven/inven_sleep.bmp", 210, 90, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리변경키1", "image/image_pbs/inven/inven_change_key1.bmp", 105, 105, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리변경키2", "image/image_pbs/inven/inven_change_key2.bmp", 105, 105, true, RGB(255, 0, 255));
@@ -97,6 +100,22 @@ void mainGame::addItemImage()
 	IMAGEMANAGER->addImage("70루비", "image/image_pbs/shop/글자/70루비.bmp", 43, 15, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("60루비", "image/image_pbs/shop/글자/60루비.bmp", 43, 15, true, RGB(255, 0, 255));
 
+	//number
+	IMAGEMANAGER->addImage("00", "image/image_pbs/UI/0.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("11", "image/image_pbs/UI/1.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("22", "image/image_pbs/UI/2.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("33", "image/image_pbs/UI/3.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("44", "image/image_pbs/UI/4.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("55", "image/image_pbs/UI/5.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("66", "image/image_pbs/UI/6.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("77", "image/image_pbs/UI/7.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("88", "image/image_pbs/UI/8.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("99", "image/image_pbs/UI/9.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+
+
+	//map
+
+	IMAGEMANAGER->addImage("town_map", "image/image_pbs/map/town.bmp", 528, 360, true, RGB(255, 0, 255));
 
 }
 
@@ -206,4 +225,67 @@ void mainGame::addMapImage()
 	IMAGEMANAGER->addFrameImage("TILE_WATER_T", "image/map/TILE_WATER_T.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_L", "image/map/TILE_WATER_WAVE_L.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_R", "image/map/TILE_WATER_WAVE_R.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
+}
+
+void mainGame::addSound()
+{
+	SOUNDMANAGER->addSound("메인메뉴음악", "sound/메인메뉴.mp3", true, true);
+
+	//메뉴관련사운드
+	SOUNDMANAGER->addSound("메뉴커서", "sound/MC_Menu_Cursor.wav", false, false);
+	SOUNDMANAGER->addSound("메뉴커서2", "sound/MC_Menu_Cursor2.wav", false, false);
+	SOUNDMANAGER->addSound("메뉴지우기", "sound/MC_Menu_Erase.wav", false, false);
+	SOUNDMANAGER->addSound("메뉴선택", "sound/MC_Menu_Select.wav", false, false);
+	SOUNDMANAGER->addSound("선택씬음악", "sound/MC_Select_Screen.mp3", true, true);
+
+	//마을관련 사운드
+	SOUNDMANAGER->addSound("상점음악", "sound/MC_Syrups_Shop.mp3", true, true);
+	SOUNDMANAGER->addSound("마을음악", "sound/MC_Hyrule_Town.mp3", true, true);
+	SOUNDMANAGER->addSound("마을밖음악", "sound/MC_Hyrule_Field.mp3", true, true);
+	SOUNDMANAGER->addSound("젤다집음악", "sound/MC_House.mp3", true, true);
+
+	//젤다관련사운드
+	SOUNDMANAGER->addSound("젤다검회전소리", "sound/MC_Link_Sword_Spin.wav", false, false);
+	SOUNDMANAGER->addSound("젤다약회전베기기합", "sound/MC_Link_Sword_Spin1.wav", false, false);
+	SOUNDMANAGER->addSound("젤다강회전베기기합", "sound/MC_Link_Sword_Spin2.wav", false, false);
+	SOUNDMANAGER->addSound("젤다검기본소리", "sound/MC_Link_Sword.wav", false, false);
+	SOUNDMANAGER->addSound("젤다기본베기기합", "sound/MC_Link_Sword1.wav", false, false);
+	SOUNDMANAGER->addSound("젤다방패반사", "sound/MC_Link_Shield_Deflect.wav", false, false);
+	SOUNDMANAGER->addSound("젤다방패들기", "sound/MC_Link_Shield.wav", false, false);
+	SOUNDMANAGER->addSound("젤다걷기", "sound/MC_Link_Run.wav", false, true);
+	SOUNDMANAGER->addSound("젤다구르기", "sound/MC_Link_Roll.wav", false, false);
+	SOUNDMANAGER->addSound("젤다밀기", "sound/MC_Link_Push.wav", false, false);
+	SOUNDMANAGER->addSound("젤다다침", "sound/MC_Link_Hurt.wav", false, false);
+	SOUNDMANAGER->addSound("젤다잡기", "sound/MC_Link_Grab.wav", false, false);
+	SOUNDMANAGER->addSound("젤다체력낮음", "sound/MC_LowHealth.wav", false, true);
+	SOUNDMANAGER->addSound("젤다죽음", "sound/MC_Link_Die_Tune.wav", false, false);
+	SOUNDMANAGER->addSound("젤다칼로벽칠때", "sound/MC_Sword_TapBombWall.wav", false, false);
+	SOUNDMANAGER->addSound("젤다체력업", "sound/MC_Heart.wav", false, false);
+
+	//아이템관련사운드
+	SOUNDMANAGER->addSound("루비습득", "sound/MC_Rupee.wav", false, false);
+	SOUNDMANAGER->addSound("루비떨어짐", "sound/MC_Rupee_Bounce.wav", false, false);
+	SOUNDMANAGER->addSound("체력아이템", "sound/MC_Heart_Bounce.wav", false, false);
+	SOUNDMANAGER->addSound("열쇠아이템", "sound/MC_Key_Appear.wav", false, false);
+
+	//대화관련사운드
+	SOUNDMANAGER->addSound("대화창켤때", "sound/MC_Text_Open.wav", false, false);
+	SOUNDMANAGER->addSound("대화창끌때", "sound/MC_Text_Close.wav", false, false);
+	SOUNDMANAGER->addSound("경비병", "sound/MC_CastleGuard_Hey.wav", false, false);
+
+	//던전관련사운드
+	SOUNDMANAGER->addSound("던전음악", "sound/MC_Inside_a_Cave.mp3", true, true);
+	SOUNDMANAGER->addSound("문열림", "sound/MC_Door2.wav", false, false);
+	SOUNDMANAGER->addSound("문닫힘", "sound/MC_Door_Close.wav", false, false);
+	SOUNDMANAGER->addSound("상자나타남", "sound/MC_Chest_Appear.wav", false, false);
+	SOUNDMANAGER->addSound("상자열림", "sound/MC_Chest_Open.wav", false, false);
+	SOUNDMANAGER->addSound("던전입구열림", "sound/MC_DungeonDoor.wav", false, false);
+	SOUNDMANAGER->addSound("상자아이템얻음", "sound/MC_Fanfare_Item.wav", false, false);
+	SOUNDMANAGER->addSound("불켜짐", "sound/MC_FlameLantern_On.wav", false, false);
+	SOUNDMANAGER->addSound("불꺼짐", "sound/MC_FlameLantern_Off.wav", false, false);
+
+	//에너미관련사운드
+	SOUNDMANAGER->addSound("에너미피격", "sound/MC_Enemy_Hit.wav", false, false);
+	SOUNDMANAGER->addSound("에너미점프", "sound/MC_Enemy_Jump.wav", false, false);
+	SOUNDMANAGER->addSound("에너미죽음", "sound/MC_Enemy_Kill.wav", false, false);
 }

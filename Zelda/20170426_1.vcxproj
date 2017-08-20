@@ -127,6 +127,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="up_grade_complete.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="octo.h" />
     <ClInclude Include="zeldaMap.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="up_grade_complete.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="octo.cpp" />
     <ClCompile Include="winMain.cpp" />
