@@ -2837,14 +2837,11 @@ void player::drawHpImage()
 	{
 		_hp[i].hpImg[_hp[i].hpKind]->render(getMemDC(), 50 + i * 78, 20);
 	}
-	controlHeart();
+	//controlHeart();
 }
 
 void player::controlHeart()
 {
-
-	if (KEYMANAGER->isStayKeyDown('P'))
-	{
 		if (_hp[_curHeart].hpKind >= 4)
 		{
 			if (_curHeart < 4)
@@ -2856,7 +2853,6 @@ void player::controlHeart()
 		{
 			_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind + 1);
 		}
-	}
 }
 
 void player::decreaseHeart()

@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "inven_all.h"
 
 #define HEART_COUNT 5
 
@@ -150,12 +151,9 @@ private:
 	bool _tumble;
 	bool _isStore;
 	bool _isCollision;
-	
 	bool _isPush;
-
 	bool _isPlayerInTileMap;
 	bool _moveTile;
-
 	bool _hurt;
 
 	int _keyCount;

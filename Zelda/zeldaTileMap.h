@@ -62,6 +62,7 @@ protected:
 	int _mapHeight;
 	int emIdx;
 	int testIdx;
+	int _rndItem;
 
 protected:
 	tagTile _tiles[TILEX * TILEY];
