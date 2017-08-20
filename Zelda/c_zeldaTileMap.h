@@ -22,6 +22,15 @@ public:
 class zeldaTileMap2 : public zeldaTileMap
 {
 private:
+	tagTileRect _fireTile[4];
+	tagTileRect _buttonTile[4];
+
+	int _alphaValue;
+	int _count;
+
+	int _frameCount;
+	int _currentFrameX[4];
+
 public:
 	zeldaTileMap2() {}
 	virtual ~zeldaTileMap2() {}

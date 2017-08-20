@@ -182,6 +182,36 @@ HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSav
 	_door[DOWN].cameraX = 165;
 	_door[DOWN].cameraY = 0;
 
+	int j = 0;
+	int k = 0;
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj2 == OBJ_FIRE2)
+		{
+			_fireTile[j].image = IMAGEMANAGER->findImage("TILE_FIRE");
+			_fireTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
+
+			j++;
+		}
+		else if (_tiles[i].obj2 == OBJ_BUTTON1_UP)
+		{
+			_buttonTile[k].image = IMAGEMANAGER->findImage("TILE_BUTTON_DOWN");
+			_buttonTile[k].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
+
+			k++;
+		}
+	}
+
+	_frameCount = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		_currentFrameX[i] = 0;
+	}
+
+	_alphaValue = 200;
+	_count = 0;
+
 	return S_OK;
 }
 
@@ -202,13 +232,74 @@ void zeldaTileMap2::update()
 	_emZorder->update();
 	_em->update();
 
+	int j = 0;
+	int k = 0;
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj2 == OBJ_FIRE2)
+		{
+			_fireTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
+
+			j++;
+		}
+		else if (_tiles[i].obj2 == OBJ_BUTTON1_UP)
+		{
+			_buttonTile[k].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
+
+			k++;
+		}
+	}
+
+	RECT temp;
+
+	_count = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (IntersectRect(&temp, &_buttonTile[i].rc, &_player->getRect()))
+		{
+			_buttonTile[i].isOn = true;
+		}
+
+		if (_buttonTile[i].isOn)
+		{
+			_count++;
+
+			if (_count >= 4) _count = 4;
+		}
+	}
+
+
+	_frameCount++;
+	if (_frameCount % 10 == 0)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (_currentFrameX[i] >= _fireTile[i].image->getMaxFrameX()) _currentFrameX[i] = 0;
+			else _currentFrameX[i]++;
+
+			_frameCount = 0;
+		}
+	}
 }
 
 void zeldaTileMap2::render()
 {
 	zeldaTileMap::render();
 
+	for (int i = 0; i < 4; i++)
+	{
+		if (_buttonTile[i].isOn)
+		{
+			_buttonTile[i].image->render(getMemDC(), _buttonTile[i].rc.left, _buttonTile[i].rc.top);
+			_fireTile[i].image->frameRender(getMemDC(), _fireTile[i].rc.left, _fireTile[i].rc.top, _currentFrameX[i], _fireTile[i].image->getFrameY());
+		}
+	}
+
 	_emZorder->render();
+
+	IMAGEMANAGER->findImage("BLACK")->alphaRender(getMemDC(), 0, 0, _alphaValue - (_count * 50));
 }
 
 // ----------------------------------------------------------------------------------------------------

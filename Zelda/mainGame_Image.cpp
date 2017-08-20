@@ -210,24 +210,25 @@ void mainGame::addMapImage()
 
 	//오브젝트 이미지
 	IMAGEMANAGER->addImage("TILE_ROCK", "image/map/TILE_ROCK.bmp", 80, 80, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("OBJECT_BIG_CHEST", "image/map/OBJECT_BIG_CHEST.bmp", 640, 190, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_FIRE", "image/map/TILE_FIRE.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("TILE_BUTTON_DOWN", "image/map/TILE_BUTTON_DOWN.bmp", 80, 80, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("OBJECT_BIG_CHEST", "image/map/OBJECT_BIG_CHEST.bmp", 640, 190, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_FIRE", "image/map/TILE_FIRE.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
 
 	//물 프레임
-	IMAGEMANAGER->addFrameImage("TILE_WATER_B", "image/map/TILE_WATER_B.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_LB", "image/map/TILE_WATER_EDGE_LB.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_LT", "image/map/TILE_WATER_EDGE_LT.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_RB", "image/map/TILE_WATER_EDGE_RB.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_RT", "image/map/TILE_WATER_EDGE_RT.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_L", "image/map/TILE_WATER_L.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_LB", "image/map/TILE_WATER_LB.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_LT", "image/map/TILE_WATER_LT.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_R", "image/map/TILE_WATER_R.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_RB", "image/map/TILE_WATER_RB.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_RT", "image/map/TILE_WATER_RT.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_T", "image/map/TILE_WATER_T.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_L", "image/map/TILE_WATER_WAVE_L.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_R", "image/map/TILE_WATER_WAVE_R.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_B", "image/map/TILE_WATER_B.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_LB", "image/map/TILE_WATER_EDGE_LB.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_LT", "image/map/TILE_WATER_EDGE_LT.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_RB", "image/map/TILE_WATER_EDGE_RB.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_EDGE_RT", "image/map/TILE_WATER_EDGE_RT.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_L", "image/map/TILE_WATER_L.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_LB", "image/map/TILE_WATER_LB.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_LT", "image/map/TILE_WATER_LT.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_R", "image/map/TILE_WATER_R.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_RB", "image/map/TILE_WATER_RB.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_RT", "image/map/TILE_WATER_RT.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_T", "image/map/TILE_WATER_T.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_L", "image/map/TILE_WATER_WAVE_L.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_R", "image/map/TILE_WATER_WAVE_R.bmp", 320, 80, 4, 1, true, RGB(255, 0, 255));
 }
 
 void mainGame::addSound()
