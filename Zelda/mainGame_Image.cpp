@@ -211,4 +211,54 @@ void mainGame::addMapImage()
 void mainGame::addSound()
 {
 	SOUNDMANAGER->addSound("메인메뉴음악", "sound/메인메뉴.mp3", true, true);
+
+	//메뉴관련사운드
+	SOUNDMANAGER->addSound("메뉴커서", "sound/MC_Menu_Cursor.wav", false, false);
+	SOUNDMANAGER->addSound("메뉴커서", "sound/MC_Menu_Cursor.wav", false, false);
+	SOUNDMANAGER->addSound("메뉴지우기", "sound/MC_Menu_Erase.wav", false, false);
+	SOUNDMANAGER->addSound("메뉴선택", "sound/MC_Menu_Select.wav", false, false);
+
+	//젤다관련사운드
+	SOUNDMANAGER->addSound("젤다검회전소리", "sound/MC_Link_Sword_Spin.wav", false, false);
+	SOUNDMANAGER->addSound("젤다약회전베기기합", "sound/MC_Link_Sword_Spin1.wav", false, false);
+	SOUNDMANAGER->addSound("젤다강회전베기기합", "sound/MC_Link_Sword_Spin2.wav", false, false);
+	SOUNDMANAGER->addSound("젤다검기본소리", "sound/MC_Link_Sword.wav", false, false);
+	SOUNDMANAGER->addSound("젤다기본베기기합", "sound/MC_Link_Sword1.wav", false, false);
+	SOUNDMANAGER->addSound("젤다방패반사", "sound/MC_Link_Shield_Deflect.wav", false, false);
+	SOUNDMANAGER->addSound("젤다방패들기", "sound/MC_Link_Shield.wav", false, false);
+	SOUNDMANAGER->addSound("젤다걷기", "sound/MC_Link_Run.wav", false, true);
+	SOUNDMANAGER->addSound("젤다구르기", "sound/MC_Link_Roll.wav", false, false);
+	SOUNDMANAGER->addSound("젤다밀기", "sound/MC_Link_Push.wav", false, false);
+	SOUNDMANAGER->addSound("젤다다침", "sound/MC_Link_Hurt.wav", false, false);
+	SOUNDMANAGER->addSound("젤다잡기", "sound/MC_Link_Grab.wav", false, false);
+	SOUNDMANAGER->addSound("젤다체력낮음", "sound/MC_LowHealth.wav", false, true);
+	SOUNDMANAGER->addSound("젤다죽음", "sound/MC_Link_Die_Tune.wav", false, false);
+	SOUNDMANAGER->addSound("젤다칼로벽칠때", "sound/MC_Sword_TapBombWall.wav", false, false);
+	SOUNDMANAGER->addSound("젤다체력업", "sound/MC_Heart.wav", false, false);
+
+	//아이템관련사운드
+	SOUNDMANAGER->addSound("루비습득", "sound/MC_Rupee.wav", false, false);
+	SOUNDMANAGER->addSound("루비떨어짐", "sound/MC_Rupee_Bounce.wav", false, false);
+	SOUNDMANAGER->addSound("체력아이템", "sound/MC_Heart_Bounce.wav", false, false);
+	SOUNDMANAGER->addSound("열쇠아이템", "sound/MC_Key_Appear.wav", false, false);
+
+	//대화관련사운드
+	SOUNDMANAGER->addSound("대화창켤때", "sound/MC_Text_Open.wav", false, false);
+	SOUNDMANAGER->addSound("대화창끌때", "sound/MC_Text_Close.wav", false, false);
+	SOUNDMANAGER->addSound("경비병", "sound/MC_CastleGuard_Hey.wav", false, false);
+
+	//던전관련사운드
+	SOUNDMANAGER->addSound("문열림", "sound/MC_Door2.wav", false, false);
+	SOUNDMANAGER->addSound("문닫힘", "sound/MC_Door_Close.wav", false, false);
+	SOUNDMANAGER->addSound("상자나타남", "sound/MC_Chest_Appear.wav", false, false);
+	SOUNDMANAGER->addSound("상자열림", "sound/MC_Chest_Open.wav", false, false);
+	SOUNDMANAGER->addSound("던전입구열림", "sound/MC_DungeonDoor.wav", false, false);
+	SOUNDMANAGER->addSound("상자아이템얻음", "sound/MC_Fanfare_Item.wav", false, false);
+	SOUNDMANAGER->addSound("불켜짐", "sound/MC_FlameLantern_On.wav", false, false);
+	SOUNDMANAGER->addSound("불꺼짐", "sound/MC_FlameLantern_Off.wav", false, false);
+
+	//에너미관련사운드
+	SOUNDMANAGER->addSound("에너미피격", "sound/MC_Enemy_Hit.wav", false, false);
+	SOUNDMANAGER->addSound("에너미점프", "sound/MC_Enemy_Jump.wav", false, false);
+	SOUNDMANAGER->addSound("에너미죽음", "sound/MC_Enemy_Kill.wav", false, false);
 }
