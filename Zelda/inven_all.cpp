@@ -14,7 +14,7 @@ inven_all::~inven_all()
 
 HRESULT inven_all::init()
 {
-	P_money = 10000;
+	P_money = 2000;
 
 	loadNumberImg();
 
