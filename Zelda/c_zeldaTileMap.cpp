@@ -28,15 +28,24 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 		}
 	}
 
+<<<<<<< HEAD
 	//_em->setSlime();
 	//_em->setSnail();
 
+=======
+>>>>>>> 0951c71cf4cc97166a9c6fc747f8f810fac8476f
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
-	_em->setOcto(2);
+	//_em->setOcto(2);
+	//_em->setSlime();
+	//_em->setSnail();
 
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0951c71cf4cc97166a9c6fc747f8f810fac8476f
 
 	return S_OK;
 }
@@ -113,8 +122,16 @@ void zeldaTileMap1::render()
 		_rockTile[i].image->render(getMemDC(), _rockTile[i].rc.left, _rockTile[i].rc.top);
 	}
 
+<<<<<<< HEAD
 	//_em->render();
 	_emZorder->render();
+=======
+
+	//_em->render();
+
+	_emZorder->render();
+
+>>>>>>> 0951c71cf4cc97166a9c6fc747f8f810fac8476f
 }
 
 // ----------------------------------------------------------------------------------------------------
