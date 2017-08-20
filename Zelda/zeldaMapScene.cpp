@@ -95,6 +95,9 @@ void zeldaMapScene::update()
 			RECT rctemp;
 			if (IntersectRect(&rctemp, &_im->get_vt()[i]->get_rc(), &_link->getRect()))
 			{
+				if (!SOUNDMANAGER->isPlaySound("·çºñ½Àµæ"))
+					SOUNDMANAGER->play("·çºñ½Àµæ", 0.5f);
+
 				if (_im->get_vt()[i]->get_item_num() == 9)
 				{
 					_link->controlHeart();
