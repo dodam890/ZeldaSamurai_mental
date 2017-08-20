@@ -82,10 +82,26 @@ void zeldaMapScene::update()
 {
 	returnToMainMenu();
 
-	changeTileScene();
+
+	_inven->get_iim()->set_is_town(_isTileMap);
+
+	_im->set_camera(_camera);
+
+	if (_curMap == STORE)
+	{
+		_inven->get_iim()->set_P_x(3200.0F);
+		_inven->get_iim()->set_P_y(1700.0F);
+	}
+	else
+	{
+		_inven->get_iim()->set_P_x(_link->getDisX());
+		_inven->get_iim()->set_P_y(_link->getDisY());
+	}
 
 	if (_isTileMap)
 	{
+		changeTileScene();
+
 		_zeldaTileMap[_tileMapKind]->update();
 		_link->update(_zeldaTileMap[_tileMapKind]);
 
@@ -105,10 +121,12 @@ void zeldaMapScene::update()
 		{
 			_inven->update();
 		}
+
+		changeTileScene();
 	}
 	else
 	{
-		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false)
+		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false && _is_inven == false)
 		{
 			_link->update(NULL);
 		}
@@ -154,6 +172,7 @@ void zeldaMapScene::update()
 
 				//_sceneEffect->init();
 				_link->setMove(true);
+				_tileMapKind = TILEMAP_ONE;
 			}
 		}
 	
@@ -459,7 +478,40 @@ void zeldaMapScene::changeTileScene()
 			RECT temp;
 			if (IntersectRect(&temp, &_zeldaTileMap[_tileMapKind]->getDoorRect(i).rc, &_link->getRect()))
 			{
-				setTileScene(i);
+				_link->setMove(false);
+				_sceneEffect->setFadeOUT(true);
+
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					setTileScene(i);
+
+					if (i == DOWN)
+					{
+						_isTileMap = false;
+						_link->setIsInTileMap(false);
+
+						break;
+					}
+				}
+			}
+		}
+	}
+	else if (_tileMapKind == TILEMAP_TWO)
+	{
+		for (int i = 0; i < DOOR_POS_END; i++)
+		{
+			RECT temp;
+			if (IntersectRect(&temp, &_zeldaTileMap[_tileMapKind]->getDoorRect(i).rc, &_link->getRect()))
+			{
+				_link->setMove(false);
+				_sceneEffect->setFadeOUT(true);
+
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					setTileScene(i);
+				}
 			}
 		}
 	}
@@ -481,7 +533,8 @@ void zeldaMapScene::setTileScene(int num)
 
 	_tileMapKind = _zeldaTileMap[_tileMapKind]->getDoorRect(num).nextMap;
 
-	_sceneEffect->init();
+	_link->setIsInTileMap(true);
+
 	_link->setMove(true);
 }
 

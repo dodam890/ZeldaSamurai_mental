@@ -116,6 +116,9 @@ void mainGame::addItemImage()
 	//map
 
 	IMAGEMANAGER->addImage("town_map", "image/image_pbs/map/town.bmp", 528, 360, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("zelda_map_icon", "image/image_pbs/map/zelda_face.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("ring", "image/image_pbs/items/ring.bmp", 64, 52, true, RGB(255, 0, 255));
 
 }
 

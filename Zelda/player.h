@@ -1,6 +1,9 @@
 #pragma once
 #include "gameNode.h"
 
+#define HEART_COUNT 5
+
+class enemy;
 class camera;
 class zeldaTileMap;
 
@@ -67,7 +70,6 @@ public:
 		RECT _rc;
 
 	};
-
 	enum RECT_ATTRIBUTE
 	{
 		RC_ATR_ATT,
@@ -80,6 +82,22 @@ public:
 	{
 		RECT _crushRc;
 		float _damage;
+	};
+public:
+	enum LINK_HP_KIND
+	{
+		LINK_HP_EMPTY,
+		LINK_HP_ONE_FOURTH,
+		LINK_HP_TWO_FOURTH,
+		LINK_HP_THREE_FOURTH,
+		LINK_HP_MAX,
+		LINK_HP_END = 5
+	};
+
+	struct LINK_HP
+	{
+		image* hpImg[LINK_HP_END];
+		LINK_HP_KIND hpKind;
 	};
 
 private:
@@ -94,10 +112,16 @@ private:
 	LINK_MOTION L_Motion;
 	LINK_CRUSH_RECT _linkCrushRc;
 
+	LINK_HP_KIND Hp_Kind;
+
+	LINK_HP _hp[HEART_COUNT];
+	int _curHeart;
+
 	RECT _playerRc;
 	RECT _rcCrush;
 
 	camera* _cam;
+	enemy* _enemy;
 
 	int tileIndex[2];
 
@@ -116,6 +140,7 @@ private:
 	int _linkIdxY;
 
 	int _count;
+	int _hurtCount;
 	int _currentFrameX, _currentFrameY;
 	int _probeX, _probeY;
 	int _rcCrushCenX;
@@ -130,6 +155,8 @@ private:
 
 	bool _isPlayerInTileMap;
 	bool _moveTile;
+
+	bool _hurt;
 
 	int _keyCount;
 
@@ -156,7 +183,9 @@ public:
 	void dectectionTileMap();
 
 	RECT getRect() { return _playerRc; }
+	RECT getCrushRect() { return _rcCrush; }
 	LINK_MOTION getMotion() { return L_Motion; }
+	RECT_ATTRIBUTE getAtr() { return _rcAtr; }
 
 	void setDisX(float disX) { _disX = disX; }
 	void setDisY(float disY) { _disY = disY; }
@@ -167,6 +196,7 @@ public:
 	int getIndexY() { return _linkIdxY; }
 	int getIndex() { return _linkIdx; }
 
+	int getCenterX() { return (_playerRc.left + _playerRc.right) / 2; }
 	int getCenterY() { return (_playerRc.bottom + _playerRc.top) / 2; }
 
 	void setIsCollision(bool collision, RECT npcRc);
@@ -181,6 +211,13 @@ public:
 	void setIsInTileMap(bool bInTile) { _isPlayerInTileMap = bInTile; }
 
 	int getKeyCount() { return _keyCount; }
+
+	
+	void setHpImage();
+	void drawHpImage();
+	void controlHeart();
+
+	void decreaseHeart();
 
 	player();
 	~player();

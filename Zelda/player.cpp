@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "zeldaTileMap.h"
 #include "c_zeldaTileMap.h"
+#include "enemy.h"
 
 player::player() {}
 player::~player() {}
@@ -12,39 +13,40 @@ HRESULT player::init(camera* camera)
 	loadImage();
 	L_Motion = LINK_MOTION_DOWN;
 
-	_currentFrameX = _currentFrameY = 0;
-	_count = 0;
-
 	_cam = camera;
 	_angle = PI;
 	_moveSpeed = 5;
 	_move = true;
 	_isStore = false;
 	_isPush = false;
+	_isPlayerInTileMap = false;
 
 	_damage = 0;
 	_frameX = 0;
-
-	_rcCrushCenX = _X + 210;
-	_rcCrushCenY = _Y + 125;
-
+	_keyCount = 0;
+	_isCollision = 0;
+	_linkIdx = _linkIdxX = _linkIdxY = 0;
+	_currentFrameX = _currentFrameY = 0;
+	_count = _hurtCount = 0;
 	_probeX = _probeY = 0;
 
+	_rcCrushCenX = -100000;
+	_rcCrushCenY = -100000;
+	_rcCrush = RectMakeCenter(_rcCrushCenX, _rcCrushCenY, 1, 1);
+	
 	_disX = WINSIZEX / 2 - 135;
 	_disY = WINSIZEY / 2 + 100;
 
 	_X = _cam->getStartX() + _disX;
 	_Y = _cam->getStartY() + _disY;
-
-	_linkIdx = _linkIdxX =_linkIdxY = 0;
-
+	
 	_playerRc = RectMake(_X + 102, _Y + 100, 66, 70);
 
-	_isCollision = 0;
+	_curHeart = HEART_COUNT - 1;
 
-	_isPlayerInTileMap = false;
+	_hurt = false;
 
-	_keyCount = 0;
+	setHpImage();
 
 	//음악카운트
 	_soundCount = 0;
@@ -66,6 +68,16 @@ void player::update(zeldaTileMap* tileMap)
 
 	}
 
+	if (_hurt)
+	{
+		_hurtCount++;
+		if (_hurtCount % 50 == 0)
+		{
+			_hurt = false;
+			_hurtCount = 0;
+		}
+	}
+
 	if (_move)
 	{
 		motionChange();
@@ -83,6 +95,8 @@ void player::update(zeldaTileMap* tileMap)
 void player::render(void)
 {
 	draw();
+	drawHpImage();
+	//_hp[2].hpImg[LINK_HP_MAX]->render(getMemDC(), 500, 500);
 }
 
 void player::draw(void)
@@ -2799,5 +2813,62 @@ void player::setIsCollision(bool collision, RECT npcRc)
 		{
 			_disY += npcRc.bottom - _playerRc.top;
 		}
+	}
+}
+
+void player::setHpImage()
+{
+	for (int i = 0; i < HEART_COUNT; i++)
+	{
+		_hp[i].hpImg[LINK_HP_EMPTY] = IMAGEMANAGER->addImage("하트-빈것(78.72)", "image/Link/하트-빈것(78.72).bmp", 78, 72, TRUE, RGB(255, 0, 255));
+		_hp[i].hpImg[LINK_HP_ONE_FOURTH] = IMAGEMANAGER->addImage("하트-사분의일(78.72)", "image/Link/하트-사분의일(78.72).bmp", 78, 72, TRUE, RGB(255, 0, 255));
+		_hp[i].hpImg[LINK_HP_TWO_FOURTH] = IMAGEMANAGER->addImage("하트-사분의이(78.72)", "image/Link/하트-사분의이(78.72).bmp", 78, 72, TRUE, RGB(255, 0, 255));
+		_hp[i].hpImg[LINK_HP_THREE_FOURTH] = IMAGEMANAGER->addImage("하트-사분의삼(78.72)", "image/Link/하트-사분의삼(78.72).bmp", 78, 72, TRUE, RGB(255, 0, 255));
+		_hp[i].hpImg[LINK_HP_MAX] = IMAGEMANAGER->addImage("하트-풀(78.72)", "image/Link/하트-풀(78.72).bmp", 78, 72, TRUE, RGB(255, 0, 255));
+		_hp[i].hpKind = LINK_HP_MAX;
+	}
+}
+
+void player::drawHpImage()
+{
+
+	for (int i = 0; i <= _curHeart; i++)
+	{
+		_hp[i].hpImg[_hp[i].hpKind]->render(getMemDC(), 50 + i * 78, 20);
+	}
+	controlHeart();
+}
+
+void player::controlHeart()
+{
+
+	if (KEYMANAGER->isStayKeyDown('P'))
+	{
+		if (_hp[_curHeart].hpKind >= 4)
+		{
+			if (_curHeart < 4)
+			{
+				_curHeart++;
+			}
+		}
+		else
+		{
+			_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind + 1);
+		}
+	}
+}
+
+void player::decreaseHeart()
+{
+	if (_hurt) return;
+	_hurt = true;
+
+	if (_hp[_curHeart].hpKind <= 0)
+	{
+		_curHeart--;
+	}
+	else
+	{
+		_hp[_curHeart].hpKind = (LINK_HP_KIND)(_hp[_curHeart].hpKind - 1);
 	}
 }

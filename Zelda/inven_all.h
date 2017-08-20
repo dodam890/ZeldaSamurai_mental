@@ -112,6 +112,7 @@ public:
 	vector<item_class*>::iterator get_vii() { return _vii; }
 
 	inven_item* get_iit() { return _iit; }
+	inven_map* get_iim() { return _im; }
 
 	void M_key_vol(int M) { key_vol -= M; }
 	void P_key_vol(int P) { key_vol += P; }

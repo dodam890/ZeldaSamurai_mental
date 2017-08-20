@@ -1,6 +1,5 @@
 #pragma once
 #include "gameNode.h"
-#include "camera.h"
 
 enum item_where
 {
@@ -30,9 +29,6 @@ struct item_option
 class item_class : public gameNode
 {
 private:
-
-	camera* _ca;
-
 	item_option _item_option;
 	item_where _item_where;
 	item_type _itemtype;
@@ -89,8 +85,8 @@ public:
 	void set_volume(int vo) { _volume = vo; }
 	void set_item_option(item_option io) { _item_option = io; }
 
-	void set_camera(camera* ca) { _ca = ca; }
-
+	void set_cameraX(float carx) { carmeraX = carx; }
+	void set_cameraY(float cary) { carmeraY = cary; }
 
 	item_class();
 	~item_class();

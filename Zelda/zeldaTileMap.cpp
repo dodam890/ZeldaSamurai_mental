@@ -8,7 +8,6 @@ zeldaTileMap::zeldaTileMap() :
 {
 }
 
-
 zeldaTileMap::~zeldaTileMap()
 {
 }
@@ -25,14 +24,6 @@ HRESULT zeldaTileMap::init(player* player, camera* camera, const CHAR* pSaveMapF
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_2", "image/sample_obj_80_2.bmp", 0, 0, 1200, 880, SAMPLETILEX3, SAMPLETILEY3, true, RGB(255, 0, 255));
 
 	loadMap(pSaveMapFileName);
-
-	//_em = new enemyManager;
-	//_em->init(_player, _camera, this);
-	//_em->setOcto();
-
-	//_emZorder = new emZorder;
-	//_emZorder->init(_em, _player);
-
 	return S_OK;
 }
 
@@ -44,9 +35,9 @@ void zeldaTileMap::update()
 {
 	cameraSetTile();
 	_camera->update(_mapWidth, _mapHeight);
-
-	//_emZorder->update();
-
+	//플레이어 vs 에너미
+	playerToEnemyCollision();
+	enemyToPlayerCollision();
 	//controlCamera();
 }
 
@@ -292,7 +283,13 @@ void zeldaTileMap::render()
 	}
 
 	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
+	Rectangle(getMemDC(), _door[DOWN].rc.left, _door[DOWN].rc.top, _door[DOWN].rc.right, _door[DOWN].rc.bottom);
 
+	char str[128] = "";
+	sprintf(str, "%d", testIdx);
+	TextOut(getMemDC(), 10, 200, str, strlen(str));
+
+	//에너미 플레이어 에이스타 맵 확인용
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
@@ -376,5 +373,110 @@ void zeldaTileMap::cameraSetTile()
 		_tiles[i].posCenter.y = _camera->getStartY() + _tiles[i].disY;
 		_tiles[i].rc = RectMakeCenter(_tiles[i].posCenter.x, _tiles[i].posCenter.y, TILESIZE, TILESIZE);
 
+	}
+}
+
+void zeldaTileMap::playerToEnemyCollision()
+{
+	RECT rcTmp = {};
+	RECT rcCrush = _player->getCrushRect();
+	RECT rcPlayer = _player->getRect();
+
+	player::RECT_ATTRIBUTE atr = _player->getAtr();
+
+	vector<enemy*>& em = _em->getVEnemy();
+
+	for (int i = 0; i < em.size(); i++)
+	{
+		RECT rcEm = em[i]->getEnemyRc();
+		if (IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		{
+			if (atr == player::RC_ATR_ATT)
+			{
+				em.erase(em.begin() + i);
+				break;
+			}
+			else if (atr == player::RC_ATR_ABSORB)
+			{
+				em[i]->setAbs(true);
+				em[i]->setNormal(false);
+				em[i]->setPull(false);
+
+				if (IntersectRect(&rcTmp, &rcPlayer, &rcEm))
+				{
+					em.erase(em.begin() + i);
+				}
+
+				break;
+			}
+		}
+
+		else
+		{
+			if (atr == player::RC_ATR_ABSORB)
+			{
+				em[i]->setAbs(false);
+				em[i]->setNormal(true);
+				em[i]->setPull(false);
+				break;
+			}
+		}
+	}
+}
+
+void zeldaTileMap::enemyToPlayerCollision()
+{
+	RECT rcTmp = {};
+	RECT rcCrush = _player->getCrushRect();
+	RECT rcPlayer = _player->getRect();
+
+	player::RECT_ATTRIBUTE atr = _player->getAtr();
+
+	vector<enemy*>& em = _em->getVEnemy();
+
+	for (int i = 0; i < em.size(); i++)
+	{
+		RECT rcEm = em[i]->getEnemyRc();
+
+		if (IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		{
+			if (atr == player::RC_ATR_DEF)
+			{
+				emIdx = em[i]->getTotalIndex();
+				if (_attribute[E_ATR_MOVE][emIdx] == FALSE)
+				{
+					em.erase(em.begin() + i);
+					break;
+				}
+				else
+				{
+					em[i]->setAbs(false);
+					em[i]->setNormal(false);
+					em[i]->setPull(true);
+				}
+			}
+		}
+		else
+		{
+			em[i]->setAbs(false);
+			em[i]->setNormal(true);
+			em[i]->setPull(false);
+		}
+
+		if (IntersectRect(&rcTmp, &rcPlayer, &rcEm) && !IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		{
+			_player->decreaseHeart();
+		}
+
+		//if (IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		//{
+		//	//막아서 피가 안단다
+
+	
+		//	if (atr == player::RC_ATR_GRAB)
+		//	{
+
+		//	}*/
+		//}
 	}
 }
