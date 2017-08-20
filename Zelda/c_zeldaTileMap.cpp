@@ -28,10 +28,9 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 		}
 	}
 
-<<<<<<< HEAD
-	_em->setSlime();
+	//_em->setSlime();
 	//_em->setSnail();
-=======
+
 
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
