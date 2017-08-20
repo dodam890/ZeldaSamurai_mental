@@ -31,7 +31,7 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 			k++;
 		}
 	}
-	_em->setSlime();
+	//_em->setSlime();
 	//_em->setSnail();
 
 	return S_OK;
