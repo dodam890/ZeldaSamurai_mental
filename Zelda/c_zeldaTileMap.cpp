@@ -11,6 +11,7 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
 	//_em->setOcto();
+<<<<<<< HEAD
 
 	int j = 0;
 	int k = 0;
@@ -31,6 +32,10 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 			k++;
 		}
 	}
+=======
+	_em->setSlime();
+	//_em->setSnail();
+>>>>>>> e0bb9d50a689ba191f5568d981c7361ebd93f48a
 
 	return S_OK;
 }

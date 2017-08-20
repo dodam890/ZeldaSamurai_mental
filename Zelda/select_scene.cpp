@@ -16,6 +16,11 @@ HRESULT select_scene::init()
 	count = 0;
 	carrentX = 0;
 
+	_rcSelect[E_SELECT_MAPTOOL].rc = RectMakeCenter(WINSIZEX / 2 - 200, WINSIZEY / 2, 300, 300);
+	_rcSelect[E_SELECT_MAPTOOL].strSceneKey = "mapToolScene";
+
+	_rcSelect[E_SELECT_GAMESTART].rc = RectMakeCenter(WINSIZEX / 2 + 200, WINSIZEY / 2, 300, 300);
+	_rcSelect[E_SELECT_GAMESTART].strSceneKey = "zeldaMapScene";
 	return S_OK;
 }
 
@@ -32,10 +37,26 @@ void select_scene::update()
 		if (carrentX > IMAGEMANAGER->findImage("선택창뒷배경")->getMaxFrameX()) carrentX = 0;
 		count = 0;
 	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		for (int i = 0; i < E_SELECT_END; i++)
+		{
+			if (PtInRect(&_rcSelect[i].rc, _ptMouse))
+			{
+				SCENEMANAGER->changeScene(_rcSelect[i].strSceneKey);
+			}
+		}
+	}
 }
 
 void select_scene::render()
 {
 	IMAGEMANAGER->findImage("선택창뒷배경")->frameRender(getMemDC(), 0, 0, carrentX, 0);
 	IMAGEMANAGER->findImage("타이틀")->render(getMemDC(), 10, 0);
+
+	for (int i = 0; i < E_SELECT_END; i++)
+	{
+		Rectangle(getMemDC(), _rcSelect[i].rc.left, _rcSelect[i].rc.top, _rcSelect[i].rc.right, _rcSelect[i].rc.bottom);
+	}
 }

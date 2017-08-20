@@ -58,7 +58,7 @@ void enemyManager::setSlime()
 	enemy* enemySlime;
 
 	enemySlime = new slime;
-	enemySlime->init(_player, _camera, _map, 1, 1);
+	enemySlime->init(_player, _camera, _map, 8, 7);
 	_vEm.push_back(enemySlime);
 }
 
@@ -66,6 +66,6 @@ void enemyManager::setSnail()
 {
 	enemy* enemySnail;
 	enemySnail = new snail;
-	enemySnail->init(_player, _camera, _map, 1, 1);
+	enemySnail->init(_player, _camera, _map, 8, 7);
 	_vEm.push_back(enemySnail);
 }

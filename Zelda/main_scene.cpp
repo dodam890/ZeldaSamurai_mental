@@ -93,7 +93,7 @@ void main_scene::update()
 	{
 		if (change_alpha >= 255)
 		{
-			SCENEMANAGER->changeScene("캐릭터선택씬");
+			SCENEMANAGER->changeScene("select_scene");
 		}
 		else
 		{

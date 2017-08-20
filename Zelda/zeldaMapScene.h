@@ -62,5 +62,6 @@ public:
 	void changeTileScene();
 
 	void setCurMap(MAP_KIND curMap) { _curMap = curMap; }
+	void returnToMainMenu();
 };
 

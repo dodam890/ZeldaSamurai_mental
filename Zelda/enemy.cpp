@@ -24,7 +24,11 @@ enemy::enemy() :
 	_rangeWidth(0),
 	_rangeHeight(0),
 	_direction(DIRECTION_DOWN),
-	_isFindPlayer(false)
+	_isFindPlayer(false),
+	_distanceMoveX(0.F),
+	_distanceMoveY(0.F),
+	_centerMoveX(0.F),
+	_centerMoveY(0.F)
 {
 }
 
@@ -52,21 +56,16 @@ HRESULT enemy::init(player* player, camera* camera, zeldaTileMap* map, int idxX,
 	this->addImage();
 
 	_distanceX = _aStar->getStartTile()->getDisX();
-	_moveDistanceX = _aStar->getStartTile()->getDisX();
-	_collisionDistanceX = _aStar->getStartTile()->getDisX();
-
 	_centerX = _camera->getStartX() + _distanceX;
-	_moveCenterX = _camera->getStartX() + _moveDistanceX;
-	_collisionCenterX = _camera->getStartX() + _collisionDistanceX;
-
 
 	_distanceY = _aStar->getStartTile()->getDisY();
-	_moveDistanceY = _aStar->getStartTile()->getDisY();
-	_collisionDistanceY = _aStar->getStartTile()->getDisY();
-
 	_centerY = _camera->getStartY() + _distanceY;
-	_moveCenterY = _camera->getStartY() + _moveDistanceY;
-	_collisionCenterY = _camera->getStartY() + _collisionDistanceY;
+
+	_distanceMoveX = _distanceX;
+	_distanceMoveY = _distanceY;
+
+	_centerMoveX = _centerX;
+	_centerMoveY = _centerY;
 
 	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth(), _imgInfo[_direction].image->getFrameHeight());
 
@@ -95,31 +94,24 @@ void enemy::update()
 		normalMove();
 	}
 
-	//RECT temp;
-	//if (IntersectRect(&temp, &_moveRc, &_player->getRect()))
-	//{
-	//	_isFindPlayer = false;
-	//}
+	RECT sour;
+	if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
+	{
+		_distanceMoveX = _distanceX;
+		_distanceMoveY = _distanceY;
+		_isFindPlayer = true;
+	}
+	else
+	{
 
-	//RECT sour;
-	//if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
-	//{
-	//	_isFindPlayer = true;
-	//}
-	//else
-	//{
-	//	_isFindPlayer = false;
-	//}
+		_isFindPlayer = false;
+	}
 
 	_centerX = _camera->getStartX() + _distanceX;
-	_moveCenterX = _camera->getStartX() + _moveDistanceX;
-	_collisionCenterX = _camera->getStartX() + _collisionDistanceX;
-
 	_centerY = _camera->getStartY() + _distanceY;
-	_moveCenterY = _camera->getStartY() + _moveDistanceY;
-	_collisionCenterY = _camera->getStartY() + _collisionDistanceY;
 
-	_rc = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 50, _imgInfo[_direction].image->getFrameHeight());
+	_centerMoveX = _camera->getStartX() + _distanceMoveX;
+	_centerMoveY = _camera->getStartY() + _distanceMoveY;
 
 	//_aStar->update();
 
@@ -175,21 +167,23 @@ void enemy::normalMove()
 	{
 	case enemy::DIRECTION_DOWN:
 		if (_rc.bottom < _moveRc.bottom)
-			_distanceY++;
+			_distanceY += 5;
 		break;
 	case enemy::DIRECTION_LEFT:
 		if (_rc.left > _moveRc.left)
-			_distanceX--;
+			_distanceX -= 5;
 		break;
 	case enemy::DIRECTION_RIGHT:
 		if (_rc.right < _moveRc.right)
-			_distanceX++;
+			_distanceX += 5;
 		break;
 	case enemy::DIRECTION_UP:
 		if (_rc.top > _moveRc.top)
-			_distanceY--;
+			_distanceY -= 5;
 		break;
 	}
+
+
 }
 
 void enemy::addFrame()
@@ -211,13 +205,9 @@ void enemy::draw()
 {
 	if (_aStar) _aStar->render();
 
-	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
-	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
-	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
-
-	if (!_imgInfo[_direction].image) return;
-
-	_imgInfo[_direction].image->frameRender(getMemDC(), _rc.left - 25, _rc.top, _imgInfo[_direction].currentFrameX, 0);
+	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
 	char str[128] = "";
 	sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
@@ -247,8 +237,8 @@ void enemy::aStarPathFind()
 			(_vPath[_currentTileIndex]->getRect().top == _rc.top) &&
 			(_vPath[_currentTileIndex]->getRect().bottom == _rc.bottom)))
 		{
-				_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), _player->getIndexX(), _player->getIndexY());
-				_currentTileIndex++;
+			_aStar->resetAstar(_map, _vPath[_currentTileIndex]->getIdxX(), _vPath[_currentTileIndex]->getIdxY(), _player->getIndexX(), _player->getIndexY());
+			_currentTileIndex++;
 		}
 		else this->aStarMove(_currentTileIndex);
 	}
@@ -259,7 +249,6 @@ void enemy::getMapAttribute()
 	BOOL* attribute = _map->getAttribute(E_ATR_MOVE);
 
 	rcCollision = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 52, _imgInfo[_direction].image->getFrameHeight() - 2);
-
 	
 	tileX = _distanceX / TILESIZE;
 	tileY = _distanceY / TILESIZE;
@@ -269,24 +258,32 @@ void enemy::getMapAttribute()
 	switch (_direction)
 	{
 	case enemy::DIRECTION_DOWN:
+
 		tileIndex[0] = tileTotalIdx + TILEX;
 		if (_rc.left > _map->getTiles()[tileIndex[0]].rc.left) tileIndex[1] = tileIndex[0] + 1;
 		else tileIndex[1] = tileIndex[0] - 1;
+
 		break;
 	case enemy::DIRECTION_LEFT:
+
 		tileIndex[0] = tileTotalIdx - 1;
 		if (_rc.bottom > _map->getTiles()[tileIndex[0]].rc.bottom) tileIndex[1] = tileIndex[0] + TILEX;
 		else tileIndex[1] = tileIndex[0] - TILEX;
+
 		break;
 	case enemy::DIRECTION_RIGHT:
+
 		tileIndex[0] = tileTotalIdx + 1;
 		if (_rc.bottom > _map->getTiles()[tileIndex[0]].rc.bottom) tileIndex[1] = tileIndex[0] + TILEX;
 		else tileIndex[1] = tileIndex[0] - TILEX;
+
 		break;
 	case enemy::DIRECTION_UP:
+
 		tileIndex[0] = tileTotalIdx - TILEX;
 		if (_rc.left > _map->getTiles()[tileIndex[0]].rc.left) tileIndex[1] = tileIndex[0] + 1;
 		else tileIndex[1] = tileIndex[0] - 1;
+
 		break;
 	}
 
@@ -299,26 +296,27 @@ void enemy::getMapAttribute()
 			switch (_direction)
 			{
 			case enemy::DIRECTION_DOWN:
-				_rc.bottom = _map->getTiles()[tileIndex[i]].rc.top;
-				_rc.top = _rc.bottom - _imgInfo[_direction].image->getFrameHeight();
+
+				_distanceY -= 5.F;
 
 				break;
 			case enemy::DIRECTION_LEFT:
-				_rc.left = _map->getTiles()[tileIndex[i]].rc.right;
-				_rc.right = _rc.left + (_imgInfo[_direction].image->getFrameWidth() - 50);
+
+				_distanceX += 5.F;
 
 				break;
 			case enemy::DIRECTION_RIGHT:
-				_rc.right = _map->getTiles()[tileIndex[i]].rc.left;
-				_rc.left = _rc.right - (_imgInfo[_direction].image->getFrameWidth() - 50);
+
+				_distanceX -= 5.F;
 
 				break;
 			case enemy::DIRECTION_UP:
-				_rc.top = _map->getTiles()[tileIndex[i]].rc.bottom;
-				_rc.bottom = _rc.top + _imgInfo[_direction].image->getFrameHeight();
+
+				_distanceY += 5.F;
 
 				break;
 			}
 		}
 	}
+
 }

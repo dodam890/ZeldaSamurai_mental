@@ -19,21 +19,9 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	SCENEMANAGER->addScene("main_scene", new main_scene);
 	SCENEMANAGER->addScene("select_scene", new select_scene);
-
 	SCENEMANAGER->addScene("zeldaMapScene", new zeldaMapScene);
 
-	//메인메뉴 클래스 생성할거고.
-	//메인메뉴에서 두가지의 씬 전환 할것임.
-	//일단 실험
-
-	//SCENEMANAGER->changeScene("mapToolScene");
-	//SCENEMANAGER->changeScene("zeldaMapScene");
-	//SCENEMANAGER->changeScene("main_scene");
-	//SCENEMANAGER->changeScene("select_scene");
-
-	//SCENEMANAGER->changeScene("main_scene");
-
-	SCENEMANAGER->changeScene("mapToolScene");
+	SCENEMANAGER->changeScene("main_scene");
 	return S_OK;
 }
 
@@ -47,9 +35,6 @@ void mainGame::update(void)
 {
 	gameNode::update();
 	SCENEMANAGER->update();
-
-	// 메뉴씬, 셀렉트씬, 게임씬, 멥툴씬 실험용
-	changeSceneByKeyInput();
 }
 
 void mainGame::render(void)
@@ -63,20 +48,3 @@ void mainGame::render(void)
 	//===============아래도 건들지마라 =================
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 }
-
-void mainGame::changeSceneByKeyInput()
-{
-	if (KEYMANAGER->isOnceKeyDown('Q'))
-	{
-		SCENEMANAGER->changeScene("mapToolScene");
-	}
-	if (KEYMANAGER->isOnceKeyDown('W'))
-	{
-		SCENEMANAGER->changeScene("zeldaMapScene");
-	}
-	if (KEYMANAGER->isOnceKeyDown('E'))
-	{
-		SCENEMANAGER->changeScene("select_scene");
-	}
-}
-

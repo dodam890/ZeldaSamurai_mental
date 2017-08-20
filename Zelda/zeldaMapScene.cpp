@@ -50,6 +50,8 @@ void zeldaMapScene::release()
 
 void zeldaMapScene::update()
 {
+	returnToMainMenu();
+
 	changeTileScene();
 
 	if (_isTileMap)
@@ -307,4 +309,12 @@ void zeldaMapScene::changeTileScene()
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD3)) _tileMapKind = TILEMAP_THREE;
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD4)) _tileMapKind = TILEMAP_FOUR;
 	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD5)) _tileMapKind = TILEMAP_BOSS;
+}
+
+void zeldaMapScene::returnToMainMenu()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		SCENEMANAGER->changeScene("main_scene");
+	}
 }

@@ -26,6 +26,10 @@ void mapToolScene::update()
 {
 	_mt->update();
 
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		SCENEMANAGER->changeScene("main_scene");
+	}
 }
 
 void mapToolScene::render()

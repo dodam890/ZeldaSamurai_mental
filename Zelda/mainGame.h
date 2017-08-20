@@ -13,8 +13,6 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 
-	void changeSceneByKeyInput();
-
 	void addItemImage();
 	void addNpcImage();
 	void addMapImage();
