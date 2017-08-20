@@ -31,7 +31,6 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	_em = new enemyManager;
 	_em->init(_player, _camera, this);
 
-
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
 		if (_tiles[i].obj == OBJ_OCTOPUS)
@@ -40,32 +39,15 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 		}
 	}
 
-<<<<<<< HEAD
-	//_em->setSlime();
-	//_em->setSnail();
-
-
-	_em = new enemyManager;
-	_em->init(_player, _camera, this);
-	_em->setOcto(2);
-=======
-	//_em->setOcto(2);
-	//_em->setSlime();
-	//_em->setSnail();
->>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
-
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
 
-<<<<<<< HEAD
-=======
 	_door[UP].rc = RectMake(625, 70, 80, 30);
 	_door[UP].nextMap = TILEMAP_TWO;
 	_door[UP].x = 630;
 	_door[UP].y = 1200;
 	_door[UP].cameraX = 145;
 	_door[UP].cameraY = 800;
->>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
 
 	return S_OK;
 }
@@ -146,15 +128,9 @@ void zeldaTileMap1::render()
 	//{
 	//	_rockTile[i].image->render(getMemDC(), _rockTile[i].rc.left, _rockTile[i].rc.top);
 	//}
-
-<<<<<<< HEAD
 	//_em->render();
 
 	_emZorder->render();
-
-=======
-	_emZorder->render();
->>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
 }
 
 // ----------------------------------------------------------------------------------------------------

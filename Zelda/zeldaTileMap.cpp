@@ -24,14 +24,6 @@ HRESULT zeldaTileMap::init(player* player, camera* camera, const CHAR* pSaveMapF
 	IMAGEMANAGER->addFrameImage("mapTiles_obj_2", "image/sample_obj_80_2.bmp", 0, 0, 1200, 880, SAMPLETILEX3, SAMPLETILEY3, true, RGB(255, 0, 255));
 
 	loadMap(pSaveMapFileName);
-
-	//_em = new enemyManager;
-	//_em->init(_player, _camera, this);
-	//_em->setOcto();
-
-	//_emZorder = new emZorder;
-	//_emZorder->init(_em, _player);
-
 	return S_OK;
 }
 
@@ -43,16 +35,10 @@ void zeldaTileMap::update()
 {
 	cameraSetTile();
 	_camera->update(_mapWidth, _mapHeight);
-
-<<<<<<< HEAD
 	//플레이어 vs 에너미
 	playerToEnemyCollision();
 	enemyToPlayerCollision();
-=======
-	//_emZorder->update();
-
 	//controlCamera();
->>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
 }
 
 void zeldaTileMap::render()
@@ -296,20 +282,13 @@ void zeldaTileMap::render()
 		}
 	}
 
-<<<<<<< HEAD
 	char str[128] = "";
 	sprintf(str, "%d", testIdx);
 	TextOut(getMemDC(), 10, 200, str, strlen(str));
 
 	//에너미 플레이어 에이스타 맵 확인용
 
-	//_em->render();
-	_player->render();
-
-=======
 	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
-
->>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)

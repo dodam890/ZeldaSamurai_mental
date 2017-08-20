@@ -89,12 +89,9 @@ public:
 	BOOL* getAttribute(ATTRIBUTE attribute) { return _attribute[attribute]; }
 	tagTile* getTiles() { return _tiles; }
 
-<<<<<<< HEAD
 	void playerToEnemyCollision();
 	void enemyToPlayerCollision();
 
-=======
 	tagDoorRect& getDoorRect(int mapNum) { return _door[mapNum]; }
->>>>>>> 2baa61dcb60d89efacb5a23566bb418a949d8bcb
 };
 
