@@ -1342,7 +1342,8 @@ void mapTool::render()
 	IMAGEMANAGER->findImage("MAPTOOL_FRAME")->render(getMemDC(), 0, 0);
 
 	//drawButton();
-	//drawTileName();
+	
+	drawTileName();
 }
 
 void mapTool::setupTiles(void)

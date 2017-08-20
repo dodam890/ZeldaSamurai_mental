@@ -47,6 +47,13 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
 
+	_door[UP].rc = RectMake(625, 70, 80, 30);
+	_door[UP].nextMap = TILEMAP_TWO;
+	_door[UP].x = 630;
+	_door[UP].y = 1200;
+	_door[UP].cameraX = 145;
+	_door[UP].cameraY = 800;
+
 	return S_OK;
 }
 
@@ -61,35 +68,8 @@ void zeldaTileMap1::update()
 {
 	zeldaTileMap::update();
 
-	int j = 0;
-	int k = 0;
+	_door[UP].rc = RectMake(_camera->getStartX() + 625, _camera->getStartY() + 70, 80, 30);
 
-	for (int i = 0; i < TILEX * TILEY; i++)
-	{
-		if (_tiles[i].terrain == TR_ROCK)
-		{
-			_rockTile[j].image = IMAGEMANAGER->findImage("TILE_ROCK");
-			_rockTile[j].rc = _tiles[i].rc;
-
-			j++;
-		}
-		else if (_tiles[i].obj2 == OBJ_POT)
-		{
-			_potTile[k].rc = _tiles[i].rc;
-
-			k++;
-		}
-	}
-
-	RECT temp;
-
-	for (int i = 0; i < 3; i++)
-	{
-		if (IntersectRect(&temp, &_rockTile[i].rc, &_player->getRect()))
-		{
-
-		}
-	}
 	//int j = 0;
 	//int k = 0;
 

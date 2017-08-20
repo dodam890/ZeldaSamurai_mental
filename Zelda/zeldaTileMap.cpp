@@ -290,6 +290,9 @@ void zeldaTileMap::render()
 			break;
 		}
 	}
+
+	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
+
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
@@ -340,25 +343,25 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 			_attribute[E_ATR_SLOW][i] = FALSE;
 		}
 
-		if (_tiles[i].terrain == TR_WATER)
+		else if (_tiles[i].terrain == TR_WATER)
 		{
 			_attribute[E_ATR_MOVE][i] = FALSE;
 		}
 		
-		if (_tiles[i].obj == OBJ_WALL)
+		else if (_tiles[i].obj == OBJ_WALL)
 		{
 			_attribute[E_ATR_MOVE][i] = FALSE;
 		}
 
-		if (_tiles[i].obj2 == OBJ_COLUMN1)
+		else if (_tiles[i].obj2 == OBJ_COLUMN1)
 		{
 			_attribute[E_ATR_SLIDE][i] = FALSE;
 		}
 
-		//if (_tiles[i].obj2 == OBJ_WALL)
-		//{
-		//	_attribute[E_ATR_MOVE][i] = FALSE;
-		//}
+		else if (_tiles[i].obj2 == OBJ_WALL)
+		{
+			//_attribute[E_ATR_MOVE][i] = FALSE;
+		}
 	}
 
 
