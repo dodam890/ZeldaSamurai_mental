@@ -195,6 +195,7 @@ HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSav
 		}
 		else if (_tiles[i].obj2 == OBJ_SMALL_BOX1)
 		{
+			
 			_chestTile.image = IMAGEMANAGER->findImage("OPEN_CHEST");
 			_chestTile.rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);		
 		}
@@ -285,6 +286,9 @@ void zeldaTileMap2::update()
 	{
 		if (IntersectRect(&temp, &_chestTile.rc, &_player->getRect()) && _isChest)
 		{
+			if (!SOUNDMANAGER->isPlaySound("작은상자열림"))
+				SOUNDMANAGER->play("작은상자열림");
+
 			_chestTile.isOn = true;
 			item_option* temp;
 			temp = new item_option;

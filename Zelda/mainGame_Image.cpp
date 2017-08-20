@@ -288,6 +288,7 @@ void mainGame::addSound()
 	SOUNDMANAGER->addSound("문닫힘", "sound/MC_Door_Close.wav", TRUE, FALSE);
 	SOUNDMANAGER->addSound("상자나타남", "sound/MC_Chest_Appear.wav", TRUE, FALSE);
 	SOUNDMANAGER->addSound("상자열림", "sound/MC_Chest_Open.wav", TRUE, FALSE);
+	SOUNDMANAGER->addSound("작은상자열림", "sound/MC_BoundChest_Open.wav", TRUE, FALSE);
 	SOUNDMANAGER->addSound("던전입구열림", "sound/MC_DungeonDoor.wav", TRUE, FALSE);
 	SOUNDMANAGER->addSound("상자아이템얻음", "sound/MC_Fanfare_Item.wav", TRUE, FALSE);
 	SOUNDMANAGER->addSound("불켜짐", "sound/MC_FlameLantern_On.wav", TRUE, FALSE);
