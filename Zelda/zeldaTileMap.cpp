@@ -284,6 +284,8 @@ void zeldaTileMap::render()
 
 	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
 	Rectangle(getMemDC(), _door[DOWN].rc.left, _door[DOWN].rc.top, _door[DOWN].rc.right, _door[DOWN].rc.bottom);
+	Rectangle(getMemDC(), _door[LEFT].rc.left, _door[LEFT].rc.top, _door[LEFT].rc.right, _door[LEFT].rc.bottom);
+	Rectangle(getMemDC(), _door[RIGHT].rc.left, _door[RIGHT].rc.top, _door[RIGHT].rc.right, _door[RIGHT].rc.bottom);
 
 	char str[128] = "";
 	sprintf(str, "%d", testIdx);
@@ -355,10 +357,6 @@ void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
 			_attribute[E_ATR_SLIDE][i] = FALSE;
 		}
 
-		else if (_tiles[i].obj2 == OBJ_WALL)
-		{
-			//_attribute[E_ATR_MOVE][i] = FALSE;
-		}
 	}
 
 

@@ -100,8 +100,6 @@ void zeldaMapScene::update()
 
 	if (_isTileMap)
 	{
-		changeTileScene();
-
 		_zeldaTileMap[_tileMapKind]->update();
 		_link->update(_zeldaTileMap[_tileMapKind]);
 
@@ -497,7 +495,7 @@ void zeldaMapScene::changeTileScene()
 			}
 		}
 	}
-	else if (_tileMapKind == TILEMAP_TWO)
+	else
 	{
 		for (int i = 0; i < DOOR_POS_END; i++)
 		{
