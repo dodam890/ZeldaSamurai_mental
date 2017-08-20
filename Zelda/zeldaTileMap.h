@@ -3,6 +3,7 @@
 #include "zeldaTileNode.h"
 #include "camera.h"
 #include "enemyManager.h"
+#include "item_class_manager.h"
 #include "emZorder.h"
 
 class player;
@@ -68,6 +69,7 @@ protected:
 
 protected:
 	enemyManager* _em;
+	item_class_manager* _im;
 	player* _player;
 
 public:
@@ -94,5 +96,6 @@ public:
 	void enemyToPlayerCollision();
 
 	tagDoorRect& getDoorRect(int mapNum) { return _door[mapNum]; }
+	void SetItemCM(item_class_manager* _icm) { _im = _icm; }
 };
 

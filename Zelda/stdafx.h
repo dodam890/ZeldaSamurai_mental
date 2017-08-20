@@ -68,3 +68,6 @@ extern HWND _hWnd;
 extern POINT _ptMouse;
 extern BOOL _leftButtonDown;
 extern BOOL _rightButtonDown;
+
+extern float _bgmVolume;
+extern float _effectVolume;

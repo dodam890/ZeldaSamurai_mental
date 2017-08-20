@@ -23,7 +23,7 @@ HRESULT select_scene::init()
 	_rcSelect[E_SELECT_GAMESTART].strSceneKey = "zeldaMapScene";
 
 	if(!SOUNDMANAGER->isPlaySound("º±≈√æ¿¿Ωæ«"))
-		SOUNDMANAGER->play("º±≈√æ¿¿Ωæ«", 1.f);
+		SOUNDMANAGER->play("º±≈√æ¿¿Ωæ«", 0.3f);
 
 
 	return S_OK;
@@ -50,7 +50,7 @@ void select_scene::update()
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				SCENEMANAGER->changeScene(_rcSelect[i].strSceneKey);
-				SOUNDMANAGER->play("∏ﬁ¥∫º±≈√", 1.f);
+				SOUNDMANAGER->play("∏ﬁ¥∫º±≈√", 0.3f);
 				SOUNDMANAGER->stop("º±≈√æ¿¿Ωæ«");
 			}
 			else

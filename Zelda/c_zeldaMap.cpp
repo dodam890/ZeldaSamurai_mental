@@ -175,9 +175,15 @@ void storeMap::talkToStoreNpc()
 				if (!_storeNpc[i]->getTalkOn())
 				{
 					_storeNpc[i]->setTalkOn(true);
+					if (!SOUNDMANAGER->isPlaySound("´ëÈ­Ã¢ÄÓ¶§"))
+						SOUNDMANAGER->play("´ëÈ­Ã¢ÄÓ¶§", 0.5f);
 				}
 				else
+				{
 					_storeNpc[i]->setTalkOn(false);
+					if (!SOUNDMANAGER->isPlaySound("´ëÈ­Ã¢²ø¶§"))
+						SOUNDMANAGER->play("´ëÈ­Ã¢²ø¶§", 0.5f);
+				}
 			}
 		}
 		else _storeNpc[i]->setTalkOn(false);

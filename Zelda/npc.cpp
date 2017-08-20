@@ -421,7 +421,10 @@ void npc::npcMove(string npcSort)
 			{
 				_direction = DIRECTION_UP;
 			}
-			else _direction = DIRECTION_DOWN;
+			else
+			{
+				_direction = DIRECTION_DOWN;
+			}
 		}
 	}
 }
@@ -595,7 +598,7 @@ void npc::setMapWords(string npcName)
 
 	else if (npcName == "npcLink")
 	{
-		char words[1000] = "검/을/ /업/그/레/이/드/하/겠/나/?";
+		char words[1000] = "강/화/를/ /하/겠/나/?";
 		char* token;
 		char* separator = "/";
 

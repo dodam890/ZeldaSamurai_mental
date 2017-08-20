@@ -73,6 +73,7 @@ void player::update(zeldaTileMap* tileMap)
 		_hurtCount++;
 		if (_hurtCount % 50 == 0)
 		{
+
 			_hurt = false;
 			_hurtCount = 0;
 		}
@@ -1033,7 +1034,7 @@ void player::motionChange(void)
 
 	if (KEYMANAGER->isOnceKeyDown('S'))
 	{
-		SOUNDMANAGER->play("Á©´Ù±¸¸£±â", 1.f);
+		SOUNDMANAGER->play("Á©´Ù±¸¸£±â", 0.5f);
 
 		switch (L_Motion)
 		{
@@ -1089,8 +1090,8 @@ void player::motionChange(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
-		SOUNDMANAGER->play("Á©´Ù°Ë±âº»¼Ò¸®", 1.f);
-		SOUNDMANAGER->play("Á©´Ù±âº»º£±â±âÇÕ", 1.f);
+		SOUNDMANAGER->play("Á©´Ù°Ë±âº»¼Ò¸®", 0.5f);
+		SOUNDMANAGER->play("Á©´Ù±âº»º£±â±âÇÕ", 0.5f);
 
 		switch (L_Motion)
 		{
@@ -1127,7 +1128,7 @@ void player::motionChange(void)
 	if (KEYMANAGER->isStayKeyDown('X'))
 	{
 		if (!SOUNDMANAGER->isPlaySound("Á©´Ù¹æÆÐµé±â"))
-			SOUNDMANAGER->play("Á©´Ù¹æÆÐµé±â");
+			SOUNDMANAGER->play("Á©´Ù¹æÆÐµé±â", 0.5f);
 
 		switch (L_Motion)
 		{
@@ -1209,8 +1210,8 @@ void player::motionChange(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown('A'))
 	{
-		SOUNDMANAGER->play("Á©´Ù°ËÈ¸Àü¼Ò¸®", 1.f);
-		SOUNDMANAGER->play("Á©´ÙÈ¸Àüº£±â±âÇÕ", 1.f);
+		SOUNDMANAGER->play("Á©´Ù°ËÈ¸Àü¼Ò¸®", 0.5f);
+		SOUNDMANAGER->play("Á©´ÙÈ¸Àüº£±â±âÇÕ", 0.5f);
 
 		switch (L_Motion)
 		{
@@ -1435,7 +1436,7 @@ void player::move(void)
 		_soundCount++;
 		if (_soundCount % 20 == 0)
 		{
-			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			SOUNDMANAGER->play("Á©´Ù°È±â", 0.5f);
 			_soundCount = 0;
 		}
 
@@ -1447,7 +1448,7 @@ void player::move(void)
 		_soundCount++;
 		if (_soundCount % 20 == 0)
 		{
-			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			SOUNDMANAGER->play("Á©´Ù°È±â", 0.5f);
 			_soundCount = 0;
 		}
 
@@ -1459,7 +1460,7 @@ void player::move(void)
 		_soundCount++;
 		if (_soundCount % 20 == 0)
 		{
-			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			SOUNDMANAGER->play("Á©´Ù°È±â", 0.5f);
 			_soundCount = 0;
 		}
 
@@ -1471,7 +1472,7 @@ void player::move(void)
 		_soundCount++;
 		if (_soundCount % 20 == 0)
 		{
-			SOUNDMANAGER->play("Á©´Ù°È±â", 1.f);
+			SOUNDMANAGER->play("Á©´Ù°È±â", 0.5f);
 			_soundCount = 0;
 		}
 

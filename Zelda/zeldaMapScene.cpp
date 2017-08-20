@@ -82,10 +82,24 @@ void zeldaMapScene::update()
 {
 	returnToMainMenu();
 
-
 	_inven->get_iim()->set_is_town(_isTileMap);
 
+	_im->update();
 	_im->set_camera(_camera);
+	_zeldaTileMap[_tileMapKind]->SetItemCM(_im);
+
+	if (_im->get_vt().size() > 0)
+	{
+		for (int i = 0; i < _im->get_vt().size(); i++)
+		{
+			RECT rctemp;
+			if (IntersectRect(&rctemp, &_im->get_vt()[i]->get_rc(), &_link->getRect()))
+			{
+				_inven->set_P_P_money(_im->get_vt()[i]->get_item_option().Price);
+				_im->eraser(i);
+			}
+		}
+	}
 
 	if (_curMap == STORE)
 	{
@@ -102,6 +116,12 @@ void zeldaMapScene::update()
 	{
 		_zeldaTileMap[_tileMapKind]->update();
 		_link->update(_zeldaTileMap[_tileMapKind]);
+
+		if (SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+			SOUNDMANAGER->stop("¸¶À»À½¾Ç");
+
+		if (!SOUNDMANAGER->isPlaySound("´øÀüÀ½¾Ç"))
+			SOUNDMANAGER->play("´øÀüÀ½¾Ç", 0.3f);
 
 		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 		{
@@ -223,57 +243,60 @@ void zeldaMapScene::update()
 					_zeldaMap[STORE]->set_is_talk_shop_npc_who(0, false);
 				}
 			}
+
 			if (_sc->get_give_item_is_true() == true)
 			{
-				if (_sc->get_ic()->get_itemtype() != using_item)
+				if (_sc->get_ic()->get_item_option().Price <= _inven->get_P_money())
 				{
-					if (_sc->get_ic()->get_itemtype() != Interaction_item)
+					if (_sc->get_ic()->get_itemtype() != using_item)
 					{
-						if (_inven->get_temp_item12_vol() < 12)
+						if (_sc->get_ic()->get_itemtype() != Interaction_item)
 						{
-							_inven->add_to_inven(
-								_sc->get_ic()->get_image(),
-								_sc->get_ic()->get_item_name(),
-								_sc->get_ic()->get_item_sub_text(),
-								_sc->get_ic()->get_item_num(),
-								_sc->get_ic()->get_volume(),
-								_sc->get_ic()->get_itemtype(),
-								_sc->get_ic()->get_item_where(),
-								_sc->get_ic()->get_is_equip(),
-								_sc->get_ic()->get_item_option());
-							_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(_inven->get_temp_item12_vol());
-							_inven->get_iit()->set_inven_v(_inven->get_vi());
-							_inven->up_temp_item12_vol();
+							if (_inven->get_temp_item12_vol() < 12)
+							{
+								_inven->add_to_inven(
+									_sc->get_ic()->get_image(),
+									_sc->get_ic()->get_item_name(),
+									_sc->get_ic()->get_item_sub_text(),
+									_sc->get_ic()->get_item_num(),
+									_sc->get_ic()->get_volume(),
+									_sc->get_ic()->get_itemtype(),
+									_sc->get_ic()->get_item_where(),
+									_sc->get_ic()->get_is_equip(),
+									_sc->get_ic()->get_item_option());
+								_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(_inven->get_temp_item12_vol());
+								_inven->get_iit()->set_inven_v(_inven->get_vi());
+								_inven->up_temp_item12_vol();
 
-							_inven->set_M_P_money(_sc->get_ic()->get_item_option().Price);
-							_sc->set_inven_money(_inven->get_P_money());
+								_inven->set_M_P_money(_sc->get_ic()->get_item_option().Price);
+								_sc->set_inven_money(_inven->get_P_money());
+							}
 						}
-					}
-					else if (_sc->get_ic()->get_itemtype() == Interaction_item)
-					{
-						if (_inven->get_temp_Sitem4_vol() < 4)
+						else if (_sc->get_ic()->get_itemtype() == Interaction_item)
 						{
-							_inven->add_to_inven(
-								_sc->get_ic()->get_image(),
-								_sc->get_ic()->get_item_name(),
-								_sc->get_ic()->get_item_sub_text(),
-								_sc->get_ic()->get_item_num(),
-								_sc->get_ic()->get_volume(),
-								_sc->get_ic()->get_itemtype(),
-								_sc->get_ic()->get_item_where(),
-								_sc->get_ic()->get_is_equip(),
-								_sc->get_ic()->get_item_option()
-							);
-							_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(12 + _inven->get_temp_Sitem4_vol());
-							_inven->get_iit()->set_inven_v(_inven->get_vi());
-							_inven->up_temp_Sitem4_vol();
+							if (_inven->get_temp_Sitem4_vol() < 4)
+							{
+								_inven->add_to_inven(
+									_sc->get_ic()->get_image(),
+									_sc->get_ic()->get_item_name(),
+									_sc->get_ic()->get_item_sub_text(),
+									_sc->get_ic()->get_item_num(),
+									_sc->get_ic()->get_volume(),
+									_sc->get_ic()->get_itemtype(),
+									_sc->get_ic()->get_item_where(),
+									_sc->get_ic()->get_is_equip(),
+									_sc->get_ic()->get_item_option()
+								);
+								_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(12 + _inven->get_temp_Sitem4_vol());
+								_inven->get_iit()->set_inven_v(_inven->get_vi());
+								_inven->up_temp_Sitem4_vol();
 
-							_inven->set_M_P_money(_sc->get_ic()->get_item_option().Price);
-							_sc->set_inven_money(_inven->get_P_money());
+								_inven->set_M_P_money(_sc->get_ic()->get_item_option().Price);
+								_sc->set_inven_money(_inven->get_P_money());
+							}
 						}
 					}
 				}
-
 				_sc->set_give_item_is_true(false);
 			}
 			effect_alpha -= 20;
@@ -302,12 +325,12 @@ void zeldaMapScene::update()
 	if (_curMap == TOWN)
 	{
 		if (!SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
-			SOUNDMANAGER->play("¸¶À»À½¾Ç", 0.5f);
+			SOUNDMANAGER->play("¸¶À»À½¾Ç", 0.3f);
 	}
 	else if (_curMap == STORE)
 	{
 		if (!SOUNDMANAGER->isPlaySound("»óÁ¡À½¾Ç"))
-			SOUNDMANAGER->play("»óÁ¡À½¾Ç", 0.5f);
+			SOUNDMANAGER->play("»óÁ¡À½¾Ç", 0.3f);
 	}
 }
 
@@ -486,6 +509,12 @@ void zeldaMapScene::changeTileScene()
 
 					if (i == DOWN)
 					{
+						if (SOUNDMANAGER->isPlaySound("´øÀüÀ½¾Ç"))
+							SOUNDMANAGER->stop("´øÀüÀ½¾Ç");
+
+						if (!SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
+							SOUNDMANAGER->play("¸¶À»À½¾Ç", 0.3f);
+
 						_isTileMap = false;
 						_link->setIsInTileMap(false);
 

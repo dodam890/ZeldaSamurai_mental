@@ -27,7 +27,7 @@ void item_class::update()
 	renderX = _x + carmeraX;
 	renderY = _y + carmeraY;
 
-	_rc = RectMakeCenter(_x, _y, _image->getWidth(), _image->getHeight());
+	_rc = RectMake(renderX, renderY, _image->getWidth(), _image->getHeight());
 }
 
 void item_class::render()
