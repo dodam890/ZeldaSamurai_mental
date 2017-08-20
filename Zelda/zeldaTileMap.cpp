@@ -284,7 +284,7 @@ void zeldaTileMap::render()
 
 	//에너미 플레이어 에이스타 맵 확인용
 
-	_em->render();
+	//_em->render();
 
 	_player->render();
 }

@@ -125,6 +125,8 @@ private:
 	bool _tumble;
 	bool _isStore;
 	bool _isCollision;
+	
+	bool _isPush;
 
 	bool _isPlayerInTileMap;
 	bool _moveTile;
@@ -167,8 +169,9 @@ public:
 	void setX(float X) { _X = X; }
 	void setY(float Y) { _Y = Y; }
 
-	void isMove(bool move) { _move = move; }
+	void setMove(bool move) { _move = move; }
 	void isStore(bool isStore) { _isStore = isStore; }
+	void setPush(bool isPush) { _isPush = isPush; }
 
 	void setIsInTileMap(bool bInTile) { _isPlayerInTileMap = bInTile; }
 

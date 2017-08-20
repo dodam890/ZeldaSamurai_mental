@@ -15,6 +15,8 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+
+	tagTileRect& getRockTile() { return _rockTile[3]; }
 };
 
 class zeldaTileMap2 : public zeldaTileMap

@@ -114,11 +114,6 @@ void enemy::update()
 	_centerMoveY = _camera->getStartY() + _distanceMoveY;
 
 	//_aStar->update();
-<<<<<<< HEAD
-
-
-=======
->>>>>>> cdf8a1d181f3d5cc8772626e17874dfdd1a1bc64
 }
 
 void enemy::render()

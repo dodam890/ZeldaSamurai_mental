@@ -20,7 +20,7 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 		if (_tiles[i].terrain == TR_ROCK)
 		{
 			_rockTile[j].image = IMAGEMANAGER->findImage("TILE_ROCK");
-			_rockTile[j].rc = _tiles[i].rc;
+			_rockTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
 
 			j++;
 		}
@@ -31,6 +31,7 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 			k++;
 		}
 	}
+
 	_em->setSlime();
 	//_em->setSnail();
 
@@ -53,9 +54,10 @@ void zeldaTileMap1::update()
 	{
 		if (_tiles[i].terrain == TR_ROCK)
 		{
-			_rockTile[j].image = IMAGEMANAGER->findImage("TILE_ROCK");
-			_rockTile[j].rc = _tiles[i].rc;
+			_rockTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 10, _tiles[i].rc.bottom - _tiles[i].rc.top - 10);
+			//_rockTile[j].rc = RectMake(_rockTile[j].rc.left + _camera->getStartX(), _rockTile[j].rc.top + _camera->getStartY(), 70, 70);
 
+			_rockTile[j].tileIndex = i;
 			j++;
 		}
 		else if (_tiles[i].obj2 == OBJ_POT)
@@ -72,6 +74,25 @@ void zeldaTileMap1::update()
 	{
 		if (IntersectRect(&temp, &_rockTile[i].rc, &_player->getRect()))
 		{
+			//_tiles[_rockTile[i].tileIndex].terrain = TR_BASE;
+			_tiles[_rockTile[i].tileIndex].terrainFrameX = 0;
+			_tiles[_rockTile[i].tileIndex].terrainFrameY = 0;
+
+			_player->setPush(true);
+
+			for (int j = 0; j < TILEX * TILEY; j++)
+			{
+				if (IntersectRect(&temp, &_rockTile[i].rc, &_tiles[j].rc))
+				{	
+					if (_tiles[j].obj == OBJ_WALL)
+					{
+					//	if(_rockTile[i].rc.left <= 
+						_rockTile[i].rc.left = _player->getRect().left - 80;
+						_rockTile[i].rc.right = _player->getRect().right - 80;
+
+					}
+				}
+			}
 
 		}
 	}
@@ -86,10 +107,9 @@ void zeldaTileMap1::render()
 	for (int i = 0; i < 3; i++)
 	{
 		_rockTile[i].image->render(getMemDC(), _rockTile[i].rc.left, _rockTile[i].rc.top);
-
-		//Rectangle(getMemDC(), _potTile[i].rc.left + _camera->getStartX(), _potTile[i].rc.top + _camera->getStartY(), _potTile[i].rc.right + _camera->getStartX(), _potTile[i].rc.bottom + _camera->getStartY());
 	}
-	_em->render();
+
+	//_em->render();
 }
 
 // ----------------------------------------------------------------------------------------------------

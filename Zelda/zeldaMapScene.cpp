@@ -233,7 +233,7 @@ void zeldaMapScene::rectCollision()
 			}
 			else
 			{
-				_link->isMove(false);
+				_link->setMove(false);
 				_sceneEffect->setFadeOUT(true);
 
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -247,7 +247,7 @@ void zeldaMapScene::rectCollision()
 
 	if (_isCameraMove)
 	{
-		_link->isMove(false);
+		_link->setMove(false);
 
 		if (_isLeft)
 		{
@@ -262,7 +262,7 @@ void zeldaMapScene::rectCollision()
 				{
 					_link->setDisX(1250);
 					_isCameraMove = false;
-					_link->isMove(true);
+					_link->setMove(true);
 					_isLeft = false;
 				}
 			}
@@ -280,7 +280,7 @@ void zeldaMapScene::rectCollision()
 				{
 					_link->setDisX(850);
 					_isCameraMove = false;
-					_link->isMove(true);
+					_link->setMove(true);
 					_isLeft = true;
 				}
 			}
@@ -299,7 +299,7 @@ void zeldaMapScene::setScene(int num)
 	_curMap = _zeldaMap[_curMap]->getEventRect(num).nextMap;
 
 	_sceneEffect->init();
-	_link->isMove(true);
+	_link->setMove(true);
 }
 
 void zeldaMapScene::changeTileScene()

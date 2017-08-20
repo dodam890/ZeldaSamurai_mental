@@ -14,6 +14,9 @@ protected:
 		RECT rc;
 		image* image;
 		bool isOn = false;
+		bool setMove = false;
+
+		int tileIndex;
 	};
 
 protected:
