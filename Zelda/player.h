@@ -133,6 +133,9 @@ private:
 
 	int _keyCount;
 
+	//음악카운트
+	int _soundCount;
+
 public:
 
 	HRESULT init(camera* camera);

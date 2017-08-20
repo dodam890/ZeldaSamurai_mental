@@ -22,7 +22,9 @@ HRESULT main_scene::init()
 	sub_logo_x = -800;
 	alpha_num = 255;
 	change_alpha = 0;
+
 	SOUNDMANAGER->play("詭檣詭景擠學", 1.F);
+
 	return S_OK;
 }
 
@@ -103,6 +105,14 @@ void main_scene::update()
 			change_alpha += 20;
 		}
 	}
+
+	//擠學疏邀
+	if (SOUNDMANAGER->isPlaySound("葆擊擠學"))
+		SOUNDMANAGER->stop("葆擊擠學");
+	if (SOUNDMANAGER->isPlaySound("鼻薄擠學"))
+		SOUNDMANAGER->stop("鼻薄擠學");
+	if (SOUNDMANAGER->isPlaySound("湍瞪擠學"))
+		SOUNDMANAGER->stop("湍瞪擠學");
 
 }
 
