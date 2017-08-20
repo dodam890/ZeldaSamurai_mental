@@ -44,8 +44,27 @@ HRESULT zeldaMapScene::init()
 
 void zeldaMapScene::release()
 {
-	_camera->release();
-	_zeldaMap[_curMap]->release();
+	SAFE_RELEASE(_camera);
+	SAFE_DELETE(_camera);
+
+	SAFE_RELEASE(_inven);
+	SAFE_DELETE(_inven);
+
+	SAFE_RELEASE(_sc);
+	SAFE_DELETE(_sc);
+
+	SAFE_RELEASE(_sceneEffect);
+	SAFE_DELETE(_sceneEffect);
+
+	for (int i = 0; i < MAP_KIND_END; i++)
+	{
+		SAFE_RELEASE(_zeldaMap[i]);
+		SAFE_DELETE(_zeldaMap[i]);
+	}
+
+	//SAFE_RELEASE(_link);
+	//SAFE_DELETE(_link);
+	//_zeldaMap[_curMap]->release();
 }
 
 void zeldaMapScene::update()

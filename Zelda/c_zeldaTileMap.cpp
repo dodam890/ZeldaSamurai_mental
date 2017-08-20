@@ -53,6 +53,8 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 void zeldaTileMap1::release()
 {
 	zeldaTileMap::release();
+
+	_em->release();
 }
 
 void zeldaTileMap1::update()

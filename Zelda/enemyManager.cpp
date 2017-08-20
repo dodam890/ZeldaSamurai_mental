@@ -26,6 +26,10 @@ HRESULT enemyManager::init(player* player, camera* camera, zeldaTileMap* map)
 
 void enemyManager::release()
 {
+	for (_viEm = _vEm.begin(); _viEm != _vEm.end(); ++_viEm)
+	{
+		(*_viEm)->release();
+	}
 }
 
 void enemyManager::update()
