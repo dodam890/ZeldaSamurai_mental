@@ -137,8 +137,6 @@ HRESULT storeMap::init(string strMapImageKey, string strPixelMapImageKey, camera
 
 	_eventRectInfo[STORE_NEXTDOOR].rc = RectMake(1200, 395, 5, 80);
 
-	_sc = new shop_class;
-
 	return S_OK;
 }
 
@@ -161,7 +159,6 @@ void storeMap::update()
 	_storeNpc[2]->update("npcMaster");
 
 	talkToStoreNpc();
-	if (_storeNpc[0]->getTalkOn() == true) _sc->update();
 }
 
 void storeMap::render()
@@ -169,8 +166,6 @@ void storeMap::render()
 	zeldaMap::render();
 
 	IMAGEMANAGER->findImage("STORE_DOOR")->render(getMemDC(), _camera->getStartX(), _camera->getStartY());
-
-	if (_storeNpc[0]->getTalkOn() == true) _sc->render();
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -191,7 +186,6 @@ void storeMap::talkToStoreNpc()
 				if (!_storeNpc[i]->getTalkOn())
 				{
 					_storeNpc[i]->setTalkOn(true);
-					if (_storeNpc[0]->getTalkOn() == true)_sc->init();
 				}
 				else
 					_storeNpc[i]->setTalkOn(false);

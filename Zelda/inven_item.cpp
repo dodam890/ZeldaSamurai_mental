@@ -60,6 +60,8 @@ void inven_item::render()
 	int temp_item_12_vol = 0;
 	int temp_s_item_4_vol = 0;
 
+	//char str[128];
+
 	for (int i = 0; i < _vi.size(); i++)
 	{
 
@@ -96,6 +98,9 @@ void inven_item::render()
 		}
 
 		_vi[i]->get_image()->render(getMemDC(), temp_x + 20, temp_y + 15);
+
+		//sprintf(str, "%d", _vi[i]->get_item_option().ATK);
+		//TextOut(getMemDC(), 200, 200 + 60 * i, str, strlen(str));
 	}
 }
 void inven_item::keypad()

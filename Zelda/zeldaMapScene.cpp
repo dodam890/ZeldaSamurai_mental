@@ -37,7 +37,8 @@ HRESULT zeldaMapScene::init()
 	_rcGoTileMap = RectMakeCenter(_camera->getStartX() + 3480, _camera->getStartY() + 2130, 50, 50);
 	_sc = new shop_class;
 	_sc->init();
-
+	_sc->set_inven_money(_inven->get_P_money());
+	_sc->set_P_mon(_inven->get_P_money());
 
 	return S_OK;
 }
@@ -129,7 +130,8 @@ void zeldaMapScene::update()
 								_sc->get_ic()->get_volume(),
 								_sc->get_ic()->get_itemtype(),
 								_sc->get_ic()->get_item_where(),
-								_sc->get_ic()->get_is_equip()
+								_sc->get_ic()->get_is_equip(),
+								_sc->get_ic()->get_item_option()
 							);
 							_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(_inven->get_temp_item12_vol());
 							_inven->get_iit()->set_inven_v(_inven->get_vi());
@@ -148,7 +150,8 @@ void zeldaMapScene::update()
 								_sc->get_ic()->get_volume(),
 								_sc->get_ic()->get_itemtype(),
 								_sc->get_ic()->get_item_where(),
-								_sc->get_ic()->get_is_equip()
+								_sc->get_ic()->get_is_equip(),
+								_sc->get_ic()->get_item_option()
 							);
 							_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(12 + _inven->get_temp_Sitem4_vol());
 							_inven->get_iit()->set_inven_v(_inven->get_vi());

@@ -37,6 +37,9 @@ void mainGame::addItemImage()
 	IMAGEMANAGER->addImage("인벤토리내용1", "image/image_pbs/inven/item_view.bmp", 1040, 665, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리세이브", "image/image_pbs/inven/inven_save.bmp", 210, 90, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리내용2", "image/image_pbs/inven/item_view2.bmp", 1040, 665, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("인벤토리내용2_1", "image/image_pbs/inven/item_view_another_2.bmp", 1040, 665, true, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addImage("인벤토리sleep", "image/image_pbs/inven/inven_sleep.bmp", 210, 90, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리변경키1", "image/image_pbs/inven/inven_change_key1.bmp", 105, 105, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("인벤토리변경키2", "image/image_pbs/inven/inven_change_key2.bmp", 105, 105, true, RGB(255, 0, 255));
@@ -97,6 +100,22 @@ void mainGame::addItemImage()
 	IMAGEMANAGER->addImage("70루비", "image/image_pbs/shop/글자/70루비.bmp", 43, 15, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("60루비", "image/image_pbs/shop/글자/60루비.bmp", 43, 15, true, RGB(255, 0, 255));
 
+	//number
+	IMAGEMANAGER->addImage("00", "image/image_pbs/UI/0.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("11", "image/image_pbs/UI/1.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("22", "image/image_pbs/UI/2.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("33", "image/image_pbs/UI/3.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("44", "image/image_pbs/UI/4.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("55", "image/image_pbs/UI/5.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("66", "image/image_pbs/UI/6.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("77", "image/image_pbs/UI/7.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("88", "image/image_pbs/UI/8.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("99", "image/image_pbs/UI/9.bmp", 60, 60, TRUE, RGB(255, 0, 255));
+
+
+	//map
+
+	IMAGEMANAGER->addImage("town_map", "image/image_pbs/map/town.bmp", 528, 360, true, RGB(255, 0, 255));
 
 }
 

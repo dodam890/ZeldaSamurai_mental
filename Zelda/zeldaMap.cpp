@@ -101,3 +101,7 @@ bool zeldaMap::get_is_talk_shop_npc_who(int arry)
 {
 	return _storeNpc[arry]->getTalkOn();
 }
+void zeldaMap::set_is_talk_shop_npc_who(int arry, bool bo)
+{
+	_storeNpc[arry]->setTalkOn(bo);
+}

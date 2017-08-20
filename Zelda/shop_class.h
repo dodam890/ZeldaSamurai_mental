@@ -4,7 +4,16 @@
 
 class shop_class : public gameNode
 {
+	struct S_SCORE
+	{
+		int nRest;
+		int nDiv;
+		image* pImg[10];
+	};
+
 private:
+
+	S_SCORE m_arScore[10];
 
 	bool click_now;
 	int message_x;
@@ -21,8 +30,14 @@ private:
 	int pick_where;
 
 	bool give_item_is_true;
+	bool shop_exit;
+
 
 	item_class* _ic;
+
+	int P_mon;
+
+	int get_inven_moneny;
 
 public:
 	shop_class();
@@ -44,5 +59,13 @@ public:
 	int get_pick_where() { return pick_where; }
 	int get_now_pick() { return temp_now_pick; }
 
+	bool get_shop_exit() { return shop_exit; }
+	void set_shop_exit(bool bo) { shop_exit = bo; }
+
+	void set_inven_money(int num) { get_inven_moneny = num; }
+	void set_P_mon(int num) { P_mon = num; }
+
+	void loadNumberImg();
+	void scoreRender();
 };
 
