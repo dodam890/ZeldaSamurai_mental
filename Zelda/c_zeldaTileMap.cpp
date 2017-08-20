@@ -95,6 +95,20 @@ void zeldaTileMap1::update()
 	_emZorder->update();
 	_em->update();
 
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		RECT rcTmp;
+		if (_tiles[i].obj2 == OBJ_POT)
+		{
+			if (IntersectRect(&rcTmp, &_tiles[i].rc, &_player->getCrushRect()))
+			{
+				_tiles[i].obj2 = OBJ_NONE;
+				_tiles[i].objFrameX = 0;
+				_tiles[i].objFrameY = 0;
+			}
+		}
+	}
+
 }
 
 void zeldaTileMap1::render()
@@ -331,6 +345,20 @@ void zeldaTileMap3::update()
 	_emZorder->update();
 	_em->update();
 
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		RECT rcTmp;
+		if (_tiles[i].obj2 == OBJ_POT)
+		{
+			if (IntersectRect(&rcTmp, &_tiles[i].rc, &_player->getCrushRect()))
+			{
+				_tiles[i].obj2 = OBJ_NONE;
+				_tiles[i].objFrameX = 0;
+				_tiles[i].objFrameY = 0;
+			}
+		}
+	}
 }
 
 void zeldaTileMap3::render()
@@ -394,6 +422,20 @@ void zeldaTileMap4::update()
 	_emZorder->update();
 	_em->update();
 
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		RECT rcTmp;
+		if (_tiles[i].obj2 == OBJ_POT)
+		{
+			if (IntersectRect(&rcTmp, &_tiles[i].rc, &_player->getCrushRect()))
+			{
+				_tiles[i].obj2 = OBJ_NONE;
+				_tiles[i].objFrameX = 0;
+				_tiles[i].objFrameY = 0;
+			}
+		}
+	}
 }
 
 void zeldaTileMap4::render()
