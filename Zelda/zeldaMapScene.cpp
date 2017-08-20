@@ -40,6 +40,15 @@ HRESULT zeldaMapScene::init()
 	_sc->set_inven_money(_inven->get_P_money());
 	_sc->set_P_mon(_inven->get_P_money());
 
+	_ugc = new up_grade_complete;
+	_ugc->init();
+	_ugc->set_my_in(_inven);
+	_ugc->set_inven_money(_inven->get_P_money());
+	_ugc->set_P_mon(_inven->get_P_money());
+
+	_im = new item_class_manager;
+	_im->init();
+
 	return S_OK;
 }
 
@@ -81,7 +90,7 @@ void zeldaMapScene::update()
 	}
 	else
 	{
-		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false)
+		if (_zeldaMap[_curMap]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[_curMap]->get_is_talk_shop_npc_who(1) == false)
 		{
 			_link->update(NULL);
 		}
@@ -109,11 +118,45 @@ void zeldaMapScene::update()
 
 			_sceneEffect->update();
 
-			if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(0) == true)
+			if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(0) == false && _zeldaMap[STORE]->get_is_talk_shop_npc_who(1) == false)
 			{
-				_sc->update();
+				_ugc->set_P_mon(_inven->get_P_money());
+				_sc->set_P_mon(_inven->get_P_money());
 			}
 
+
+			if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(1) == true && _ugc->get_confirm_reset() == false)
+			{
+				_ugc->set_vi(_inven->get_vi());
+				_ugc->set_upgrade_exit(false);
+				_ugc->set_confirm_reset(true);
+			}
+			else if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(1) == false && _ugc->get_confirm_reset() == true)
+			{
+				_ugc->set_confirm_reset(false);
+				_ugc->set_invens_view(upgrade_state_view_standard);
+			}
+			else if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(1) == true && _ugc->get_confirm_reset() == true)
+			{
+				_ugc->update();
+
+				if (_ugc->get_upgrade_exit() == true)
+				{
+					_zeldaMap[STORE]->set_is_talk_shop_npc_who(1, false);
+				}
+			}
+
+
+			if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(0) == true)
+			{
+				_sc->set_shop_exit(false);
+				_sc->update();
+
+				if (_sc->get_shop_exit() == true)
+				{
+					_zeldaMap[STORE]->set_is_talk_shop_npc_who(0, false);
+				}
+			}
 			if (_sc->get_give_item_is_true() == true)
 			{
 				if (_sc->get_ic()->get_itemtype() != using_item)
@@ -131,14 +174,16 @@ void zeldaMapScene::update()
 								_sc->get_ic()->get_itemtype(),
 								_sc->get_ic()->get_item_where(),
 								_sc->get_ic()->get_is_equip(),
-								_sc->get_ic()->get_item_option()
-							);
+								_sc->get_ic()->get_item_option());
 							_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(_inven->get_temp_item12_vol());
 							_inven->get_iit()->set_inven_v(_inven->get_vi());
 							_inven->up_temp_item12_vol();
+
+							_inven->set_M_P_money(_sc->get_ic()->get_item_option().Price);
+							_sc->set_inven_money(_inven->get_P_money());
 						}
 					}
-					else if (_inven->get_temp_item12_vol() == Interaction_item)
+					else if (_sc->get_ic()->get_itemtype() == Interaction_item)
 					{
 						if (_inven->get_temp_Sitem4_vol() < 4)
 						{
@@ -156,12 +201,15 @@ void zeldaMapScene::update()
 							_inven->get_vi()[_inven->get_vi().size() - 1]->set_numbering_where(12 + _inven->get_temp_Sitem4_vol());
 							_inven->get_iit()->set_inven_v(_inven->get_vi());
 							_inven->up_temp_Sitem4_vol();
+
+							_inven->set_M_P_money(_sc->get_ic()->get_item_option().Price);
+							_sc->set_inven_money(_inven->get_P_money());
 						}
 					}
 				}
+
 				_sc->set_give_item_is_true(false);
 			}
-
 			effect_alpha -= 20;
 			if (effect_alpha < 0) effect_alpha = 0;
 			if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
@@ -182,6 +230,7 @@ void zeldaMapScene::update()
 			_inven->update();
 		}
 	}
+	_im->update();
 }
 
 void zeldaMapScene::render()
@@ -200,6 +249,10 @@ void zeldaMapScene::render()
 			{
 				_sc->render();
 			}
+			if (_zeldaMap[STORE]->get_is_talk_shop_npc_who(1) == true)
+			{
+				_ugc->render();
+			}
 			IMAGEMANAGER->findImage("ÇÏ¾áÈ­¸é")->alphaRender(getMemDC(), 0, 0, effect_alpha);
 		}
 		else if (_is_inven == true)
@@ -210,6 +263,8 @@ void zeldaMapScene::render()
 
 		Rectangle(getMemDC(), _rcGoTileMap.left, _rcGoTileMap.top, _rcGoTileMap.right, _rcGoTileMap.bottom);
 	}
+
+	_im->render();
 
 	_camera->render();
 	_camera->drawCameraPos();
