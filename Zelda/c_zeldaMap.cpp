@@ -19,8 +19,8 @@ HRESULT townMap::init(string strMapImageKey, string strPixelMapImageKey, camera*
 	_eventRectInfo[TOWN_STORE].x = 555;
 	_eventRectInfo[TOWN_STORE].y = 640;
 
-	_eventRectInfo[TOWN_STORE].x = 465;
-	_eventRectInfo[TOWN_STORE].y = 465;
+	//_eventRectInfo[TOWN_STORE].x = 465;
+	//_eventRectInfo[TOWN_STORE].y = 465;
 
 	_eventRectInfo[TOWN_STAGE].rc = RectMake(3228, 1960, 80, 30);
 	_eventRectInfo[TOWN_STAGE].nextMap = STORE;

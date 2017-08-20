@@ -1490,7 +1490,7 @@ void mapTool::save(void)
 	HANDLE file;
 	DWORD write;
 
-	file = CreateFile("mapSave05.map", GENERIC_WRITE, 0, NULL,
+	file = CreateFile("mapSave01.map", GENERIC_WRITE, 0, NULL,
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
@@ -1503,7 +1503,7 @@ void mapTool::load(void)
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("mapSave05.map", GENERIC_READ, 0, NULL,
+	file = CreateFile("mapSave01.map", GENERIC_READ, 0, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
@@ -2565,17 +2565,17 @@ OBJECT mapTool::objSelect3(int frameX, int frameY)
 
 	if (frameX == 0 && frameY == 0)
 	{
+		return OBJ_SLIME;
+	}
+
+	if (frameX == 1 && frameY == 0)
+	{
 		return OBJ_SNAIL;
 	}
 
-	if (frameX == 0 && frameY == 1)
+	if (frameX == 2 && frameY == 0)
 	{
 		return OBJ_OCTOPUS;
-	}
-
-	if (frameX == 0 && frameY == 2)
-	{
-		return OBJ_SLIME;
 	}
 
 }

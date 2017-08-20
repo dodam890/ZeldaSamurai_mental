@@ -8,44 +8,44 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 {
 	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
 
-	int j = 0;
-	int k = 0;
+	//int j = 0;
+	//int k = 0;
+
+	//for (int i = 0; i < TILEX * TILEY; i++)
+	//{
+	//	if (_tiles[i].terrain == TR_ROCK)
+	//	{
+	//		_rockTile[j].image = IMAGEMANAGER->findImage("TILE_ROCK");
+	//		_rockTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
+
+	//		j++;
+	//	}
+	//	else if (_tiles[i].obj2 == OBJ_POT)
+	//	{
+	//		_potTile[k].rc = _tiles[i].rc;
+
+	//		k++;
+	//	}
+	//}
+
+	_em = new enemyManager;
+	_em->init(_player, _camera, this);
+
 
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		if (_tiles[i].terrain == TR_ROCK)
+		if (_tiles[i].obj == OBJ_OCTOPUS)
 		{
-			_rockTile[j].image = IMAGEMANAGER->findImage("TILE_ROCK");
-			_rockTile[j].rc = RectMake(_tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].rc.right - _tiles[i].rc.left - 5, _tiles[i].rc.bottom - _tiles[i].rc.top - 5);
-
-			j++;
-		}
-		else if (_tiles[i].obj2 == OBJ_POT)
-		{
-			_potTile[k].rc = _tiles[i].rc;
-
-			k++;
+			_em->setOcto(_tiles[i].rc.left, _tiles[i].rc.top);
 		}
 	}
 
-<<<<<<< HEAD
-	//_em->setSlime();
-	//_em->setSnail();
-
-=======
->>>>>>> 0951c71cf4cc97166a9c6fc747f8f810fac8476f
-	_em = new enemyManager;
-	_em->init(_player, _camera, this);
 	//_em->setOcto(2);
 	//_em->setSlime();
 	//_em->setSnail();
 
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
-<<<<<<< HEAD
-=======
-
->>>>>>> 0951c71cf4cc97166a9c6fc747f8f810fac8476f
 
 	return S_OK;
 }
@@ -117,21 +117,12 @@ void zeldaTileMap1::render()
 {
 	zeldaTileMap::render();
 
-	for (int i = 0; i < 3; i++)
-	{
-		_rockTile[i].image->render(getMemDC(), _rockTile[i].rc.left, _rockTile[i].rc.top);
-	}
-
-<<<<<<< HEAD
-	//_em->render();
-	_emZorder->render();
-=======
-
-	//_em->render();
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	_rockTile[i].image->render(getMemDC(), _rockTile[i].rc.left, _rockTile[i].rc.top);
+	//}
 
 	_emZorder->render();
-
->>>>>>> 0951c71cf4cc97166a9c6fc747f8f810fac8476f
 }
 
 // ----------------------------------------------------------------------------------------------------
