@@ -8,7 +8,6 @@ zeldaTileMap::zeldaTileMap() :
 {
 }
 
-
 zeldaTileMap::~zeldaTileMap()
 {
 }
@@ -38,7 +37,9 @@ void zeldaTileMap::update()
 	cameraSetTile();
 	_camera->update(_mapWidth, _mapHeight);
 
-	//controlCamera();
+	//플레이어 vs 에너미
+	playerToEnemyCollision();
+	enemyToPlayerCollision();
 }
 
 void zeldaTileMap::render()
@@ -282,14 +283,15 @@ void zeldaTileMap::render()
 		}
 	}
 
-<<<<<<< HEAD
+	char str[128] = "";
+	sprintf(str, "%d", testIdx);
+	TextOut(getMemDC(), 10, 200, str, strlen(str));
+
 	//에너미 플레이어 에이스타 맵 확인용
 
 	//_em->render();
-
 	_player->render();
-=======
->>>>>>> 64aea2e0a62f0969fe01d4ced1fb1a0c6d72e97c
+
 }
 
 void zeldaTileMap::loadMap(const CHAR* pSaveMapFileName)
@@ -363,5 +365,110 @@ void zeldaTileMap::cameraSetTile()
 		_tiles[i].posCenter.y = _camera->getStartY() + _tiles[i].disY;
 		_tiles[i].rc = RectMakeCenter(_tiles[i].posCenter.x, _tiles[i].posCenter.y, TILESIZE, TILESIZE);
 
+	}
+}
+
+void zeldaTileMap::playerToEnemyCollision()
+{
+	RECT rcTmp = {};
+	RECT rcCrush = _player->getCrushRect();
+	RECT rcPlayer = _player->getRect();
+
+	player::RECT_ATTRIBUTE atr = _player->getAtr();
+
+	vector<enemy*>& em = _em->getVEnemy();
+
+	for (int i = 0; i < em.size(); i++)
+	{
+		RECT rcEm = em[i]->getEnemyRc();
+		if (IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		{
+			if (atr == player::RC_ATR_ATT)
+			{
+				em.erase(em.begin() + i);
+				break;
+			}
+			else if (atr == player::RC_ATR_ABSORB)
+			{
+				em[i]->setAbs(true);
+				em[i]->setNormal(false);
+				em[i]->setPull(false);
+
+				if (IntersectRect(&rcTmp, &rcPlayer, &rcEm))
+				{
+					em.erase(em.begin() + i);
+				}
+
+				break;
+			}
+		}
+
+		else
+		{
+			if (atr == player::RC_ATR_ABSORB)
+			{
+				em[i]->setAbs(false);
+				em[i]->setNormal(true);
+				em[i]->setPull(false);
+				break;
+			}
+		}
+	}
+}
+
+void zeldaTileMap::enemyToPlayerCollision()
+{
+	RECT rcTmp = {};
+	RECT rcCrush = _player->getCrushRect();
+	RECT rcPlayer = _player->getRect();
+
+	player::RECT_ATTRIBUTE atr = _player->getAtr();
+
+	vector<enemy*>& em = _em->getVEnemy();
+
+	for (int i = 0; i < em.size(); i++)
+	{
+		RECT rcEm = em[i]->getEnemyRc();
+
+		if (IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		{
+			if (atr == player::RC_ATR_DEF)
+			{
+				emIdx = em[i]->getTotalIndex();
+				if (_attribute[E_ATR_MOVE][emIdx] == FALSE)
+				{
+					em.erase(em.begin() + i);
+					break;
+				}
+				else
+				{
+					em[i]->setAbs(false);
+					em[i]->setNormal(false);
+					em[i]->setPull(true);
+				}
+			}
+		}
+		else
+		{
+			em[i]->setAbs(false);
+			em[i]->setNormal(true);
+			em[i]->setPull(false);
+		}
+
+		if (IntersectRect(&rcTmp, &rcPlayer, &rcEm) && !IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		{
+			_player->decreaseHeart();
+		}
+
+		//if (IntersectRect(&rcTmp, &rcCrush, &rcEm))
+		//{
+		//	//막아서 피가 안단다
+
+	
+		//	if (atr == player::RC_ATR_GRAB)
+		//	{
+
+		//	}*/
+		//}
 	}
 }

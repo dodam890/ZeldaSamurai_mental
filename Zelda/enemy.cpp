@@ -4,6 +4,7 @@
 #include "player.h"
 #include "zeldaTileMap.h"
 
+
 enemy::enemy() :
 	_rc(),
 	_moveRc(),
@@ -71,6 +72,9 @@ HRESULT enemy::init(player* player, camera* camera, zeldaTileMap* map, int idxX,
 
 	_isFindPlayer = false;
 
+	_absorb = false;
+	_normal = true;
+	_pull = false;
 	return S_OK;;
 }
 
@@ -81,29 +85,45 @@ void enemy::release()
 
 void enemy::update()
 {
-	this->addFrame();
-	_aStar->tilesUpdate();
+	tileX = _distanceX / TILESIZE;
+	tileY = _distanceY / TILESIZE;
 
-	if (_isFindPlayer)
-	{
-		this->aStarPathFind();
-		_distanceMoveX = _distanceX;
-		_distanceMoveY = _distanceY;
-	}
-	else
-	{
-		normalMove();
-		getMapAttribute();
-	}
+	tileTotalIdx = tileX + tileY * TILEX;
 
-	RECT sour;
-	if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
+	if (_absorb)
 	{
-		_isFindPlayer = true;
+		this->absorb(_player->getCenterX(), _player->getCenterY());
 	}
-	else
+	else if (_pull)
 	{
-		_isFindPlayer = false;
+		this->pulling();
+	}
+	else if (_normal)
+	{
+		this->addFrame();
+		_aStar->tilesUpdate();
+
+		if (_isFindPlayer)
+		{
+			this->aStarPathFind();
+			_distanceMoveX = _distanceX;
+			_distanceMoveY = _distanceY;
+		}
+		else
+		{
+			normalMove();
+			getMapAttribute();
+		}
+
+		RECT sour;
+		if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
+		{
+			_isFindPlayer = true;
+		}
+		else
+		{
+			_isFindPlayer = false;
+		}
 	}
 
 	_centerX = _camera->getStartX() + _distanceX;
@@ -111,17 +131,12 @@ void enemy::update()
 
 	_centerMoveX = _camera->getStartX() + _distanceMoveX;
 	_centerMoveY = _camera->getStartY() + _distanceMoveY;
-<<<<<<< HEAD
+
 
 	//_aStar->update();
 
-=======
-<<<<<<< HEAD
-
 	//_aStar->update();
-=======
->>>>>>> 64aea2e0a62f0969fe01d4ced1fb1a0c6d72e97c
->>>>>>> f65822ee97d28aa4791ebd5171dd194dd956ca26
+
 }
 
 void enemy::render()
@@ -260,11 +275,6 @@ void enemy::getMapAttribute()
 	BOOL* attribute = _map->getAttribute(E_ATR_MOVE);
 
 	rcCollision = RectMakeCenter(_centerX, _centerY, _imgInfo[_direction].image->getFrameWidth() - 52, _imgInfo[_direction].image->getFrameHeight() - 2);
-	
-	tileX = _distanceX / TILESIZE;
-	tileY = _distanceY / TILESIZE;
-
-	tileTotalIdx = tileX + tileY * TILEX;
 
 	switch (_direction)
 	{
@@ -330,4 +340,45 @@ void enemy::getMapAttribute()
 		}
 	}
 
+}
+
+void enemy::absorb(float playerCenX, float playerCenY)
+{
+	float distance = getDistance(_centerX, _centerY, playerCenX, playerCenY);
+	float angle = getAngle(_centerX, _centerY, playerCenX, playerCenY);
+
+	_distanceX += cosf(angle) * 2.5F;
+	_distanceY += -sinf(angle) * 2.5F;
+}
+
+void enemy::pulling()
+{
+	player::LINK_MOTION motion = _player->getMotion();
+
+	switch (motion)
+	{
+		case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
+
+			_distanceX += 5;
+
+		break;
+
+		case player::LINK_MOTION_LEFT_SHIELD_MOVE:
+
+			_distanceX -= 5;
+
+		break;
+
+		case player::LINK_MOTION_UP_SHIELD_MOVE:
+
+			_distanceY -= 5;
+
+		break;
+
+		case player::LINK_MOTION_DOWN_SHIELD_MOVE:
+
+			_distanceY += 5;
+
+		break;
+	}
 }
