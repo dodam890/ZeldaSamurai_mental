@@ -380,6 +380,15 @@ void zeldaTileMap::playerToEnemyCollision()
 	RECT rcCrush = _player->getCrushRect();
 	RECT rcPlayer = _player->getRect();
 
+	item_option* temp;
+	temp = new item_option;
+
+	temp->ATK = 0;
+	temp->ATK_SPEED = 0;
+	temp->DEF = 0;
+	temp->Price = 0;
+	temp->Upgrade = 0;
+
 	player::RECT_ATTRIBUTE atr = _player->getAtr();
 
 	vector<enemy*>& em = _em->getVEnemy();
@@ -393,6 +402,10 @@ void zeldaTileMap::playerToEnemyCollision()
 			{
 				if (!SOUNDMANAGER->isPlaySound("¿¡³Ê¹ÌÁ×À½"))
 					SOUNDMANAGER->play("¿¡³Ê¹ÌÁ×À½");
+
+				temp->Price = 50;
+				_im->add_items_init(em[i]->getDistanceX(), em[i]->getDistanceY(), 11, 1, false, (*temp));
+
 				em.erase(em.begin() + i);
 				break;
 			}

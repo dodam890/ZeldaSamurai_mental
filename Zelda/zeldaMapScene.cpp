@@ -82,10 +82,24 @@ void zeldaMapScene::update()
 {
 	returnToMainMenu();
 
-
 	_inven->get_iim()->set_is_town(_isTileMap);
 
+	_im->update();
 	_im->set_camera(_camera);
+	_zeldaTileMap[_tileMapKind]->SetItemCM(_im);
+
+	if (_im->get_vt().size() > 0)
+	{
+		for (int i = 0; i < _im->get_vt().size(); i++)
+		{
+			RECT rctemp;
+			if (IntersectRect(&rctemp, &_im->get_vt()[i]->get_rc(), &_link->getRect()))
+			{
+				_inven->set_P_P_money(_im->get_vt()[i]->get_item_option().Price);
+				_im->eraser(i);
+			}
+		}
+	}
 
 	if (_curMap == STORE)
 	{
