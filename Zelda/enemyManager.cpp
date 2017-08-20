@@ -58,7 +58,7 @@ void enemyManager::setSlime()
 	enemy* enemySlime;
 
 	enemySlime = new slime;
-	enemySlime->init(_player, _camera, _map, 8, 7);
+	enemySlime->init(_player, _camera, _map, 5, 7);
 	_vEm.push_back(enemySlime);
 }
 
