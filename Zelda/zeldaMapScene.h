@@ -41,6 +41,7 @@ private:
 	bool _isLeft;
 
 	bool _is_inven;
+	bool _tile_inven;
 	int effect_alpha;
 
 private:

@@ -21,6 +21,7 @@ HRESULT zeldaMapScene::init()
 	_inven = new inven_all;
 	_inven->init();
 	_is_inven = false;
+	_tile_inven = false;
 	effect_alpha = 0;
 
 	_sceneEffect = new sceneEffect;
@@ -87,6 +88,23 @@ void zeldaMapScene::update()
 	{
 		_zeldaTileMap[_tileMapKind]->update();
 		_link->update(_zeldaTileMap[_tileMapKind]);
+
+		if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+		{
+			if (_tile_inven == true)
+			{
+				_tile_inven = false;
+			}
+			else if (_tile_inven == false)
+			{
+				_tile_inven = true;
+			}
+		}
+
+		if (_tile_inven == true)
+		{
+			_inven->update();
+		}
 	}
 	else
 	{
@@ -238,6 +256,11 @@ void zeldaMapScene::render()
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->render();
+
+		if (_tile_inven == true)
+		{
+			_inven->render();
+		}
 	}
 	else
 	{
