@@ -23,7 +23,7 @@ HRESULT main_scene::init()
 	alpha_num = 255;
 	change_alpha = 0;
 
-	SOUNDMANAGER->play("메인메뉴음악", 1.F);
+	SOUNDMANAGER->play("메인메뉴음악", 0.3f);
 
 	return S_OK;
 }
@@ -89,7 +89,7 @@ void main_scene::update()
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			ready_to_change = true;
-			SOUNDMANAGER->play("메뉴선택", 1.f);
+			SOUNDMANAGER->play("메뉴선택", 0.3f);
 			SOUNDMANAGER->stop("메인메뉴음악");
 		}
 	}

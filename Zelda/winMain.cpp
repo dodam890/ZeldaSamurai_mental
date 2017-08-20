@@ -10,6 +10,9 @@ POINT		_ptMouse;		//마우스 좌표 받을 POINT 변수
 BOOL _leftButtonDown;
 BOOL _rightButtonDown;
 
+float _bgmVolume;
+float _effectVolume;
+
 //=============================================================================
 
 LPTSTR _lpszClass = TEXT("Theta API");	//윈도우 창 텍스트

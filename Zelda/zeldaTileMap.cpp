@@ -393,6 +393,8 @@ void zeldaTileMap::playerToEnemyCollision()
 		{
 			if (atr == player::RC_ATR_ATT)
 			{
+				if (!SOUNDMANAGER->isPlaySound("¿¡³Ê¹ÌÁ×À½"))
+					SOUNDMANAGER->play("¿¡³Ê¹ÌÁ×À½");
 				em.erase(em.begin() + i);
 				break;
 			}
@@ -404,6 +406,8 @@ void zeldaTileMap::playerToEnemyCollision()
 
 				if (IntersectRect(&rcTmp, &rcPlayer, &rcEm))
 				{
+					if (!SOUNDMANAGER->isPlaySound("¿¡³Ê¹ÌÁ×À½"))
+						SOUNDMANAGER->play("¿¡³Ê¹ÌÁ×À½");
 					em.erase(em.begin() + i);
 				}
 
@@ -465,6 +469,8 @@ void zeldaTileMap::enemyToPlayerCollision()
 
 		if (IntersectRect(&rcTmp, &rcPlayer, &rcEm) && !IntersectRect(&rcTmp, &rcCrush, &rcEm))
 		{
+			if (!SOUNDMANAGER->isPlaySound("Á©´Ù´ÙÄ§"))
+				SOUNDMANAGER->play("Á©´Ù´ÙÄ§" , 0.5f);
 			_player->decreaseHeart();
 		}
 
