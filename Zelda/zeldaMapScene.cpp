@@ -82,8 +82,6 @@ void zeldaMapScene::update()
 {
 	returnToMainMenu();
 
-	changeTileScene();
-
 	if (_isTileMap)
 	{
 		_zeldaTileMap[_tileMapKind]->update();
@@ -105,6 +103,8 @@ void zeldaMapScene::update()
 		{
 			_inven->update();
 		}
+
+		changeTileScene();
 	}
 	else
 	{
@@ -154,6 +154,7 @@ void zeldaMapScene::update()
 
 				//_sceneEffect->init();
 				_link->setMove(true);
+				_tileMapKind = TILEMAP_ONE;
 			}
 		}
 	
@@ -442,7 +443,40 @@ void zeldaMapScene::changeTileScene()
 			RECT temp;
 			if (IntersectRect(&temp, &_zeldaTileMap[_tileMapKind]->getDoorRect(i).rc, &_link->getRect()))
 			{
-				setTileScene(i);
+				_link->setMove(false);
+				_sceneEffect->setFadeOUT(true);
+
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					setTileScene(i);
+
+					if (i == DOWN)
+					{
+						_isTileMap = false;
+						_link->setIsInTileMap(false);
+
+						break;
+					}
+				}
+			}
+		}
+	}
+	else if (_tileMapKind == TILEMAP_TWO)
+	{
+		for (int i = 0; i < DOOR_POS_END; i++)
+		{
+			RECT temp;
+			if (IntersectRect(&temp, &_zeldaTileMap[_tileMapKind]->getDoorRect(i).rc, &_link->getRect()))
+			{
+				_link->setMove(false);
+				_sceneEffect->setFadeOUT(true);
+
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					setTileScene(i);
+				}
 			}
 		}
 	}
@@ -464,7 +498,8 @@ void zeldaMapScene::setTileScene(int num)
 
 	_tileMapKind = _zeldaTileMap[_tileMapKind]->getDoorRect(num).nextMap;
 
-	_sceneEffect->init();
+	_link->setIsInTileMap(true);
+
 	_link->setMove(true);
 }
 

@@ -292,6 +292,7 @@ void zeldaTileMap::render()
 	}
 
 	Rectangle(getMemDC(), _door[UP].rc.left, _door[UP].rc.top, _door[UP].rc.right, _door[UP].rc.bottom);
+	Rectangle(getMemDC(), _door[DOWN].rc.left, _door[DOWN].rc.top, _door[DOWN].rc.right, _door[DOWN].rc.bottom);
 
 }
 

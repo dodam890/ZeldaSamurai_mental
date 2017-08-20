@@ -1491,7 +1491,7 @@ void mapTool::save(void)
 	HANDLE file;
 	DWORD write;
 
-	file = CreateFile("mapSave01.map", GENERIC_WRITE, 0, NULL,
+	file = CreateFile("mapSave02.map", GENERIC_WRITE, 0, NULL,
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
@@ -1504,7 +1504,7 @@ void mapTool::load(void)
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("mapSave01.map", GENERIC_READ, 0, NULL,
+	file = CreateFile("mapSave02.map", GENERIC_READ, 0, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);

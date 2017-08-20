@@ -35,6 +35,7 @@ protected:
 		TILEMAP_KIND nextMap;
 		int x, y;
 		int cameraX, cameraY;
+
 	};
 
 	struct tagTileRect

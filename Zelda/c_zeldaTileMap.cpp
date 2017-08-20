@@ -40,19 +40,21 @@ HRESULT zeldaTileMap1::init(player* player, camera * camera, const CHAR* pMapSav
 		}
 	}
 
-	//_em->setOcto(2);
-	//_em->setSlime();
-	//_em->setSnail();
-
 	_emZorder = new emZorder;
 	_emZorder->init(_em, _player);
 
-	_door[UP].rc = RectMake(625, 70, 80, 30);
+	_door[UP].rc = RectMake(720, 150, 80, 30);
 	_door[UP].nextMap = TILEMAP_TWO;
 	_door[UP].x = 630;
 	_door[UP].y = 1200;
 	_door[UP].cameraX = 145;
 	_door[UP].cameraY = 800;
+
+	_door[DOWN].rc = RectMake(720, 1400, 80, 30);
+	_door[DOWN].x = 1250;
+	_door[DOWN].y = 790;
+	_door[DOWN].cameraX = 790;
+	_door[DOWN].cameraY = 510;
 
 	return S_OK;
 }
@@ -68,7 +70,8 @@ void zeldaTileMap1::update()
 {
 	zeldaTileMap::update();
 
-	_door[UP].rc = RectMake(_camera->getStartX() + 625, _camera->getStartY() + 70, 80, 30);
+	_door[UP].rc = RectMake(_camera->getStartX() + 720, _camera->getStartY() + 150, 80, 30);
+	_door[DOWN].rc = RectMake(_camera->getStartX() + 720, _camera->getStartY() + 1400, 80, 30);
 
 	//int j = 0;
 	//int k = 0;
@@ -142,22 +145,54 @@ void zeldaTileMap1::render()
 HRESULT zeldaTileMap2::init(player* player, camera * camera, const CHAR* pMapSaveFileName, int mapWidth, int mapHeight)
 {
 	zeldaTileMap::init(player, camera, pMapSaveFileName, mapWidth, mapHeight);
+
+	_em = new enemyManager;
+	_em->init(_player, _camera, this);
+
+	_emZorder = new emZorder;
+	_emZorder->init(_em, _player);
+
+	_door[UP].rc = RectMake(720, 150, 80, 30);
+	_door[UP].nextMap = TILEMAP_THREE;
+	_door[UP].x = 630;
+	_door[UP].y = 1200;
+	_door[UP].cameraX = 145;
+	_door[UP].cameraY = 800;
+
+	_door[DOWN].rc = RectMake(720, 1400, 80, 30);
+	_door[DOWN].nextMap = TILEMAP_ONE;
+	_door[DOWN].x = 625;
+	_door[DOWN].y = 142;
+	_door[DOWN].cameraX = 165;
+	_door[DOWN].cameraY = 0;
+
 	return S_OK;
 }
 
 void zeldaTileMap2::release()
 {
 	zeldaTileMap::release();
+
+	_em->release();
 }
 
 void zeldaTileMap2::update()
 {
 	zeldaTileMap::update();
+
+	_door[UP].rc = RectMake(_camera->getStartX() + 720, _camera->getStartY() + 150, 80, 30);
+	_door[DOWN].rc = RectMake(_camera->getStartX() + 720, _camera->getStartY() + 1400, 80, 30);
+
+	_emZorder->update();
+	_em->update();
+
 }
 
 void zeldaTileMap2::render()
 {
 	zeldaTileMap::render();
+
+	_emZorder->render();
 }
 
 // ----------------------------------------------------------------------------------------------------
