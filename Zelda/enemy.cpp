@@ -87,7 +87,6 @@ void enemy::update()
 	if (_isFindPlayer)
 	{
 		this->aStarPathFind();
-
 		_distanceMoveX = _distanceX;
 		_distanceMoveY = _distanceY;
 	}
@@ -98,7 +97,7 @@ void enemy::update()
 	}
 
 	RECT sour;
-	if (IntersectRect(&sour, &_collisionRc, &_player->getRect()) && !(IntersectRect(&sour, &_moveRc, &_player->getRect())))
+	if (IntersectRect(&sour, &_collisionRc, &_player->getRect()))
 	{
 		_isFindPlayer = true;
 	}
@@ -112,13 +111,6 @@ void enemy::update()
 
 	_centerMoveX = _camera->getStartX() + _distanceMoveX;
 	_centerMoveY = _camera->getStartY() + _distanceMoveY;
-
-	//_aStar->update();
-<<<<<<< HEAD
-
-
-=======
->>>>>>> cdf8a1d181f3d5cc8772626e17874dfdd1a1bc64
 }
 
 void enemy::render()
@@ -192,8 +184,6 @@ void enemy::normalMove()
 			_distanceY -= 5;
 		break;
 	}
-
-
 }
 
 void enemy::addFrame()
@@ -215,9 +205,9 @@ void enemy::draw()
 {
 	//if (_aStar) _aStar->render();
 
-	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
-	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
-	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
 	char str[128] = "";
 	sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
