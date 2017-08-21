@@ -123,7 +123,18 @@ void player::render(void)
 
 void player::draw(void)
 {
-	char str[128] = "";
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+	if (_rectView)
+	{
+		Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
+		Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
+	}
+
+=======
+>>>>>>> 23d44893868fd55d37d370a3a455747a76114958
+	/*char str[128] = "";
 
 	sprintf(str, "[_probeX : %d _probeY : %d]", _probeX, _probeY);
 	TextOut(getMemDC(), 400, 30, str, strlen(str));
@@ -288,11 +299,15 @@ void player::draw(void)
 	case player::LINK_MOTION_DOWN_ROLLING_ATTACK:
 		TextOut(getMemDC(), 500, 10, "아래쪽롤링썬더", strlen("아래쪽롤링썬더"));
 		break;
+	}*/
+
+	if (_rectView)
+	{
+		Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
+		Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
 	}
 
-	Rectangle(getMemDC(), _playerRc.left, _playerRc.top, _playerRc.right, _playerRc.bottom);
-	Rectangle(getMemDC(), _rcCrush.left, _rcCrush.top, _rcCrush.right, _rcCrush.bottom);
-
+>>>>>>> 7189e772e750cc8b6c196669d2e8105c28452850
 	if (L_Motion == LINK_MOTION_UP_GRAB)
 	{
 		_link[L_Motion]._linkImg->frameRender(getMemDC(), _X - 5, _Y - 15, _currentFrameX, 0);
