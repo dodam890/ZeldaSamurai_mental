@@ -72,7 +72,11 @@ void select_scene::render()
 
 	for (int i = 0; i < E_SELECT_END; i++)
 	{
-		//Rectangle(getMemDC(), _rcSelect[i].rc.left, _rcSelect[i].rc.top, _rcSelect[i].rc.right, _rcSelect[i].rc.bottom);
 		_rcSelect[i].img->alphaRender(getMemDC(), _rcSelect[i].rc.left, _rcSelect[i].rc.top, _rcSelect[i].alpha);
+
+		if (_rectView)
+		{
+			Rectangle(getMemDC(), _rcSelect[i].rc.left, _rcSelect[i].rc.top, _rcSelect[i].rc.right, _rcSelect[i].rc.bottom);
+		}
 	}
 }

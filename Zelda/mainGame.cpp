@@ -36,6 +36,24 @@ void mainGame::update(void)
 {
 	gameNode::update();
 	SCENEMANAGER->update();
+
+	if (KEYMANAGER->isStayKeyDown(VK_F9))
+	{
+		_rectView = true;
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_F9))
+	{
+		_rectView = false;
+	}
+
+	if (KEYMANAGER->isStayKeyDown(VK_F7))
+	{
+		_pixelView = true;
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_F7))
+	{
+		_pixelView = false;
+	}
 }
 
 void mainGame::render(void)
@@ -45,8 +63,8 @@ void mainGame::render(void)
 
 	SCENEMANAGER->render();
 
-	TIMEMANAGER->render(getMemDC());
+	//TIMEMANAGER->render(getMemDC());
 	//===============아래도 건들지마라 =================
-	this->getBackBuffer()->render(getHDC(), 0, 0);
+	this->getBackBuffer()->render(getHDC(), 0, 0); 
 }
 
