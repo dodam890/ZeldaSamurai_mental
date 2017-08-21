@@ -69,8 +69,6 @@ void zeldaTileMap1::update()
 
 		}
 	}
-
-	_em->update();
 }
 
 void zeldaTileMap1::render()

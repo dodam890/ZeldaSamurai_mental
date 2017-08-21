@@ -207,3 +207,8 @@ void mainGame::addMapImage()
 	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_L", "image/map/TILE_WATER_WAVE_L.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TILE_WATER_WAVE_R", "image/map/TILE_WATER_WAVE_R.bmp", 320, 80, 1, 4, true, RGB(255, 0, 255));
 }
+
+void mainGame::addSound()
+{
+
+}

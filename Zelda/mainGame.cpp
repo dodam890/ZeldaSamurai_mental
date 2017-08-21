@@ -48,3 +48,4 @@ void mainGame::render(void)
 	//===============아래도 건들지마라 =================
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 }
+
