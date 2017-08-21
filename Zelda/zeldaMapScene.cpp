@@ -131,9 +131,7 @@ void zeldaMapScene::update()
 		{
 			_link->update(_zeldaTileMap[_tileMapKind]);
 			_zeldaTileMap[_tileMapKind]->update();
-		}
-
-		
+		}		
 
 		if (SOUNDMANAGER->isPlaySound("¸¶À»À½¾Ç"))
 			SOUNDMANAGER->stop("¸¶À»À½¾Ç");
@@ -536,6 +534,8 @@ void zeldaMapScene::changeTileScene()
 
 						_isTileMap = false;
 						_link->setIsInTileMap(false);
+
+						_tileMapKind = TILEMAP_ONE;
 
 						break;
 					}
