@@ -210,5 +210,5 @@ void mainGame::addMapImage()
 
 void mainGame::addSound()
 {
-
+	SOUNDMANAGER->addSound("메인메뉴음악", "sound/메인메뉴.mp3", true, true);
 }
