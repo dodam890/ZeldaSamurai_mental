@@ -177,7 +177,10 @@ struct tagTile
 	OBJECT obj;
 	OBJECT obj2;
 	//OBJECT obj3;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1567585530f23238a1f934e0082835663fa5e842
 	TILE_KIND tileKind;
 
 	POINT posCenter;

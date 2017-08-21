@@ -2,6 +2,7 @@
 #include "player.h"
 #include "camera.h"
 #include "zeldaTileMap.h"
+#include "c_zeldaTileMap.h"
 
 player::player() {}
 player::~player() {}
@@ -19,6 +20,7 @@ HRESULT player::init(camera* camera)
 	_moveSpeed = 5;
 	_move = true;
 	_isStore = false;
+	_isPush = false;
 
 	_damage = 0;
 	_frameX = 0;
@@ -1314,6 +1316,70 @@ void player::motionChange(void)
 			break;
 		}
 	}
+
+	if (_isPush)
+	{
+		switch (L_Motion)
+		{
+		case player::LINK_MOTION_RIGHT_WALK:
+			_currentFrameX = 0;
+
+			L_Motion = LINK_MOTION_RIGHT_PUSH;
+			break;
+		case player::LINK_MOTION_LEFT_WALK:
+			_currentFrameX = 0;
+
+			L_Motion = LINK_MOTION_LEFT_PUSH;
+			break;
+		case player::LINK_MOTION_UP_WALK:
+			_currentFrameX = 0;
+
+			L_Motion = LINK_MOTION_UP_PUSH;
+			break;
+		case player::LINK_MOTION_DOWN_WALK:
+			_currentFrameX = 0;
+
+			L_Motion = LINK_MOTION_DOWN_PUSH;
+			break;
+
+
+
+		case player::LINK_MOTION_RIGHT_TUMBLE:
+			break;
+		case player::LINK_MOTION_LEFT_TUMBLE:
+			break;
+		case player::LINK_MOTION_UP_TUMBLE:
+			break;
+		case player::LINK_MOTION_DOWN_TUMBLE:
+			break;
+		case player::LINK_MOTION_RIGHT_SHIELD_MOVE:
+			break;
+		case player::LINK_MOTION_LEFT_SHIELD_MOVE:
+			break;
+		case player::LINK_MOTION_UP_SHIELD_MOVE:
+			break;
+		case player::LINK_MOTION_DOWN_SHIELD_MOVE:
+			break;
+		case player::LINK_MOTION_RIGHT_MAGICPOT_ABSORB:
+			break;
+		case player::LINK_MOTION_LEFT_MAGICPOT_ABSORB:
+			break;
+		case player::LINK_MOTION_UP_MAGICPOT_ABSORB:
+			break;
+		case player::LINK_MOTION_DOWN_MAGICPOT_ABSORB:
+			break;
+		case player::LINK_MOTION_RIGHT_MAGICPOT_FIRE:
+			break;
+		case player::LINK_MOTION_LEFT_MAGICPOT_FIRE:
+			break;
+		case player::LINK_MOTION_UP_MAGICPOT_FIRE:
+			break;
+		case player::LINK_MOTION_DOWN_MAGICPOT_FIRE:
+			break;
+
+		}
+	}
+
 }
 
 void player::move(void)

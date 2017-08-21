@@ -1475,6 +1475,7 @@ void mapTool::setMap(void)
 				_tiles[i].objFrameY = 0;
 				_tiles[i].obj = OBJ_NONE;
 				_tiles[i].obj2 = OBJ_NONE;
+				//_tiles[i].obj3 = OBJ_NONE;
 				break;
 
 			}
@@ -2267,7 +2268,7 @@ void mapTool::drawTileName()
 
 TERRAIN mapTool::terrainSelect(int frameX, int frameY)
 {
-	if (frameX == 0 & frameY == 0)
+	if (frameX == 0 && frameY == 0)
 	{
 		return TR_BASE;
 	}
@@ -2556,8 +2557,6 @@ OBJECT mapTool::objSelect2(int frameX, int frameY)
 		return OBJ_DOOR2_DOWN_OPEN;
 	}
 
-
-
 	return OBJ_WALL;
 }
 
@@ -2566,17 +2565,17 @@ OBJECT mapTool::objSelect3(int frameX, int frameY)
 
 	if (frameX == 0 && frameY == 0)
 	{
+		return OBJ_SLIME;
+	}
+
+	if (frameX == 1 && frameY == 0)
+	{
 		return OBJ_SNAIL;
 	}
 
-	if (frameX == 0 && frameY == 1)
+	if (frameX == 2 && frameY == 0)
 	{
 		return OBJ_OCTOPUS;
-	}
-
-	if (frameX == 0 && frameY == 2)
-	{
-		return OBJ_SLIME;
 	}
 
 }

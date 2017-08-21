@@ -44,28 +44,28 @@ void enemyManager::render()
 	}
 }
 
-void enemyManager::setOcto()
+void enemyManager::setOcto(float distanceX, float distanceY)
 {
 	enemy* enemyOcto;
 
 	enemyOcto = new octo;
-	enemyOcto->init(_player, _camera, _map, 8, 7);
+	enemyOcto->init(_player, _camera, _map, distanceX / TILESIZE, distanceY / TILESIZE);
 	_vEm.push_back(enemyOcto);
 }
 
-void enemyManager::setSlime()
+void enemyManager::setSlime(float distanceX, float distanceY)
 {
 	enemy* enemySlime;
 
 	enemySlime = new slime;
-	enemySlime->init(_player, _camera, _map, 5, 7);
+	enemySlime->init(_player, _camera, _map, distanceX / TILESIZE, distanceY / TILESIZE);
 	_vEm.push_back(enemySlime);
 }
 
-void enemyManager::setSnail()
+void enemyManager::setSnail(float distanceX, float distanceY)
 {
 	enemy* enemySnail;
 	enemySnail = new snail;
-	enemySnail->init(_player, _camera, _map, 8, 7);
+	enemySnail->init(_player, _camera, _map, distanceX / TILESIZE, distanceY / TILESIZE);
 	_vEm.push_back(enemySnail);
 }
