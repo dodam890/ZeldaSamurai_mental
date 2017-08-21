@@ -19,12 +19,6 @@ HRESULT townMap::init(string strMapImageKey, string strPixelMapImageKey, camera*
 	_eventRectInfo[TOWN_STORE].x = 465;
 	_eventRectInfo[TOWN_STORE].y = 465;
 
-	//_eventRectInfo[TOWN_STAGE].rc = RectMake(1349, 851, 80, 30);
-	//_eventRectInfo[TOWN_STAGE].cameraX = 790;
-	//_eventRectInfo[TOWN_STAGE].cameraY = 490;
-	//_eventRectInfo[TOWN_STAGE].x = 490;
-	//_eventRectInfo[TOWN_STAGE].y = 370;
-
 	return S_OK;
 }
 
@@ -42,7 +36,6 @@ void townMap::update()
 	talkToTownNpc();
 
 	_eventRectInfo[TOWN_STORE].rc = RectMake(3228 + _camera->getStartX(), 1960 + _camera->getStartY(), 80, 30);
-	//_eventRectInfo[TOWN_STAGE].rc = RectMake(1349 + _camera->getStartX(), 851 + _camera->getStartY(), 80, 30);
 
 	for (int i = 0; i < 7; i++)
 	{

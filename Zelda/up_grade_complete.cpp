@@ -80,6 +80,7 @@ void up_grade_complete::update()
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (corcer_x > (650 + 120))
 				{
 					corcer_x -= 100;
@@ -92,6 +93,7 @@ void up_grade_complete::update()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (corcer_x < (650 + 120 + 100))
 				{
 					corcer_x += 100;
@@ -104,15 +106,18 @@ void up_grade_complete::update()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_UP))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (temp_now_pick > 0) temp_now_pick--;
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 			{
+				SOUNDMANAGER->play("메뉴커서", 0.5f);
 				if (temp_now_pick < 1) temp_now_pick++;
 			}
 
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
+				SOUNDMANAGER->play("메뉴선택", 0.5f);
 				if (pick_where == 0)
 				{
 					invens_view = upgrade_state_view_select;
@@ -130,6 +135,7 @@ void up_grade_complete::update()
 
 		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			num_x--;
 
 			if (num_x < 0 && num_x + (4 * num_y) == 11)
@@ -144,6 +150,7 @@ void up_grade_complete::update()
 
 		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			num_x++;
 			if (num_x > 3 && num_x + (4 * num_y) <= 12)
 			{
@@ -156,6 +163,7 @@ void up_grade_complete::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_UP))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (num_x + (4 * num_y) == 14 || num_x + (4 * num_y) == 15 || num_x + (4 * num_y) == 16)
 			{
 				num_y--;
@@ -183,6 +191,7 @@ void up_grade_complete::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
+			SOUNDMANAGER->play("메뉴커서", 0.5f);
 			if (num_x + (4 * num_y) == 10 || num_x + (4 * num_y) == 11)
 			{
 				num_y++;
@@ -211,93 +220,96 @@ void up_grade_complete::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			SOUNDMANAGER->play("메뉴선택", 0.5f);
 			_uss = upgrade_confirm;
 
 			if (num_x + (4 * num_y) < _vi.size())
 			{
-				if (temp_now_pick == 0)
+				if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price <= _in->get_P_money())
 				{
-
-					if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade < 5)
+					if (temp_now_pick == 0)
 					{
-						if (_vi[num_x + (4 * num_y)]->get_itemtype() == weapon)
+						if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade < 5)
 						{
-							_uss = upgrade_success;
-							item_option* temp_io;
-							temp_io = new item_option;
-
-							if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade == 0)
+							if (_vi[num_x + (4 * num_y)]->get_itemtype() == weapon)
 							{
-								temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
-								temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * 2;
-								temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * 2;
-								temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * 2;
-								temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * 2;
+								_uss = upgrade_success;
+								item_option* temp_io;
+								temp_io = new item_option;
+
+								if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade == 0)
+								{
+									temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
+									temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * 2;
+									temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * 2;
+									temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * 2;
+									temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * 2;
+								}
+								else
+								{
+									temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
+									temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * temp_io->Upgrade;
+									temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * temp_io->Upgrade;
+									temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * temp_io->Upgrade;
+									temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * temp_io->Upgrade;
+								}
+								_in->get_vi()[num_x + (4 * num_y)]->set_item_option((*temp_io));
+
+								_in->set_M_P_money(100 + temp_io->Upgrade * 200);
+
+								set_inven_money(_in->get_P_money());
+
+								upgrade_exit = true;
 							}
-							else
-							{
-								temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
-								temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * temp_io->Upgrade;
-								temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * temp_io->Upgrade;
-								temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * temp_io->Upgrade;
-								temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * temp_io->Upgrade;
-							}
-							_in->get_vi()[num_x + (4 * num_y)]->set_item_option((*temp_io));
-
-							_in->set_M_P_money(100 + temp_io->Upgrade * 200);
-
-							set_inven_money(_in->get_P_money());
-
-							upgrade_exit = true;
-						}
-					}
-					else
-					{
-						_uss = upgrade_fail;
-					}
-				}
-				else if (temp_now_pick == 1)
-				{
-					if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade < 5)
-					{
-						if (_vi[num_x + (4 * num_y)]->get_itemtype() == Armor)
-						{
-							_uss = upgrade_success;
-							item_option* temp_io;
-							temp_io = new item_option;
-
-							if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade == 0)
-							{
-								temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
-								temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * 2;
-								temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * 2;
-								temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * 2;
-								temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * 2;
-							}
-							else
-							{
-								temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
-								temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * temp_io->Upgrade;
-								temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * temp_io->Upgrade;
-								temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * temp_io->Upgrade;
-								temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * temp_io->Upgrade;
-							}
-							_in->get_vi()[num_x + (4 * num_y)]->set_item_option((*temp_io));
-
-							_in->set_M_P_money(100 + temp_io->Upgrade * 200);
-
-							set_inven_money(_in->get_P_money());
-
-							upgrade_exit = true;
 						}
 						else
 						{
 							_uss = upgrade_fail;
 						}
 					}
-					else
+					else if (temp_now_pick == 1)
 					{
-						_uss = upgrade_fail;
+						if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade < 5)
+						{
+							if (_vi[num_x + (4 * num_y)]->get_itemtype() == Armor)
+							{
+								_uss = upgrade_success;
+								item_option* temp_io;
+								temp_io = new item_option;
+
+								if (_in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade == 0)
+								{
+									temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
+									temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * 2;
+									temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * 2;
+									temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * 2;
+									temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * 2;
+								}
+								else
+								{
+									temp_io->Upgrade = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade + 1;
+									temp_io->ATK = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK * temp_io->Upgrade;
+									temp_io->ATK_SPEED = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().ATK_SPEED * temp_io->Upgrade;
+									temp_io->DEF = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().DEF * temp_io->Upgrade;
+									temp_io->Price = _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Price * temp_io->Upgrade;
+								}
+								_in->get_vi()[num_x + (4 * num_y)]->set_item_option((*temp_io));
+
+								_in->set_M_P_money(100 + temp_io->Upgrade * 200);
+
+								set_inven_money(_in->get_P_money());
+
+								upgrade_exit = true;
+							}
+							else
+							{
+								_uss = upgrade_fail;
+							}
+						}
+						else
+						{
+							_uss = upgrade_fail;
+						}
 					}
 				}
 			}
@@ -359,7 +371,7 @@ void up_grade_complete::render()
 			sprintf(str, "검을 선택해 주세요. ( 5 강 이상은 강화 되지 않습니다. )");
 			TextOut(getMemDC(), 80, 600, str, strlen(str));
 
-			if (_in->get_vi().size() > 0)
+			if (_in->get_vi().size() > num_x + (4 * num_y))
 			{
 				sprintf(str, "현재 선택 무기 강화 : %d", _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade);
 				TextOut(getMemDC(), 80, 700, str, strlen(str));
@@ -375,7 +387,7 @@ void up_grade_complete::render()
 		{
 			sprintf(str, "방패를 선택해 주세요. ( 5 강 이상은 강화 되지 않습니다. )");
 			TextOut(getMemDC(), 80, 600, str, strlen(str));
-			if (_in->get_vi().size() > 0)
+			if (_in->get_vi().size() > num_x + (4 * num_y))
 			{
 				sprintf(str, "현재 선택 무기 강화 : %d", _in->get_vi()[num_x + (4 * num_y)]->get_item_option().Upgrade);
 				TextOut(getMemDC(), 80, 700, str, strlen(str));
