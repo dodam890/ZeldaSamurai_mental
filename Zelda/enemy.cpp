@@ -169,19 +169,19 @@ void enemy::normalMove()
 	{
 	case enemy::DIRECTION_DOWN:
 		if (_rc.bottom < _moveRc.bottom)
-			_distanceY += 5;
+			_distanceY += 5.f;
 		break;
 	case enemy::DIRECTION_LEFT:
 		if (_rc.left > _moveRc.left)
-			_distanceX -= 5;
+			_distanceX -= 5.f;
 		break;
 	case enemy::DIRECTION_RIGHT:
 		if (_rc.right < _moveRc.right)
-			_distanceX += 5;
+			_distanceX += 5.f;
 		break;
 	case enemy::DIRECTION_UP:
 		if (_rc.top > _moveRc.top)
-			_distanceY -= 5;
+			_distanceY -= 5.f;
 		break;
 	}
 }
