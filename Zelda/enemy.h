@@ -86,6 +86,8 @@ public:
 	virtual void aStarPathFind();
 	virtual void getMapAttribute();
 
+	int getCenterY() { return _centerY; }
+
 	enemy();
 	virtual ~enemy();
 };

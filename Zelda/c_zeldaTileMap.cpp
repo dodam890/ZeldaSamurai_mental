@@ -89,7 +89,7 @@ void zeldaTileMap1::render()
 
 		//Rectangle(getMemDC(), _potTile[i].rc.left + _camera->getStartX(), _potTile[i].rc.top + _camera->getStartY(), _potTile[i].rc.right + _camera->getStartX(), _potTile[i].rc.bottom + _camera->getStartY());
 	}
-	_em->render();
+	//_em->render();
 }
 
 // ----------------------------------------------------------------------------------------------------

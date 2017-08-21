@@ -3,6 +3,7 @@
 #include "zeldaTileNode.h"
 #include "camera.h"
 #include "enemyManager.h"
+#include "emZorder.h"
 
 class player;
 
@@ -15,6 +16,9 @@ protected:
 		image* image;
 		bool isOn = false;
 	};
+
+protected:
+	emZorder* _emZorder;
 
 protected:
 	camera* _camera;
@@ -41,7 +45,7 @@ public:
 	virtual void render();
 
 	virtual void loadMap(const CHAR* pSaveMapFileName);
-
+	void drawTileAttribute();
 	void cameraSetTile();
 
 	int getMapWidth() { return _mapWidth; }

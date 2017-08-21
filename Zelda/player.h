@@ -162,6 +162,8 @@ public:
 	int getIndexY() { return _linkIdxY; }
 	int getIndex() { return _linkIdx; }
 
+	int getCenterY() { return (_playerRc.bottom + _playerRc.top) / 2; }
+
 	void setIsCollision(bool collision, RECT npcRc);
 
 	void setX(float X) { _X = X; }
