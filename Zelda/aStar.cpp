@@ -104,7 +104,7 @@ void aStar::setTile(zeldaTileMap* pZeldaMap, int nStartIdxX, int nStartIdxY, int
 			aStarTile* node = new aStarTile;
 			node->init(_camera, j, i);
 			node->setAttribute("normal");
-			//node->setColor(RGB(0, 255, 255));
+			node->setColor(RGB(0, 255, 255));
 			m_vTotalList.push_back(node);
 		}
 	}

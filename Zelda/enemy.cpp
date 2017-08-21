@@ -92,6 +92,7 @@ void enemy::update()
 	else
 	{
 		normalMove();
+		getMapAttribute();
 	}
 
 	RECT sour;
@@ -103,7 +104,6 @@ void enemy::update()
 	}
 	else
 	{
-
 		_isFindPlayer = false;
 	}
 
@@ -115,13 +115,20 @@ void enemy::update()
 
 	//_aStar->update();
 
-	getMapAttribute();
+
 }
 
 void enemy::render()
 {
 	this->draw();
-
+	if (_isFindPlayer)
+	{
+		TextOut(getMemDC(), 500, 500, "발견!", strlen("발견!"));
+	}
+	else
+	{
+		TextOut(getMemDC(), 500, 500, "노발견!", strlen("노발견!"));
+	}
 	//Rectangle(getMemDC(), rcCollision.left, rcCollision.top, rcCollision.right, rcCollision.bottom);
 }
 
@@ -205,9 +212,9 @@ void enemy::draw()
 {
 	if (_aStar) _aStar->render();
 
-	//Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
-	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
-	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+	Rectangle(getMemDC(), _collisionRc.left, _collisionRc.top, _collisionRc.right, _collisionRc.bottom);
+	Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
+	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
 	char str[128] = "";
 	sprintf_s(str, "eTileX : %d, eTileY : %d", tileX, tileY);
